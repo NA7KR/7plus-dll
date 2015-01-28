@@ -1,0 +1,156 @@
+﻿Build started 1/28/2015 11:26:17 AM.
+     1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c os9\ren.c os9\stat.c rebuild.c unix.c utils.c
+         utils.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+     1>utils.c(89): warning C4013: 'exit' undefined; assuming extern returning int
+     1>utils.c(587): warning C4013: 'access' undefined; assuming extern returning int
+     1>utils.c(588): warning C4013: 'chmod' undefined; assuming extern returning int
+     1>utils.c(1161): warning C4244: '=' : conversion from 'const time_t' to 'long', possible loss of data
+     1>utils.c(1209): error C2084: function 'tm *gmtime(const time_t *)' already has a body
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(99) : see previous definition of 'gmtime'
+     1>utils.c(1221): error C2084: function 'time_t mktime(tm *)' already has a body
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(123) : see previous definition of 'mktime'
+     1>utils.c(1779): warning C4013: 'gtty' undefined; assuming extern returning int
+     1>utils.c(1779): error C2036: 'termio *' : unknown size
+     1>utils.c(1781): error C2036: 'termio *' : unknown size
+     1>utils.c(1805): warning C4013: 'stty' undefined; assuming extern returning int
+     1>utils.c(1805): error C2036: 'termio *' : unknown size
+     1>utils.c(1808): warning C4013: 'read' undefined; assuming extern returning int
+     1>utils.c(1817): error C2036: 'termio *' : unknown size
+         unix.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+         rebuild.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+         stat.c
+     1>os9\stat.c(31): fatal error C1083: Cannot open include file: 'types.h': No such file or directory
+         ren.c
+     1>f:\code\7plsrc.225\os9\../7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\os9\../7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\os9\../7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\os9\../7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\os9\../7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\os9\../7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\os9\../7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+     1>os9\ren.c(13): warning C4273: 'rename' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(275) : see previous definition of 'rename'
+     1>os9\ren.c(18): warning C4013: 'system' undefined; assuming extern returning int
+         join.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+         extract.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+     1>extract.c(203): warning C4013: 'exit' undefined; assuming extern returning int
+         encode.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+     1>encode.c(180): warning C4013: 'exit' undefined; assuming extern returning int
+         decode.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+         correct.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+         7plus.c
+     1>f:\code\7plsrc.225\7plus.h(322): error C2148: total size of array must not exceed 0x7fffffff bytes
+     1>f:\code\7plsrc.225\7plus.h(326): warning C4005: 'PATHCHAR' : macro redefinition
+                 f:\code\7plsrc.225\7plus.h(324) : see previous definition of 'PATHCHAR'
+     1>f:\code\7plsrc.225\7plus.h(458): warning C4273: 'strupr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
+     1>f:\code\7plsrc.225\7plus.h(459): warning C4273: 'strlwr' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
+     1>f:\code\7plsrc.225\7plus.h(461): warning C4273: 'stricmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
+     1>f:\code\7plsrc.225\7plus.h(462): warning C4273: 'strnicmp' : inconsistent dll linkage
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
+     1>7plus.c(604): warning C4013: 'malloc' undefined; assuming extern returning int
+     1>7plus.c(694): warning C4013: 'isatty' undefined; assuming extern returning int
+     1>7plus.c(746): warning C4013: 'exit' undefined; assuming extern returning int
+     1>7plus.c(751): warning C4013: 'free' undefined; assuming extern returning int
+         Generating Code...
+     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.53
