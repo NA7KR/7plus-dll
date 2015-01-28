@@ -319,7 +319,9 @@
  #include <termcap.h>
  #include <stdlib.h>
 #endif /* OSK */
- struct termio sg[2];
+
+#include <termio.h>
+struct termio sg[2];
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
 #define PATHCHAR '/'
 #define PATHSEP "\\"
