@@ -161,11 +161,9 @@ int encode_file(char *name, long blocksize, char *search,
 		sprintf(stop_buf, "%s%s", endstr, delimit);
 
 	/* Get file's timestamp */
-#if ( defined(__TOS__))
-	ftimestamp = get_filetime (in);
-#else
+
 	ftimestamp = get_filetime(q);
-#endif
+
 
 	/* determine size of original file. This could be done with filestat(),
 	   but it's not available on all compilers. */

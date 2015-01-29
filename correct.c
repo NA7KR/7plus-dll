@@ -408,13 +408,8 @@ int correct_meta(char *name, int itsacor, int quietmode)
 #endif
 	fclose(meta);
 
-#if (defined ( defined (__TOS__) )
-
-	p = idxptr->filename;
-
-#else
 	p = idxptr->full_name;
-#endif
+
 	check_fn(p);
 
 	if (idxptr->lines_left)

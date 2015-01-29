@@ -920,7 +920,6 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 					fprintf (o, "\007\nCan't set file's timestamp!");
 			}
 
-#else /* it's not an MSDOS or Atari system */
 #ifndef _HAVE_GMTIME
 			/*
 			* mktime function from GNU C library V1.03; modified:

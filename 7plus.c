@@ -127,13 +127,6 @@ int     twolinesend = 0;
 struct  m_index *idxptr;
 
 
-
-
-
-#ifdef __TOS__
-int   nowait  = 0;
-#endif
-
 const char logon_ctrl[] =
 
 
@@ -144,16 +137,6 @@ BKG"บ"CHR"%s"BKG"บ"DFT"\n"
 BKG"บ"CHR"%s"BKG"บ"DFT"\n"
 BKG"ศออออออออออออออออออออออออออออออออออออออออออออออออออออผ"DFT"\n";
 #define LOGON_OK
-#endif
-
-#ifdef __TOS__
-"\033p\033v\n"
-"%s\n"
-"%s\n"
-"%s\n"
-"\033q\n";
-#define LOGON_OK
-#endif
 
 
 
@@ -241,9 +224,7 @@ const char *help[] = {
 	"Other Options (not all options listed):\n",
 	"\n",
 	"-k    Automatically kill all obsolete files.\n",
-#ifdef __TOS__
-	"-n    Don't wait for a keystroke at termination.\n",
-#endif
+
 	"-p    Use Packet line separator CR for encoded files. Should be used,\n",
 	"      when uploading files to the BBS in binary mode! See manual.\n",
 	"-y    Assume YES on all queries.\n",
@@ -375,25 +356,11 @@ int __export CALLBACK Do_7plus(char *cmd_line)
    However, the '-n' option overrides this. */
 int main(int argc, char **argv)
 {
-#ifdef __TOS__
-	int ret;
-
-	ret = go_at_it (argc, argv);
-	if ((!nowait || !noquery) && !system(NULLCP))
-	{
-		printf("\n\033p Hit any key \033q");
-		getch();
-	}
-	return (ret);
-#else
-
-
-
 
 
 	return (go_at_it(argc, argv));
 
-#endif
+
 }
 #endif /* #ifdef __DLL__ #else */
 
@@ -571,10 +538,7 @@ int go_at_it(int argc, char **argv)
 		if (!stricmp(argv[i], "-J")) /* Join two error reports / Produce single */
 			join = 1;                   /* output file when encoding               */
 
-#ifdef __TOS__
-		if (!stricmp (argv[i], "-N")) /* Don't wait for a key at termination  */
-			nowait = 1;
-#endif
+
 
 		if (!stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
 			sprintf(delimit, "\r");    /* for direct binary upload. */
