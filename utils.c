@@ -1,7 +1,7 @@
 #include "7plus.h"
 #include "globals.h"
 
-#if (defined (__OS2__) || defined (__WIN32__))
+#if ( defined (__WIN32__))
  #ifdef __BORLANDC__
   #include <utime.h>
   #define _FTIMEDEFINED
@@ -1452,7 +1452,7 @@ void strip (char *string)
 
 
 
- #if (defined (__unix__) || defined (__MWERKS__) || defined (OSK) || defined (__OS2__))
+ #if (defined (__unix__) || defined (__MWERKS__) || defined (OSK) )
   #define _SETFTIME_OK
 
   /*
@@ -1495,7 +1495,7 @@ void strip (char *string)
     fprintf (o, "\007\nCan't set file's timestamp to: %s", ctime (&atime));
     return;
   }
- #endif /* __unix__/OSK/__OS2__ */
+ #endif /* __unix__/OSK/ */
 
  #ifndef _SETFTIME_OK
   /*

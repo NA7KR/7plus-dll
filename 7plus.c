@@ -155,13 +155,9 @@ struct  suffix_index suffix_table[NSUFFIX] =
 #endif
 
 const char logon_ctrl[] =
-#if defined (__MSDOS__) || defined (__OS2__)
+#if defined (__MSDOS__) )
 
- #ifdef __OS2__
-  #define BKG  "\033[44;36;1m" /* cyan on blue   */
-  #define CHR  "\033[44;37;1m" /* white on blue  */
-  #define DFT  "\033[0;1m"     /* default colors */
- #endif
+ 
 
  #ifdef __MSDOS__
   #define BKG
@@ -868,7 +864,7 @@ int screenlength (void)
 {
   int scrlines;
 
-  #ifdef __OS2__
+ 
    #ifdef __EMX__
     /* Find out, how many lines fit on screen.
        _scrsize() probably only available with GNU_C/EMX */
@@ -891,7 +887,7 @@ int screenlength (void)
       scrlines = VioModeInfo.row;
     }
    #endif
-  #else
+  
    #if defined (__TURBOC__) && defined (__MSDOS__) && !defined (_Windows)
     /* Same thing for Turbo C */
     {
@@ -902,7 +898,7 @@ int screenlength (void)
    #else
     scrlines = 24;
    #endif
-  #endif
+  
   return (scrlines);
 }
 

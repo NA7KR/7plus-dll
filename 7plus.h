@@ -87,37 +87,7 @@
  #define __MSDOS__
 #endif /* __BORLANDC__ && __WIN32__*/
 
-#ifdef __OS2__
- #include <sys/types.h>
- #include <sys/stat.h>
- #include <io.h>
- #ifdef __BORLANDC__
-  #define __IBMC__
- #endif
- #define MAXPATH   80 /* I don't have HPFS installed! */
- #define MAXDRIVE  3
- #define MAXDIR    66
- #define MAXFILE   9
- #define MAXEXT    5
- #define PATHSEP "\\"
- #define PATHCHAR '\\'
- #define TWO_CHAR_SEP
- #define MAXFNAME MAXFILE+MAXEXT-1
- #define _HAVE_CHSIZE
- #define _HAVE_ICMP
- #define _HAVE_GMTIME
- #define _HAVE_MKTIME
- #include <stdlib.h>
- #ifdef __IBMC__
-  #define _HAVE_GETCH
-  #include <conio.h>
- #endif
- #ifdef __EMX__
-  #define chsize ftruncate
-  #include <termio.h>
-  struct termio sg[2];
- #endif
-#endif /* __OS2__ */
+
 
 
 
