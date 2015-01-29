@@ -60,7 +60,8 @@
 #define _HAVE_GMTIME
 #define _HAVE_MKTIME
 #define _HAVE_GETCH
-
+#define ext
+#define name
 
 #include <sys/types.h>
 #include <sys/stat.h>

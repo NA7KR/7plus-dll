@@ -751,28 +751,8 @@ int screenlength(void)
 	int scrlines;
 
 
-#ifdef __EMX__
-	/* Find out, how many lines fit on screen.
-	   _scrsize() probably only available with GNU_C/EMX */
-	{
-		int dst[2];
-		_scrsize (dst);
-		scrlines = dst[1];
-	}
-#endif
 
-#ifdef __IBMC__
-	/* IBM C++ Set/2 & Developer's Toolkit/2 , Borland C++ */
-#define INCL_VIO
-#include <os2.h>
-	{
-		VIOMODEINFO VioModeInfo;
-		HVIO hvio = 0;
-		VioModeInfo.cb = sizeof (VioModeInfo);
-		VioGetMode (&VioModeInfo, hvio);
-		scrlines = VioModeInfo.row;
-	}
-#endif
+
 
 
 	

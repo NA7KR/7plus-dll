@@ -912,7 +912,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			***
 			***
 			*/
-			void set_filetime (FILE *_file, ulong ftimestamp)
+			void set_filetime(FILE *_file, ulong ftimestamp);
 			{
 
 
@@ -1243,7 +1243,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			 * Get file's timestamp and package it into a 32-bit word (MS_DOS-format).
 			 * This function should work on any system (even on AMIGAs) :-)
 			 */
-			ulong get_filetime(const char *filename)
+			ulong get_filetime(const char *filename);
 			{
 				struct ftime fti;
 				ulong *retval = (ulong *)&fti;
@@ -1260,13 +1260,9 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 
 					if (utm)
 					{
-#ifdef __EMX__
-						/* The gmtime() implementation of EMX/GCC under OS2 already devides
-						   the seconds by 2.. strange!?  */
-						fti.ft_tsec  = utm->tm_sec;
-#else
+
 						fti.ft_tsec = utm->tm_sec / 2;
-#endif
+
 						fti.ft_min = utm->tm_min;
 						fti.ft_hour = utm->tm_hour;
 						fti.ft_day = utm->tm_mday;
@@ -1473,7 +1469,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 
 #ifndef _HAVE_GETCH
 
-#if defined(SYSV) || defined(__EMX__) || defined(__NetBSD__)/* use ioctl() */
+#if defined(SYSV) )/* use ioctl() */
 #define _IOCTL_
 #endif
 
@@ -1508,23 +1504,18 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				{
 					first = 0;
 #ifdef _IOCTL_
-#ifdef __NetBSD__
-					(void) ioctl(fd, TIOCGETA, (char *) &sg[OFF]);
-#else
+
 					(void) ioctl(fd, TCGETA, (char *) &sg[OFF]);
-#endif
+
 #else
 					(void) gtty(fd, &sg[OFF]);
 #endif
 					sg[ON] = sg[OFF];
 
 #ifdef _IOCTL_
-#ifdef __EMX__
-					/* IDEFAULT is a EMX/GCC extension. May not work elsewhere.. */
-					sg[ON].c_lflag &= ~(IDEFAULT|ICANON|ECHO);
-#else
+
 					sg[ON].c_lflag &= ~(ICANON|ECHO);
-#endif
+
 					sg[ON].c_cc[VMIN] = 1;
 					sg[ON].c_cc[VTIME] = 0;
 #else
@@ -1534,11 +1525,9 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				}
 
 #ifdef _IOCTL_
-#ifdef __NetBSD__
-				(void) ioctl(fd, TIOCSETAW, (char *) &sg[ON]);
-#else
+
 				(void) ioctl(fd, TCSETAW, (char *) &sg[ON]);
-#endif
+
 #else
 				(void) stty(fd, &sg[ON]);
 #endif
@@ -1546,11 +1535,9 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				read(fd, &c, 1);
 
 #ifdef _IOCTL_
-#ifdef __NetBSD__
-				(void) ioctl(fd, TIOCSETAW, (char *) &sg[OFF]);
-#else
+
 				(void) ioctl(fd, TCSETAW, (char *) &sg[OFF]);
-#endif
+
 #else
 				(void) stty(fd, &sg[OFF]);
 #endif
