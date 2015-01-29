@@ -176,7 +176,7 @@ void  fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft);
 #endif
 #ifndef _HAVE_ICMP
 char  *_strupr(char *string);
-char  *strlwr(char *string);
+char  *_strlwr(char *string);
 char  *strcnvt(char *string, int flag);
 int   _stricmp(const char *s1, const char *s2);
 int   _strnicmp(const char *s1, const char *s2, size_t n);

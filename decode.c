@@ -295,9 +295,9 @@ int decode_file(char *name, int flag)
 			return (5);
 		}
 
-		strlwr(destname);                  /* Convert to lower case */
+		_strlwr(destname);                  /* Convert to lower case */
 		fnsplit(destname, dummi, dummi, orgdestname, dummi2);
-		sprintf_s(destname, "%s%s", orgdestname, dummi2);
+		sprintf_s(destname, sizeof(destname), "%s%s", orgdestname, dummi2);
 		strcpy(orgdestname, destname);
 		check_fn(destname);
 
@@ -539,7 +539,7 @@ int decode_file(char *name, int flag)
 	{
 		if (_binbytes == binbytes)
 		{
-			sprintf_s(srcname, "%s%s", genpath, orgname);
+			sprintf_s(srcname, sizeof(srcname), "%s%s", genpath, orgname);
 			if (test_file(NULLFP, srcname, 2, MAXFNAME - 1) == 10)
 				return (10);
 			replace(srcname, metafile, ftimestamp);
@@ -658,9 +658,9 @@ void w_index_err(struct m_index *idxp, const char* localname, int flag)
 	if (!flag)
 	{
 		if (localname != NULL)
-			sprintf_s(filename2, "%s%s", genpath, localname);
+			sprintf_s(filename2, sizeof(filename2), "%s%s", genpath, localname);
 		else
-			sprintf_s(filename2, "%s%s", genpath, filename);
+			sprintf_s(filename2, sizeof(filename2), "%s%s", genpath, filename);
 		check_fn(filename2);
 #ifndef _HAVE_CHSIZE
 		strcat(filename2, ".7ix");

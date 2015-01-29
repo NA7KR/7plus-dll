@@ -78,12 +78,12 @@ int extract_files(char *name, char *search)
 			   Careful! It could also be a marked textfile */
 			if (!strncmp(p + offset, "text.", 5) &&
 				(strstr(p, ".ERR") || strstr(p, ".COR")))
-				sscanf_s(p + offset + 6, sizeof(p + offset + 6), "%12s", destnam);
+				sscanf_s(p + offset + 6,  "%12s", destnam);
 
 			/* It could also be an info file accompanying the code file */
 			if (!strncmp(p + offset, "info.", 5))
 			{
-				sscanf_s(p + offset + 6, sizeof(p + offset + 6), "%12s", destnam);
+				sscanf_s(p + offset + 6,  "%12s", destnam);
 				info = 0;
 			}
 			_strlwr(destnam);

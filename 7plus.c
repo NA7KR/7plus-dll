@@ -463,7 +463,7 @@ int go_at_it(int argc, char **argv)
 
 	}
 
-	if (!isatty(fileno(o)))
+	if (!_isatty(_fileno(o)))
 		no_tty = noquery = 1;
 
 	if (no_tty)
@@ -491,7 +491,7 @@ int go_at_it(int argc, char **argv)
 					fprintf(o, "Press RETURN to continue....\r");
 
 					fflush(stdout);
-					while (!getch());
+					while (!_getch());
 					fflush(stdin);
 					n = 0;
 
@@ -545,7 +545,7 @@ int go_at_it(int argc, char **argv)
 		if (findfirst (p, &ffblk, 0) == 0)
 		{
 			fnsplit (p, _drive, _dir, NULL, NULL);
-			sprintf_s (argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
+			sprintf_s(argname, sizeof(argname), "%s%s%s", _drive, _dir, ffblk.ff_name);
 		}
 	}
 
@@ -553,7 +553,7 @@ int go_at_it(int argc, char **argv)
 	fnsplit(argname, _drive, _dir, _file, _ext);
 
 	if (genflag)
-		sprintf_s(genpath, "%s%s", _drive, _dir);
+		sprintf_s(genpath, sizeof(genpath), "%s%s", _drive, _dir);
 
 	if (extract)
 	{
@@ -656,6 +656,7 @@ int screenlength(void)
 
 	return (scrlines);
 }
+
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
  *+ Possible return codes:                                                 +*

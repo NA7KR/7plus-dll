@@ -625,7 +625,7 @@ int encode_file(char *name, long blocksize, char *search,
 				destname, part, parts, ftimestamp);
 			else
 				sprintf_s(line2, sizeof(line2), " stop_7+. (%s.7PL) [%lX]", destname, ftimestamp);
-			strlwr(destname);
+			_strlwr(destname);
 
 			memcpy(line, line2, strlen(line2));
 			mcrc(line, 1);

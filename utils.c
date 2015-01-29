@@ -45,11 +45,7 @@ int my_putc(int outchar, FILE *out)
 {
 	register int x;
 
-	if ((x = putc(BRLND_PUTC_BUG(outchar & 0xff), out)) == EOF)
-	{
-		fprintf(o, "\007\nWrite error! Can't continue.\n");
-		exit(1);
-	}
+	
 	return (x);
 }
 
@@ -508,8 +504,7 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 	_to = fopen(to, OPEN_WRITE_BINARY);
 
 	while ((_char = getc(_from)) != EOF)
-		if ((status = putc(BRLND_PUTC_BUG(_char & 0xff), _to)) == EOF)
-			break;
+		
 	fclose(_from);
 
 	if (status != EOF)
@@ -1364,12 +1359,12 @@ char *_strupr(char *string)
 }
 
 /*
-*** strlwr - convert string to lower case.
+*** _strlwr - convert string to lower case.
 ***
 ***
 */
 
-char *strlwr(char *string)
+char *_strlwr(char *string)
 {
 	char *strcnvt(char *string, int flag);
 

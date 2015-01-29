@@ -34,7 +34,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 
 	/* Isolate input-path and filename */
 	fnsplit(name, _drive, _dir, _file, _ext);
-	sprintf_s(inpath, "%s%s", _drive, _dir);
+	sprintf_s(inpath, sizeof(inpath), "%s%s", _drive, _dir);
 	if (*_ext)
 		memmove(_ext, _ext + 1, strlen(_ext));
 	/*build_DOS_name (_file, _ext);*/
@@ -44,9 +44,9 @@ int correct_meta(char *name, int itsacor, int quietmode)
 		batchcor = 1;
 
 	check_fn(_file);
-	strlwr(_file);
+	_strlwr(_file);
 
-	sprintf_s(metafile, "%s%s.7mf", genpath, _file);
+	sprintf_s(metafile, sizeof(metafile), "%s%s.7mf", genpath, _file);
 
 #ifndef _HAVE_CHSIZE
 	sprintf_s(indexfile, "%s%s.7ix", genpath, _file);
@@ -107,7 +107,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 				if (num == 256 || (j > 9))
 					break;
 
-				sprintf_s(newname, "%s%s%s.c%02x", _drive, _dir, _file, num);
+				sprintf_s(newname, sizeof(newname), "%s%s%s.c%02x", _drive, _dir, _file, num);
 				if (test_exist(newname))
 				{
 					j++;
@@ -148,7 +148,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 			{
 				if (idxptr->lines_ok[4080 + (num >> 5)] & (1UL << (num & 31)))
 				{
-					sprintf_s(newname, "%s%s%s.p%02x", _drive, _dir, _file, num);
+					sprintf_s(newname, sizeof(newname), "%s%s%s.p%02x", _drive, _dir, _file, num);
 					if (!test_exist(newname))
 					{
 						/* Use batchcor to indicate that at least one file was found */
@@ -208,7 +208,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 					*orgname = EOS;
 
 				splitsize = get_hex(dum);
-				strlwr(orgname);
+				_strlwr(orgname);
 			}
 			else
 				*orgname = EOS;
@@ -403,7 +403,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 	if (!idxptr->lines_left)
 	{
 		fseek (meta, 0L, SEEK_SET);
-		chsize (fileno(meta), idxptr->length);
+		_chsize (_fileno(meta), idxptr->length);
 	}
 #endif
 	fclose(meta);
@@ -431,7 +431,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 		return (16);
 	}
 
-	sprintf_s(newname, "%s%s", genpath, p);
+	sprintf_s(newname, sizeof(newname), "%s%s", genpath, p);
 
 	if (test_file(NULLFP, newname, 2, MAXFNAME - 1) == 10)
 		return (10);
