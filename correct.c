@@ -409,11 +409,9 @@ int correct_meta (char *name, int itsacor, int quietmode)
   fclose (meta);
 
 #if (defined (__MSDOS__) || defined (__TOS__) )
-  #if defined (__BORLANDC__) && (__WIN32__)
-   p = idxptr->full_name;
-  #else
+  
    p = idxptr->filename;
-  #endif
+  
 #else
   p = idxptr->full_name;
 #endif

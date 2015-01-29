@@ -2,13 +2,9 @@
 #include "globals.h"
 
 #if ( defined (__WIN32__))
- #ifdef __BORLANDC__
-  #include <utime.h>
-  #define _FTIMEDEFINED
-  #define BRLND_PUTC_BUG (short)
- #else
+ 
   #include <sys/utime.h>
- #endif
+ 
 #endif
 
 #if !defined (BRLND_PUTC_BUG)

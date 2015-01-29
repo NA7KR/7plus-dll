@@ -66,7 +66,7 @@
  #define _HAVE_GETCH
 #endif /* __MSDOS__ */
 
-#if defined (__BORLANDC__) && (__WIN32__)
+#if defined   (__WIN32__)
  #include <dir.h>
  #include <io.h>
  #include <conio.h>
@@ -85,7 +85,7 @@
  #define _HAVE_MKTIME
  #define _HAVE_GETCH
  #define __MSDOS__
-#endif /* __BORLANDC__ && __WIN32__*/
+#endif /*   __WIN32__*/
 
 
 
