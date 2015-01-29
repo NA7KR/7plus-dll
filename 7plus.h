@@ -155,73 +155,10 @@
  #include <sys/types.h>
  #include <sys/stat.h>
 
- #ifdef __linux__
-  #define _HAVE_STRSTR
-  #define _HAVE_RENAME
-  #define _HAVE_GMTIME
-  #define _HAVE_MKTIME
-  #include <malloc.h>
-  #include <string.h>
-  #include <linux/limits.h>
-  #include <sys/ioctl.h>
- #endif /* __linux__ */
 
- #ifdef __NetBSD__
-  #define _HAVE_STRSTR
-  #define _HAVE_RENAME
-  #define _HAVE_GMTIME
-  #define _HAVE_MKTIME
-  #include <stdlib.h>
-  #include <string.h>
-  #include <limits.h>
-  #include <sys/ioctl.h>
- #endif /* __NetBSD__ */
 
- #ifdef __M_XENIX__
-  #include <malloc.h>
-  #define SEEK_CUR 1
-  #define SEEK_END 2
-  #define SEEK_SET 0
-  typedef unsigned size_t;
- #endif /* _M_XENIX__ */
 
- #ifdef SYSV
-  #include <unistd.h> /* not sure, if this one is really necessary */
-  #include <termio.h>
-  struct termio sg[2];
- #else
-  #ifdef __NetBSD__
-    #include <unistd.h>
-    #include <termios.h>
-    struct termios sg[2];
-  #else
-   #include <sgtty.h>
-   struct sgttyb sg[2];
-  #endif /* __NetBSD__ */
- #endif /* SYSV */
 
-/* assumed limits (hope reasonable !!! DF6NL) */
- #if defined(__linux__) || defined(__NetBSD__)
-  #define MAXPATH  PATH_MAX             /* defined in linux/limits.h DL5MLO */
-  #define MAXFILE  NAME_MAX
-  #define MAXEXT   NAME_MAX             /* you can a.asdfasdfasdfasfa */
-  #define MAXDIR   PATH_MAX
-  #define MAXDRIVE NAME_MAX             /* No idea what to put here... */
-  #define MAXFNAME PATH_MAX+NAME_MAX
- #else /* __linux__ */
-  #define MAXPATH 256
-  #define MAXDRIVE 16
-  #define MAXDIR 256
-  #define MAXFILE 32
-  #define MAXEXT 32
-  #define MAXFNAME MAXFILE
- #endif /* __linux__ */
-
- #define PATHSEP "/"
- #define PATHCHAR '/'
- #define LFN
-
-#endif /* __unix__ */
 
 #ifdef OSK
  /* Assumed limits */

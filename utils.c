@@ -1550,11 +1550,7 @@ void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
 
   strcpy(tmp,pth);
 
-#if (defined (__MWERKS__) || defined (__linux__) || defined (__NETBSD__))
-    /* Ignore drive on systems that don't have drives. */
-    p = tmp;
-    drv[0] = EOS;
-#else
+
     if ((p = strchr(tmp,':')) != NULL)
     {
       *p++ = EOS;
@@ -1565,7 +1561,7 @@ void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
       p = tmp;
       drv[0] = EOS;
     }
-#endif
+
 
   if ((pth = strrchr(p, PATHCHAR)) != NULL)
   {

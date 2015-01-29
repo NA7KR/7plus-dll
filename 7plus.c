@@ -247,15 +247,8 @@ const char *help[] = {
 
 
 
-#if defined(__linux__) || defined(__NetBSD__)
- #undef EXMPL
- #define EXMPL "/pr/"
-#endif
 
-#ifdef __MWERKS__
- #undef EXMPL
- #define EXMPL "HD:Folder:"
-#endif
+
 
 "7plus file.err "EXMPL"\n",
 "  Create correction file. Look for original unencoded file in '"EXMPL"'.\n",
