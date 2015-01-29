@@ -39,9 +39,6 @@
     <ClCompile Include="sevplus.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="unix.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>

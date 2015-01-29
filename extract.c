@@ -167,9 +167,7 @@ int extract_files (char *name, char *search)
 
         fprintf (o, "%-12s ", destnam);
         out = fopen (writenam, OPEN_WRITE_TEXT);
-        #ifndef _AMIGA_
-          setvbuf (out, NULL, _IOFBF, buflen);
-        #endif
+       
         bytes = 0UL;
         lines = 0;
       }

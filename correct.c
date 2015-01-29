@@ -410,7 +410,7 @@ int correct_meta (char *name, int itsacor, int quietmode)
   #endif
   fclose (meta);
 
-#if (defined (__MSDOS__) || defined (__TOS__) || defined (__OS2__))
+#if (defined (__MSDOS__) || defined (__TOS__))
   #if defined (__BORLANDC__) && (__WIN32__)
    p = idxptr->full_name;
   #else
