@@ -15,17 +15,7 @@
  #define BRLND_PUTC_BUG
 #endif
 
-#ifdef __unix__
- #ifdef __M_XENIX__
-  struct utimbuf {
-   time_t actime;
-   time_t modtime;
-  };
-  extern time_t mktime (struct tm *utm);
- #else
-  #include <utime.h>
- #endif
-#endif
+
 
 f
 
@@ -1342,7 +1332,7 @@ void strip (char *string)
 
 
 
- #if (defined (__unix__)  || defined (OSK) )
+ #if  defined (OSK) )
   #define _SETFTIME_OK
 
   /*
@@ -1385,7 +1375,7 @@ void strip (char *string)
     fprintf (o, "\007\nCan't set file's timestamp to: %s", ctime (&atime));
     return;
   }
- #endif /* __unix__/OSK/ */
+ #endif /* /OSK/ */
 
  #ifndef _SETFTIME_OK
   /*

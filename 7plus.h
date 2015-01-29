@@ -112,12 +112,7 @@
 
 
 
-#ifdef __unix__
- #if defined(__i386__) && !defined(__NetBSD__)
-   #ifndef SYSV
-    #define SYSV
-   #endif
- #endif
+
 
  #include <sys/types.h>
  #include <sys/stat.h>
@@ -186,17 +181,10 @@
 
 /** shorthands for unsigned types **/
 typedef unsigned char byte;  /* 8bit unsigned char */
-#ifdef __unix__
- #ifdef __vax__
-   typedef u_long ulong;
- #endif
- #ifdef __M_XENIX__
-   typedef unsigned long ulong;
- #endif
-#else
+
  typedef unsigned int  uint;  /* 16 or 32bit unsigned int */
  typedef unsigned long ulong; /* 32bit unsigned long      */
-#endif
+
 
 struct  m_index
 {
@@ -309,24 +297,7 @@ int   join_err       (char *file1, char *file2);
 
 
 
-#ifdef __unix__
- #ifdef __i386__
-  #ifndef _HAVE_STRSTR
-   char     *strstr    (const char *s1, const char *s2);
-  #endif  /* _HAVE_STRSTR */
-  #ifndef _HAVE_RENAME
-   int      rename     (const char *s1, const char *s2);
-  #endif /* _HAVE_RENAME */
- #endif /* __i386__ */
 
- #ifdef __vax__
-  #ifdef __STDC__
-   extern char *strdup (const char *);
-  #else
-   extern char *strdup ();
-  #endif  /* __STDC__ */
- #endif  /* __vax__ */
-#endif /* __unix__ */
 
 #ifdef OSK
  int  rename        (const char *s1, const char *s2);
