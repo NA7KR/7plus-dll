@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{01039AC0-6552-40AC-B80D-DDDE17CC2CA0}</ProjectGuid>
+    <ProjectGuid>{B2CD6934-F407-40A9-AA1A-3471D2C461B7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -19,6 +19,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -53,6 +54,9 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,18 +82,12 @@
     <ClCompile Include="encode.c" />
     <ClCompile Include="extract.c" />
     <ClCompile Include="join.c" />
-    <ClCompile Include="os9\ren.c" />
-    <ClCompile Include="os9\stat.c" />
     <ClCompile Include="rebuild.c" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="format.def" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="7plus.h" />
     <ClInclude Include="globals.h" />
-    <ClInclude Include="os9\stat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -42,26 +42,12 @@
     <ClCompile Include="dll\test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="os9\ren.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="os9\stat.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="format.def">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="7plus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="os9\stat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -892,12 +892,12 @@ void strip(char *string)
 ***
 ***
 */
-void set_filetime(FILE *_file, ulong ftimestamp)
+/*void set_filetime(FILE *_file, ulong ftimestamp)
 {
 	if (setftime(fileno(_file), (struct ftime *)&ftimestamp) == EOF)
 		fprintf(o, "\007\nCan't set file's timestamp!");
 }
-
+*/
 #ifndef _HAVE_GMTIME
 /*
 * mktime function from GNU C library V1.03; modified:
@@ -1427,7 +1427,7 @@ int strnicmp(const char *s1, const char *s2, size_t n)
 
 #ifndef _HAVE_GETCH
 
-#if defined(SYSV) )/* use ioctl() */
+#if defined(SYSV) /* use ioctl() */
 #define _IOCTL_
 #endif
 

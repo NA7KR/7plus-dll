@@ -6,91 +6,12 @@
 /**********************************************************
 *** 7PLUS ASCII- Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
 ***********************************************************
-***
-*** Compile:
-*** --------
-***
-*** -------
-*** | IBM |  : SMALL memory model
-*** -------
-***            Turbo C++ and Turbo C 2.0:
-***            MAKE -FTC_DOS.MAK
-***
-***      also: Turbo C++:
-***            Compile in IDE using 7PL_TCPP.PRJ
-***
-***      or  : Turbo C 2.0:
-***            Rename TC2.PRJ to 7PLUS.PRJ and compile in IDE
-***
-*** ----------
-*** |IBM OS/2|           EMX/GCC 0.8d : make -femxgcc.mak
-*** ---------- IBM C Set/2 & Toolkit/2: nmake -f ibmc2.mak
-***                    Borland C++ 1.0: make -fbcos2.mak (or use the IDE)
-***
-*** ---------
-*** | ATARI |  Pure C 1.0/Turbo C 2.0 : Use 7PLST.PRJ
-*** ---------
-*** --------
-*** | UNIX |   support by Torsten H. Bischoff, DF6NL @ DB0BOX
-*** --------
-***            Supported systems are:  Interactive UNIX 386
-***                                    SCO XENIX 386
-***                                    VAX BSD 4.3/ Ultrix 4.1
-***
-***            Compile: make -funix.mak
-***
-*** ---------  Adjustments made by Mario DL5MLO @OK0PKL.TCH.EU
-*** | LINUX |  Tested only on an I486.
-*** ---------  Compile: make -flinux.mak
-***
-*** ---------  Adjustments made by Berndt VK5ABN
-*** | NETBSD | Compile: make -fnetbsd.mak
-*** ---------
-***
-*** ---------
-*** | AMIGA |  egcs or gcc
-*** ---------  Compile: make -f amiga.mak
-***
-*** ------------
-*** | OS-9/68K |    GNU C 1.42
-*** ------------
-***            copy os9/stat.h /dd/defs/stat.h
-***            Compile : make -f=os9_68k.mak
-***
-*** ----------
-*** | Mac OS | Metrowerks CodeWarrior
-*** ----------
-***
-***
-*** Other systems: Find out for yourself :->  Good luck!
-***
-*** All systems:
-*** Signed or unsigned char per default is: don't care.
-*** No floating point lib required.
-***
-*** TABSIZE when editing: 2; don't insert real TABs (^I), use spaces instead.
-***
-*** When porting or modifying this source, make SURE it can still be compiled
-*** on all systems! Do this by using #ifdef directives! Please let me know
-*** about the modifications or portations, so I can include them in the origi-
-*** nal 7PLUS source.
-***
-**********************************************************
-*** 7PLUS ASCII-Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
-**********************************************************
-***
-*** File converter for transfer of arbitrary binary data
-*** via store & forward.
-***
-*** 7PLUS is HAMWARE. No commercial use. No Sale. Pass on only in it's
-*** entirety! There is no warranty for the proper functioning. Use at own
-*** risk.
-***
+
 */
 
 #include "7plus.h"
+#include <conio.h>
 
-/** globals **/
 
 FILE    *o;
 uint    crctab[256];
@@ -112,10 +33,8 @@ char    altname[MAXPATH];
 char    delimit[] = "\n";
 char def_format[] = "format.def";
 const char cant[] = "\007\n'%s': Can't open. Break.\n";
-const char notsame[] = "\007Filesize in %s differs from the original file!\n"
-"Break.\n";
-const char nomem[] = "\007Argh error: Not enough memory present! "
-"Can't continue.....\n";
+const char notsame[] = "\007Filesize in %s differs from the original file!\n" "Break.\n";
+const char nomem[] = "\007Argh error: Not enough memory present! " "Can't continue.....\n";
 int     noquery = 0;
 int     force = 0;
 int     fls = 0;
@@ -127,28 +46,8 @@ int     twolinesend = 0;
 struct  m_index *idxptr;
 
 
-const char logon_ctrl[] =
 
 
-"\n"
-BKG"ษออออออออออออออออออออออออออออออออออออออออออออออออออออป"DFT"\n"
-BKG"บ"CHR"%s"BKG"บ"DFT"\n"
-BKG"บ"CHR"%s"BKG"บ"DFT"\n"
-BKG"บ"CHR"%s"BKG"บ"DFT"\n"
-BKG"ศออออออออออออออออออออออออออออออออออออออออออออออออออออผ"DFT"\n";
-#define LOGON_OK
-
-
-
-
-#ifndef LOGON_OK /* default logon */
-"\n"
-"[]--------------------------------------------------[]\n"
-"|%s|\n"
-"|%s|\n"
-"|%s|\n"
-"[]--------------------------------------------------[]\n";
-#endif
 
 #ifdef LFN
 #define _LFN "/LFN"
@@ -189,10 +88,6 @@ const char *help[] = {
 	"\n",
 
 #define EXMPL "c:\\pr\\"
-
-
-
-
 
 
 	"7plus file.err "EXMPL"\n",
@@ -237,14 +132,14 @@ const char *help[] = {
 #ifdef __DLL__
 
 /*
- * DLL initialisation
- */
+* DLL initialisation
+*/
 
 #pragma warn -par
 
 /*
- * 32 bit DLL initialisation.
- */
+* 32 bit DLL initialisation.
+*/
 HANDLE hDLLInst = 0;
 
 BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
@@ -264,8 +159,8 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
 #pragma warn +par
 
 /*
- * The real DLL entry point
- */
+* The real DLL entry point
+*/
 int __export CALLBACK Do_7plus(char *cmd_line)
 {
 	char *p1, *p2;
@@ -275,15 +170,15 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 	int ret;
 
 	/*
-	 * Count the args.
-	 *
-	 * Long Windows 9x file names may contain spaces,
-	 * a long file name could look like this...
-	 *
-	 * "This is a long win9x file called fumph.zip"
-	 *
-	 * Note the " " surrounding the file name.
-	 */
+	* Count the args.
+	*
+	* Long Windows 9x file names may contain spaces,
+	* a long file name could look like this...
+	*
+	* "This is a long win9x file called fumph.zip"
+	*
+	* Note the " " surrounding the file name.
+	*/
 	l = strlen(cmd_line);
 
 	for (i = 0; i <= l; i++)
@@ -295,9 +190,9 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 			i++;
 		}
 		/*
-		 * Replace ' ' with '\0' unless surrounded with quotes
-		 * to indicate the spaces are inside a long file name.
-		 */
+		* Replace ' ' with '\0' unless surrounded with quotes
+		* to indicate the spaces are inside a long file name.
+		*/
 		if (cmd_line[i] == ' ')
 		{
 			cmd_line[i] = 0;
@@ -306,18 +201,18 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 	}
 
 	/*
-	 * The number of args should be one more than the spaces.
-	 */
+	* The number of args should be one more than the spaces.
+	*/
 	argc++;
 
 	/*
-	 * Allocate the pointers.
-	 */
+	* Allocate the pointers.
+	*/
 	argv = (char **) calloc (argc, sizeof (char *));
 
 	/*
-	 * Process cmd_line again setting up argv.
-	 */
+	* Process cmd_line again setting up argv.
+	*/
 	p1 = cmd_line;
 
 	for (i = 0; i < argc; i++)
@@ -328,8 +223,8 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 	}
 
 	/*
-	 * Remove any quotes
-	 */
+	* Remove any quotes
+	*/
 	for (i = 0; i < argc; i++)
 		if (argv[i] [0] == '"')
 			for (l = 0; argv[i] [l]; l++)
@@ -340,8 +235,8 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 			}
 
 	/*
-	 * Call real program entry point
-	 */
+	* Call real program entry point
+	*/
 	ret = go_at_it(argc,argv);
 
 	fclose(o);
@@ -349,6 +244,8 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 }
 
 #else /* #ifdef __DLL__ #else */
+
+
 
 /* Depending on the system, it may be nessesary to prompt the user for a
    keystroke, before terminating, because user wouldn't be able to read
@@ -749,12 +646,6 @@ end:
 int screenlength(void)
 {
 	int scrlines;
-
-
-
-
-
-
 	
 	{
 		struct text_info t;
