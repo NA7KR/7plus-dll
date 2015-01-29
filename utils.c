@@ -1,8 +1,5 @@
 #include "7plus.h"
 #include "globals.h"
-
-
-
 #include <sys/utime.h>
 
 
@@ -10,9 +7,6 @@
 #if !defined (BRLND_PUTC_BUG)
 #define BRLND_PUTC_BUG
 #endif
-
-
-
 
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
@@ -792,7 +786,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			***
 			*/
 
-			void init_decodetab(void)
+			void init_decodetab(void);
 			{
 				register int i;
 				register byte j;
@@ -822,7 +816,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			***
 			*/
 
-			void init_codetab(void)
+			void init_codetab(void);
 			{
 				register byte i, j;
 
@@ -850,7 +844,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			***
 			*/
 
-			void init_crctab(void)
+			void init_crctab(void);
 			{
 				uint m, n, r, mask;
 
@@ -872,7 +866,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			***
 			*/
 
-			void build_DOS_name(char *name, char *ext)
+			void build_DOS_name(char *name, char *ext);
 			{
 
 				strip(name);
@@ -910,25 +904,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				}
 			}
 
-#if defined  (__TOS__)
-			/*
-			*** Get file's timestamp and package it into a 32-bit word (MS_DOS-format)
-			***
-			***
-			*/
-			ulong get_filetime (FILE *_file)
-			{
-				ulong    ftimestamp;
 
-				if (getftime (fileno(_file), (struct ftime *)&ftimestamp) == EOF)
-					fprintf (o, "\007\nCan't get file's timestamp!\n");
-
-#ifdef __TOS__
-				ftimestamp = swapl(ftimestamp);
-#endif
-
-				return (ftimestamp);
-			}
 
 #define _SETFTIME_OK
 			/*
@@ -938,9 +914,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			*/
 			void set_filetime (FILE *_file, ulong ftimestamp)
 			{
-#ifdef __TOS__
-				ftimestamp = swapl(ftimestamp);
-#endif
+
 
 				if (setftime (fileno(_file), (struct ftime *)&ftimestamp) == EOF)
 					fprintf (o, "\007\nCan't set file's timestamp!");

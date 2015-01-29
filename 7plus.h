@@ -44,10 +44,6 @@
 #define fnsplit  _splitpath
 
 
-
-
-
-
 #include <io.h>
 #include <conio.h>
 #include <stdlib.h>
@@ -65,43 +61,8 @@
 #define _HAVE_MKTIME
 #define _HAVE_GETCH
 
-
-
-
-
-
-
-#ifdef __TOS__
-#define MAXPATH   119
-#define MAXDRIVE  3
-#define MAXDIR    102
-#define MAXFILE   9
-#define MAXEXT    5
-#define PATHSEP "\\"
-#define PATHCHAR '\\'
-#define TWO_CHAR_SEP
-#define MAXFNAME MAXFILE+MAXEXT-1
-#define _HAVE_GETCH
-#include <stdlib.h>
-#include <ext.h>
-/* quick & dirty, swaps upper and lower word                      */
-unsigned long swapl(unsigned long l)0x4840; /* opcode for SWAP D0 */
-/* needed for timestamp-functions    (Odo,DL1XAO)                 */
-#endif /* __TOS__ */
-
-
-
-
-
-
 #include <sys/types.h>
 #include <sys/stat.h>
-
-
-
-
-
-
 
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
 
@@ -201,14 +162,11 @@ void  init_codetab(void);
 void  init_crctab(void);
 void  build_DOS_name(char *name, char *ext);
 void  strip(char *string);
-#if defined  (__TOS__)
-ulong get_filetime   (FILE *_file);
-void  set_filetime   (FILE *_file, ulong ftimestamp);
-#else
+
 #ifndef _HAVE_GMTIME
 struct tm *__offtime(const time_t *t, long int offset);
 struct tm *gmtime(const time_t *t);
-#endif
+
 #ifndef _HAVE_MKTIME
 time_t    mktime(register struct tm *tp);
 #endif
@@ -239,11 +197,6 @@ int   extract_files(char *name, char *search);
 /** join.c **/
 int   join_control(char *file1, char *file2);
 int   join_err(char *file1, char *file2);
-
-
-
-
-
 
 #define set_autolf(x)
 #define check_fn(x)
