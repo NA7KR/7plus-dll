@@ -34,40 +34,20 @@
 #include <windows.h>
 #endif
 
-/* Microsoft's Quick C has some different makros and function names **/
-#ifdef _QC
-#define __MSDOS__
+
+
 #define MAXDRIVE _MAX_DRIVE
 #define MAXDIR   _MAX_DIR
 #define MAXFILE  _MAX_FNAME
 #define MAXEXT   _MAX_EXT
 #define MAXPATH  _MAX_PATH
 #define fnsplit  _splitpath
-#endif /* _QC */
 
-#ifdef __MSDOS__
-#ifdef __TURBOC__
-#include <dir.h>
-#include <io.h>
-#endif
-#include <conio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#define PATHSEP "\\"
-#define PATHCHAR '\\'
-#define TWO_CHAR_SEP
-#define MAXFNAME MAXFILE+MAXEXT-1
-#define _HAVE_FNSPLIT
-#define _HAVE_CHSIZE
-#define _HAVE_ICMP
-#define _HAVE_GMTIME
-#define _HAVE_MKTIME
-#define _HAVE_GETCH
-#endif /* __MSDOS__ */
 
-#if defined   (__WIN32__)
-#include <dir.h>
+
+
+
+
 #include <io.h>
 #include <conio.h>
 #include <stdlib.h>
@@ -84,8 +64,8 @@
 #define _HAVE_GMTIME
 #define _HAVE_MKTIME
 #define _HAVE_GETCH
-#define __MSDOS__
-#endif /*   __WIN32__*/
+
+
 
 
 
@@ -221,7 +201,7 @@ void  init_codetab(void);
 void  init_crctab(void);
 void  build_DOS_name(char *name, char *ext);
 void  strip(char *string);
-#if defined (__MSDOS__) || (__TOS__)
+#if defined  (__TOS__)
 ulong get_filetime   (FILE *_file);
 void  set_filetime   (FILE *_file, ulong ftimestamp);
 #else

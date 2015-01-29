@@ -161,7 +161,7 @@ int encode_file(char *name, long blocksize, char *search,
 		sprintf(stop_buf, "%s%s", endstr, delimit);
 
 	/* Get file's timestamp */
-#if (defined(__MSDOS__) || defined(__TOS__))
+#if ( defined(__TOS__))
 	ftimestamp = get_filetime (in);
 #else
 	ftimestamp = get_filetime(q);

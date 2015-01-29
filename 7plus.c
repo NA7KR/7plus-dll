@@ -135,15 +135,7 @@ int   nowait  = 0;
 #endif
 
 const char logon_ctrl[] =
-#if defined (__MSDOS__) )
 
-
-
-#ifdef __MSDOS__
-#define BKG
-#define CHR
-#define DFT
-#endif
 
 "\n"
 BKG"浜様様様様様様様様様様様様様様様様様様様様様様様様様融"DFT"\n"
@@ -683,7 +675,7 @@ int go_at_it(int argc, char **argv)
 
 	strcpy(argname, p);
 
-#if (defined (__WIN32__)) || (defined (__MSDOS__))
+
 	{ /* Since Win32 does not distinguish the case in filenames, findfirst
 	  ** is used to determine how the filename is really spelt casewise.
 	  ** It's usefull for DOS also.
@@ -695,7 +687,7 @@ int go_at_it(int argc, char **argv)
 			sprintf (argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
 		}
 	}
-#endif
+
 
 	fnsplit(argname, _drive, _dir, _file, _ext);
 
@@ -818,16 +810,14 @@ int screenlength(void)
 	}
 #endif
 
-#if defined (__TURBOC__) && defined (__MSDOS__) && !defined (_Windows)
-	/* Same thing for Turbo C */
+
+	
 	{
 		struct text_info t;
 		gettextinfo (&t);
 		scrlines = t.screenheight;
 	}
-#else
-	scrlines = 24;
-#endif
+
 
 	return (scrlines);
 }

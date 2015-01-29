@@ -1,19 +1,17 @@
 #include "7plus.h"
 #include "globals.h"
 
-#if ( defined (__WIN32__))
+
 
 #include <sys/utime.h>
 
-#endif
+
 
 #if !defined (BRLND_PUTC_BUG)
 #define BRLND_PUTC_BUG
 #endif
 
 
-
-f
 
 
 
@@ -529,17 +527,12 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 
 	if (status != EOF)
 	{
-#if (defined(__MSDOS__) || defined(__TOS__))
-		if (timestamp)
-			set_filetime (_to, timestamp);
 
-		fclose (_to);
-#else
 		fclose(_to);
 
 		if (timestamp)
 			set_filetime(to, timestamp);
-#endif
+
 	}
 	else
 	{
@@ -570,15 +563,9 @@ void replace(const char *old, const char *new, ulong timestamp)
 	{
 		if (timestamp)
 		{
-#if (defined(__MSDOS__) || defined(__TOS__))
-			FILE *_file;
 
-			_file = fopen (old, OPEN_APPEND_BINARY);
-			set_filetime (_file, timestamp);
-			fclose (_file);
-#else
 			set_filetime(old, timestamp);
-#endif
+
 		}
 	}
 }
@@ -787,7 +774,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				{
 
 					fprintf(o, "\n");
-#endif
+
 
 					/*   fclose (out); */
 
@@ -923,7 +910,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				}
 			}
 
-#if defined (__MSDOS__) || (__TOS__)
+#if defined  (__TOS__)
 			/*
 			*** Get file's timestamp and package it into a 32-bit word (MS_DOS-format)
 			***

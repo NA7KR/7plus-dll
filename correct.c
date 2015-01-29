@@ -408,7 +408,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 #endif
 	fclose(meta);
 
-#if (defined (__MSDOS__) || defined (__TOS__) )
+#if (defined ( defined (__TOS__) )
 
 	p = idxptr->filename;
 
