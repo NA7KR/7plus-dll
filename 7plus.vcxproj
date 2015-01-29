@@ -81,8 +81,6 @@
     <ClCompile Include="os9\ren.c" />
     <ClCompile Include="os9\stat.c" />
     <ClCompile Include="rebuild.c" />
-    <ClCompile Include="sevplus.c" />
-    <ClCompile Include="unix.c" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 /*
- *  stat.h for OSK : 89/04/10 by A.Seyama
+ *  stat.h for OSK : 89/04/10 by A.SeyamaOSK
  *  -mte DG1ECN Do. 07.11.1991 17:27:14
  */
 

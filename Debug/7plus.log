@@ -1,7 +1,7 @@
-﻿Build started 1/29/2015 8:40:16 AM.
+﻿Build started 1/29/2015 8:45:38 AM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c os9\ren.c os9\stat.c rebuild.c sevplus.c unix.c utils.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c os9\ren.c os9\stat.c rebuild.c utils.c
          utils.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -11,42 +11,32 @@
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
      1>f:\code\7plsrc.225\7plus.h(282): warning C4273: 'strnicmp' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
-     1>utils.c(24): error C2054: expected '(' to follow 'f'
-     1>utils.c(24): error C2085: 'no' : not in formal parameter list
-     1>utils.c(24): error C2143: syntax error : missing ';' before '='
-     1>utils.c(70): warning C4013: 'exit' undefined; assuming extern returning int
-     1>utils.c(568): warning C4013: 'access' undefined; assuming extern returning int
-     1>utils.c(569): warning C4013: 'chmod' undefined; assuming extern returning int
-     1>utils.c(606): error C2065: 'MAXPATH' : undeclared identifier
-     1>utils.c(606): error C2057: expected constant expression
-     1>utils.c(606): error C2466: cannot allocate an array of constant size 0
-     1>utils.c(606): error C2133: 'newname' : unknown size
-     1>utils.c(746): error C2065: 'MAXDRIVE' : undeclared identifier
-     1>utils.c(746): error C2057: expected constant expression
-     1>utils.c(746): error C2466: cannot allocate an array of constant size 0
-     1>utils.c(746): error C2133: '__drive' : unknown size
-     1>utils.c(746): error C2065: 'MAXDIR' : undeclared identifier
-     1>utils.c(746): error C2133: '__dir' : unknown size
-     1>utils.c(746): error C2065: 'MAXFILE' : undeclared identifier
-     1>utils.c(746): error C2133: '__file' : unknown size
-     1>utils.c(746): error C2065: 'MAXEXT' : undeclared identifier
-     1>utils.c(746): error C2133: '__ext' : unknown size
-     1>utils.c(747): error C2065: 'MAXPATH' : undeclared identifier
-     1>utils.c(747): error C2057: expected constant expression
-     1>utils.c(747): error C2466: cannot allocate an array of constant size 0
-     1>utils.c(747): error C2133: 'newnam' : unknown size
-     1>utils.c(756): error C2065: 'MAXFILE' : undeclared identifier
-     1>utils.c(797): fatal error C1020: unexpected #endif
-         unix.c
-     1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
-     1>f:\code\7plsrc.225\7plus.h(279): warning C4273: 'strlwr' : inconsistent dll linkage
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see previous definition of 'strlwr'
-     1>f:\code\7plsrc.225\7plus.h(281): warning C4273: 'stricmp' : inconsistent dll linkage
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see previous definition of 'stricmp'
-     1>f:\code\7plsrc.225\7plus.h(282): warning C4273: 'strnicmp' : inconsistent dll linkage
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see previous definition of 'strnicmp'
-         sevplus.c
+     1>utils.c(20): error C2054: expected '(' to follow 'f'
+     1>utils.c(20): error C2085: 'no' : not in formal parameter list
+     1>utils.c(20): error C2143: syntax error : missing ';' before '='
+     1>utils.c(66): warning C4013: 'exit' undefined; assuming extern returning int
+     1>utils.c(561): warning C4013: 'access' undefined; assuming extern returning int
+     1>utils.c(562): warning C4013: 'chmod' undefined; assuming extern returning int
+     1>utils.c(599): error C2065: 'MAXPATH' : undeclared identifier
+     1>utils.c(599): error C2057: expected constant expression
+     1>utils.c(599): error C2466: cannot allocate an array of constant size 0
+     1>utils.c(599): error C2133: 'newname' : unknown size
+     1>utils.c(739): error C2065: 'MAXDRIVE' : undeclared identifier
+     1>utils.c(739): error C2057: expected constant expression
+     1>utils.c(739): error C2466: cannot allocate an array of constant size 0
+     1>utils.c(739): error C2133: '__drive' : unknown size
+     1>utils.c(739): error C2065: 'MAXDIR' : undeclared identifier
+     1>utils.c(739): error C2133: '__dir' : unknown size
+     1>utils.c(739): error C2065: 'MAXFILE' : undeclared identifier
+     1>utils.c(739): error C2133: '__file' : unknown size
+     1>utils.c(739): error C2065: 'MAXEXT' : undeclared identifier
+     1>utils.c(739): error C2133: '__ext' : unknown size
+     1>utils.c(740): error C2065: 'MAXPATH' : undeclared identifier
+     1>utils.c(740): error C2057: expected constant expression
+     1>utils.c(740): error C2466: cannot allocate an array of constant size 0
+     1>utils.c(740): error C2133: 'newnam' : unknown size
+     1>utils.c(749): error C2065: 'MAXFILE' : undeclared identifier
+     1>utils.c(790): fatal error C1020: unexpected #endif
          rebuild.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -112,7 +102,7 @@
      1>extract.c(16): error C2057: expected constant expression
      1>extract.c(16): error C2466: cannot allocate an array of constant size 0
      1>extract.c(16): error C2133: 'writenam' : unknown size
-     1>extract.c(201): warning C4013: 'exit' undefined; assuming extern returning int
+     1>extract.c(199): warning C4013: 'exit' undefined; assuming extern returning int
          encode.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -149,13 +139,12 @@
      1>encode.c(117): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'int'
      1>encode.c(117): warning C4024: 'strcat' : different types for formal and actual parameter 2
      1>encode.c(180): warning C4013: 'exit' undefined; assuming extern returning int
-     1>encode.c(837): error C2065: 'MAXFNAME' : undeclared identifier
-     1>encode.c(837): error C2057: expected constant expression
-     1>encode.c(837): error C2466: cannot allocate an array of constant size 0
-     1>encode.c(837): error C2133: '__file' : unknown size
-     1>encode.c(837): error C2065: 'MAXEXT' : undeclared identifier
-     1>encode.c(837): error C2133: '__ext' : unknown size
-         test.c
+     1>encode.c(831): error C2065: 'MAXFNAME' : undeclared identifier
+     1>encode.c(831): error C2057: expected constant expression
+     1>encode.c(831): error C2466: cannot allocate an array of constant size 0
+     1>encode.c(831): error C2133: '__file' : unknown size
+     1>encode.c(831): error C2065: 'MAXEXT' : undeclared identifier
+     1>encode.c(831): error C2133: '__ext' : unknown size
          decode.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -188,11 +177,11 @@
      1>decode.c(81): error C2065: 'MAXFNAME' : undeclared identifier
      1>decode.c(81): error C2133: 'orgname' : unknown size
      1>decode.c(362): error C2065: 'MAXFNAME' : undeclared identifier
-     1>decode.c(544): error C2065: 'MAXFNAME' : undeclared identifier
-     1>decode.c(655): error C2065: 'MAXPATH' : undeclared identifier
-     1>decode.c(655): error C2057: expected constant expression
-     1>decode.c(655): error C2466: cannot allocate an array of constant size 0
-     1>decode.c(655): error C2133: 'filename2' : unknown size
+     1>decode.c(543): error C2065: 'MAXFNAME' : undeclared identifier
+     1>decode.c(654): error C2065: 'MAXPATH' : undeclared identifier
+     1>decode.c(654): error C2057: expected constant expression
+     1>decode.c(654): error C2466: cannot allocate an array of constant size 0
+     1>decode.c(654): error C2133: 'filename2' : unknown size
          correct.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -214,7 +203,7 @@
      1>correct.c(20): error C2057: expected constant expression
      1>correct.c(20): error C2466: cannot allocate an array of constant size 0
      1>correct.c(20): error C2133: 'newname' : unknown size
-     1>correct.c(443): error C2065: 'MAXFNAME' : undeclared identifier
+     1>correct.c(441): error C2065: 'MAXFNAME' : undeclared identifier
          7plus.c
      1>f:\code\7plsrc.225\7plus.h(278): warning C4273: 'strupr' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see previous definition of 'strupr'
@@ -242,4 +231,4 @@
 
 Build FAILED.
 
-Time Elapsed 00:00:01.56
+Time Elapsed 00:00:00.51

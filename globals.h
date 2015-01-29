@@ -33,5 +33,5 @@ extern struct m_index *idxptr;
 
 
 #ifdef __TOS__
-  extern int   nowait;
+extern int   nowait;
 #endif
