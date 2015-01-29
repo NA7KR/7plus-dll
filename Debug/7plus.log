@@ -1,210 +1,60 @@
-﻿Build started 1/29/2015 3:13:15 PM.
+﻿Build started 1/29/2015 3:38:20 PM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c rebuild.c utils.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
          utils.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
      1>utils.c(48): warning C4013: 'BRLND_PUTC_BUG' undefined; assuming extern returning int
      1>utils.c(521): warning C4013: 'set_filetime' undefined; assuming extern returning int
-     1>utils.c(541): warning C4013: '__access' undefined; assuming extern returning int
          rebuild.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
          join.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>join.c(78): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(245) : see declaration of 'strdup'
-     1>join.c(79): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(245) : see declaration of 'strdup'
-     1>join.c(139): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
          extract.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>extract.c(27): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
      1>extract.c(81): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'unsigned int'
      1>extract.c(81): warning C4024: 'sscanf_s' : different types for formal and actual parameter 2
      1>extract.c(86): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'unsigned int'
      1>extract.c(86): warning C4024: 'sscanf_s' : different types for formal and actual parameter 2
-     1>extract.c(89): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>extract.c(108): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>extract.c(108): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
          encode.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>encode.c(50): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(50): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(57): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>encode.c(91): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(93): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(115): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(115): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(135): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(135): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(157): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [18]'
-     1>encode.c(157): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(161): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(161): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>encode.c(165): warning C4013: 'get_filetime' undefined; assuming extern returning int
-     1>encode.c(241): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(241): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(250): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(250): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(262): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(262): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(263): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(268): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(268): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(270): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(270): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(318): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(318): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(321): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(321): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(331): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>encode.c(331): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(334): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(334): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(349): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(349): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(352): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(352): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(362): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(362): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(364): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(364): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(403): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [62]'
-     1>encode.c(403): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(403): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'int'
-     1>encode.c(403): warning C4024: 'sprintf_s' : different types for formal and actual parameter 3
-     1>encode.c(424): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(427): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [44]'
-     1>encode.c(427): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(431): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(431): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(431): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'ulong'
-     1>encode.c(431): warning C4024: 'sprintf_s' : different types for formal and actual parameter 3
-     1>encode.c(493): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(493): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(494): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(515): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>encode.c(515): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(517): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(517): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(522): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>encode.c(522): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(523): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(622): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(624): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [32]'
-     1>encode.c(624): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(627): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [25]'
-     1>encode.c(627): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>encode.c(628): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(729): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>encode.c(729): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(731): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>encode.c(731): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>encode.c(770): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>encode.c(833): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(834): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(862): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(877): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
+         test.c
          decode.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>decode.c(20): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>decode.c(20): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(31): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>decode.c(31): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(41): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>decode.c(41): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(46): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [12]'
-     1>decode.c(46): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(93): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>decode.c(93): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(99): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>decode.c(99): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(100): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>decode.c(100): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(119): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [8]'
-     1>decode.c(119): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(134): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
-     1>decode.c(134): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(150): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>decode.c(152): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [8]'
-     1>decode.c(152): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(163): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>decode.c(163): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(167): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>decode.c(167): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(170): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [17]'
-     1>decode.c(170): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(202): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>decode.c(202): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(204): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
-     1>decode.c(204): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(209): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>decode.c(209): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(298): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
      1>decode.c(300): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>decode.c(300): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(326): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>decode.c(542): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>decode.c(542): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(661): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>decode.c(661): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(663): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>decode.c(663): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(679): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
-     1>decode.c(679): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(681): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
-     1>decode.c(681): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>decode.c(686): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>decode.c(689): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
          correct.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
      1>correct.c(37): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>correct.c(37): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>correct.c(43): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>correct.c(47): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
      1>correct.c(49): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
      1>correct.c(49): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>correct.c(104): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>correct.c(110): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [13]'
      1>correct.c(110): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>correct.c(151): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [13]'
      1>correct.c(151): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>correct.c(211): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>correct.c(260): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>correct.c(406): warning C4996: 'chsize': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _chsize. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(325) : see declaration of 'chsize'
      1>correct.c(406): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _fileno. See online help for details.
@@ -214,48 +64,6 @@
          7plus.c
      1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>7plus.c(311): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(327): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(341): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(351): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(360): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(375): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(390): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(407): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(416): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(420): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(423): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(426): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(429): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(432): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(435): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(440): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(443): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(451): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(455): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(458): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(461): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(466): warning C4996: 'isatty': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _isatty. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(332) : see declaration of 'isatty'
      1>7plus.c(466): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _fileno. See online help for details.
@@ -267,16 +75,6 @@
      1>7plus.c(548): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>7plus.c(556): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
      1>7plus.c(556): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
-     1>7plus.c(582): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(591): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(604): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(610): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(619): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
      1>7plus.c(652): warning C4013: 'gettextinfo' undefined; assuming extern returning int
          Generating Code...
      1>f:\code\7plsrc.225\utils.c(762): warning C4715: 'test_file' : not all control paths return a value
@@ -295,10 +93,9 @@
      1>7plus.obj : error LNK2019: unresolved external symbol _gettextinfo referenced in function _screenlength
      1>utils.obj : error LNK2019: unresolved external symbol _BRLND_PUTC_BUG referenced in function _my_putc
      1>utils.obj : error LNK2019: unresolved external symbol _set_filetime referenced in function _copy_file
-     1>utils.obj : error LNK2019: unresolved external symbol ___access referenced in function _replace
-     1>F:\Code\7plsrc.225\Debug\7plus.exe : fatal error LNK1120: 5 unresolved externals
+     1>F:\Code\7plsrc.225\Debug\7plus.exe : fatal error LNK1120: 4 unresolved externals
      1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:02.67
+Time Elapsed 00:00:03.03

@@ -40,7 +40,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 	/*build_DOS_name (_file, _ext);*/
 	strcpy(newname, name);
 
-	if (!stricmp("7mf", _ext))
+	if (!_stricmp("7mf", _ext))
 		batchcor = 1;
 
 	check_fn(_file);
@@ -101,7 +101,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 		{
 			if (num)
 			{
-				if (stricmp(_ext, "cor") && num == 1)
+				if (_stricmp(_ext, "cor") && num == 1)
 					break;
 
 				if (num == 256 || (j > 9))
@@ -256,7 +256,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 			fseek(rfile, offset, SEEK_SET);
 		}
 
-		if (stricmp(orgname, idxptr->filename) ||
+		if (_stricmp(orgname, idxptr->filename) ||
 			(binbytes && (binbytes != idxptr->length)))
 		{
 			fprintf(o, "\007\nCorrection file '%s.%s' and metafile '%s' do not "

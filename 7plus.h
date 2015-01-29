@@ -175,11 +175,11 @@ uint  get_hex(char *hex);
 void  fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft);
 #endif
 #ifndef _HAVE_ICMP
-char  *strupr(char *string);
+char  *_strupr(char *string);
 char  *strlwr(char *string);
 char  *strcnvt(char *string, int flag);
-int   stricmp(const char *s1, const char *s2);
-int   strnicmp(const char *s1, const char *s2, size_t n);
+int   _stricmp(const char *s1, const char *s2);
+int   _strnicmp(const char *s1, const char *s2, size_t n);
 #endif
 #ifndef _HAVE_GETCH
 int    getch(void);

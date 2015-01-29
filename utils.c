@@ -538,7 +538,7 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 void replace(const char *old, const char *new, ulong timestamp)
 {
 
-	if (__access(old, 2))
+	if (_access(old, 2))
 		_chmod(old, S_IREAD | S_IWRITE);
 	_unlink(old);
 	if (rename(new, old))
@@ -1351,12 +1351,12 @@ void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
 /* The following functions are unfortunately not avialable on all compilers */
 
 /*
-*** strupr - convert string to upper case.
+*** _strupr - convert string to upper case.
 ***
 ***
 */
 
-char *strupr(char *string)
+char *_strupr(char *string)
 {
 	char *strcnvt(char *string, int flag);
 
@@ -1396,30 +1396,30 @@ char *strcnvt(char *string, int flag)
 }
 
 /*
-*** stricmp - same as strcmp(), but ignores case.
+*** _stricmp - same as strcmp(), but ignores case.
 *** s1 and s2 are not modified.
 ***
 */
 
-int stricmp(const char *s1, const char *s2)
+int _stricmp(const char *s1, const char *s2)
 {
-	return (strnicmp(s1, s2, (size_t)80));
+	return (_strnicmp(s1, s2, (size_t)80));
 }
 
 /*
-*** strnicmp - same as strncmp(), but ignores case.
+*** _strnicmp - same as strncmp(), but ignores case.
 *** s1 and s2 are not modified.
 ***
 */
 
-int strnicmp(const char *s1, const char *s2, size_t n)
+int _strnicmp(const char *s1, const char *s2, size_t n)
 {
 	char _s1[81], _s2[81];
 
 	strncpy(_s1, s1, 80);
 	strncpy(_s2, s2, 80);
-	strupr(_s1);
-	strupr(_s2);
+	_strupr(_s1);
+	_strupr(_s2);
 
 	return (strncmp(_s1, _s2, n));
 }

@@ -75,8 +75,8 @@ int join_err (char *file1, char *file2)
   long fsize[2];
   ulong timestamp[2];
 
-  file[0] = strdup (file1);
-  file[1] = strdup (file2);
+  file[0] = _strdup (file1);
+  file[1] = _strdup (file2);
 
   for (i=0;i<2;i++)
   {
@@ -136,7 +136,7 @@ int join_err (char *file1, char *file2)
   }
 
   fnsplit (name[0], NULL, NULL, line[0], NULL);
-  strupr (line[0]);
+  _strupr (line[0]);
   fprintf (tmp, " go_text. %s.ERR%s7PLUS error report: %s %03X",
                                       line[0], delimit, name[0], blocksize[0]);
   if (*fullname[0])

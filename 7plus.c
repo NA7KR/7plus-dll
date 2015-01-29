@@ -308,7 +308,7 @@ int go_at_it(int argc, char **argv)
 			}
 		}
 
-		if (!stricmp(argv[i], "-S")) /* Split option */
+		if (!_stricmp(argv[i], "-S")) /* Split option */
 		{
 			i++;
 			if (i == argc)
@@ -324,7 +324,7 @@ int go_at_it(int argc, char **argv)
 
 		}
 
-		if (!stricmp(argv[i], "-SP")) /* Split into equal parts */
+		if (!_stricmp(argv[i], "-SP")) /* Split into equal parts */
 		{
 			i++;
 			if (i == argc)
@@ -338,7 +338,7 @@ int go_at_it(int argc, char **argv)
 											 indicator) */
 		}
 
-		if (!stricmp(argv[i], "-SB")) /* Split in parts of n bytes */
+		if (!_stricmp(argv[i], "-SB")) /* Split in parts of n bytes */
 		{
 			i++;
 			if (i == argc)
@@ -348,7 +348,7 @@ int go_at_it(int argc, char **argv)
 					blocksize = (blocksize / 71 - 2) * 62;
 		}
 
-		if (!stricmp(argv[i], "-R")) /* Only re-encode specified part(s) */
+		if (!_stricmp(argv[i], "-R")) /* Only re-encode specified part(s) */
 		{
 			i++;
 			if (i == argc)
@@ -357,7 +357,7 @@ int go_at_it(int argc, char **argv)
 				get_range(argv[i]);
 		}
 
-		if (!stricmp(argv[i], "-TB")) /* File to get head and foot lines from */
+		if (!_stricmp(argv[i], "-TB")) /* File to get head and foot lines from */
 		{
 			i++;
 			if (i == argc)
@@ -372,7 +372,7 @@ int go_at_it(int argc, char **argv)
 					t = def_format;
 		}
 
-		if (!stricmp(argv[i], "-T")) /* Define BBS's termination string, */
+		if (!_stricmp(argv[i], "-T")) /* Define BBS's termination string, */
 		{                             /* e.g. "/ex" */
 			i++;
 			if (i == argc)
@@ -387,7 +387,7 @@ int go_at_it(int argc, char **argv)
 			}
 		}
 
-		if (!strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
+		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
 		{                                /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
 			if (argv[i][5] == '2')
 				twolinesend = 1;
@@ -404,7 +404,7 @@ int go_at_it(int argc, char **argv)
 			}
 		}
 
-		if (!stricmp(argv[i], "-U")) /* Set alternative filename */
+		if (!_stricmp(argv[i], "-U")) /* Set alternative filename */
 		{
 			i++;
 			if (i == argc)
@@ -413,34 +413,34 @@ int go_at_it(int argc, char **argv)
 				strcpy(altname, argv[i]);
 		}
 
-		if (!stricmp(argv[i], "-#")) /* Create 7PLUS.FLS. Contents e.g.:     */
+		if (!_stricmp(argv[i], "-#")) /* Create 7PLUS.FLS. Contents e.g.:     */
 			fls = 1;                    /* 10 TEST */
 		/* for TEST.EXE encoded into 10 parts   */
 
-		if (!stricmp(argv[i], "-C")) /* Use 7PLUS-file as a correction file  */
+		if (!_stricmp(argv[i], "-C")) /* Use 7PLUS-file as a correction file  */
 			cor = 1;
 
-		if (!stricmp(argv[i], "-K")) /* Kill obsolete files, stop if gap */
+		if (!_stricmp(argv[i], "-K")) /* Kill obsolete files, stop if gap */
 			autokill = 1;               /* greater than 10 files (faster)   */
 
-		if (!stricmp(argv[i], "-KA"))/* Kill all obsolete files        */
+		if (!_stricmp(argv[i], "-KA"))/* Kill all obsolete files        */
 			autokill = 2;               /* (slow, but better for servers) */
 
-		if (!stricmp(argv[i], "-F")) /* Force usage of correction file */
+		if (!_stricmp(argv[i], "-F")) /* Force usage of correction file */
 			force = 1;
 
-		if (!stricmp(argv[i], "-G")) /* Write to same dir as input file */
+		if (!_stricmp(argv[i], "-G")) /* Write to same dir as input file */
 			genflag = 1;
 
-		if (!stricmp(argv[i], "-J")) /* Join two error reports / Produce single */
+		if (!_stricmp(argv[i], "-J")) /* Join two error reports / Produce single */
 			join = 1;                   /* output file when encoding               */
 
 
 
-		if (!stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
+		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
 			sprintf_s(delimit, sizeof(delimit), "\r");    /* for direct binary upload. */
 
-		if (!stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
+		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
 
 			o = fopen("7plus.out", OPEN_WRITE_TEXT);
@@ -448,17 +448,17 @@ int go_at_it(int argc, char **argv)
 			noquery = 1;
 		}
 
-		if (!stricmp(argv[i], "-SIM")) /* Simulate encoding and report */
+		if (!_stricmp(argv[i], "-SIM")) /* Simulate encoding and report */
 			simulate = 1;                 /* number of parts and parts */
 		/* filename in 7plus.fls */
 
-		if (!stricmp(argv[i], "-SYSOP")) /* SYSOP mode. Decode, even if parts */
+		if (!_stricmp(argv[i], "-SYSOP")) /* SYSOP mode. Decode, even if parts */
 			sysop = 1;                      /* are missing. */
 
-		if (!stricmp(argv[i], "-X")) /* Extract 7plus-files from log-file    */
+		if (!_stricmp(argv[i], "-X")) /* Extract 7plus-files from log-file    */
 			extract = 1;
 
-		if (!stricmp(argv[i], "-Y")) /* Always assume YES on queries.*/
+		if (!_stricmp(argv[i], "-Y")) /* Always assume YES on queries.*/
 			noquery = 1;
 
 	}
@@ -576,7 +576,7 @@ int go_at_it(int argc, char **argv)
 		}
 
 		if (join)
-			if (!strnicmp(".err", _ext, 4) ||
+			if (!_strnicmp(".err", _ext, 4) ||
 				(toupper(*(_ext + 1)) == 'E' &&
 				isxdigit(*(_ext + 2)) &&
 				isxdigit(*(_ext + 3))))
@@ -585,7 +585,7 @@ int go_at_it(int argc, char **argv)
 				goto end;
 			}
 
-		if (!strnicmp(".cor", _ext, 4) ||
+		if (!_strnicmp(".cor", _ext, 4) ||
 			(toupper(*(_ext + 1)) == 'C' &&
 			isxdigit(*(_ext + 2)) &&
 			isxdigit(*(_ext + 3))))
@@ -601,22 +601,22 @@ int go_at_it(int argc, char **argv)
 		}
 
 		/* Call decode_file() if ext ist 7PL, P01, else encode_file() */
-		if (!strnicmp(".7pl", _ext, 4) || !strnicmp(".p01", _ext, 4))
+		if (!_strnicmp(".7pl", _ext, 4) || !_strnicmp(".p01", _ext, 4))
 		{
 			ret = control_decode(argname);
 			goto end;
 		}
 #ifdef _HAVE_CHSIZE
-		if (!strnicmp (".7mf", _ext, 4))
+		if (!_strnicmp (".7mf", _ext, 4))
 #else
-		if (!strnicmp(".7ix", _ext, 4))
+		if (!_strnicmp(".7ix", _ext, 4))
 #endif
 		{
 			ret = make_new_err(argname);
 			goto end;
 		}
 
-		if (!strnicmp(".x", _ext, 3))
+		if (!_strnicmp(".x", _ext, 3))
 		{
 			ret = extract_files(argname, r);
 			goto end;

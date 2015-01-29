@@ -24,7 +24,7 @@ int extract_files(char *name, char *search)
 	bytes = sum = 0UL;
 
 	if (search)
-		strlwr(search);
+		_strlwr(search);
 
 	fprintf(o, "\n--------------------\n"
 		"7PLUS file extractor\n"
@@ -86,7 +86,7 @@ int extract_files(char *name, char *search)
 				sscanf_s(p + offset + 6, sizeof(p + offset + 6), "%12s", destnam);
 				info = 0;
 			}
-			strlwr(destnam);
+			_strlwr(destnam);
 			fnsplit(destnam, _drive, _dir, _file, _ext);
 			build_DOS_name(_file, _ext);
 			sprintf_s(destnam, sizeof(destnam), "%s.%s", _file, _ext);
@@ -105,7 +105,7 @@ int extract_files(char *name, char *search)
 			}
 			if (*destnam) /* Open output file if 7PLUS file found. */
 			{
-				sprintf_s(writenam, "%s%s", genpath, destnam);
+				sprintf_s(writenam, sizeof(writenam), "%s%s", genpath, destnam);
 
 				/* create filename for output file */
 				if (err && !test_exist(writenam))
