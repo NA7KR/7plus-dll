@@ -27,9 +27,7 @@
  #endif
 #endif
 
-#ifdef __MWERKS__
- #include <time.h>
-#endif
+f
 
 
 
@@ -602,53 +600,7 @@ void replace (const char *old, const char *new, ulong timestamp)
   }
 }
 
-#ifdef __MWERKS__
-/*
-*** Check whether "string" is the suffix of the string "name".
-***    Return 1 if true, else 0.
-***    Ignore case (suffix must be lower case)
-***
- */
 
-int suffixcmp (char *string, const char *name)
-{
-  int slen, nlen, i, j;
-
-  slen = (int) strlen(string);
-  nlen = (int) strlen(name);
-  for (i = slen-1, j = nlen-1; i >= 0; i--, j--)
-  {
-    if (j < 0)  return (0);      /* name is shorter than string */
-    if (string[i] != tolower(name[j]))  return (0);
-  }
-  return (1);
-}
-
-/*
-*** Set filetype and filecreator based on suffix
-***     when running on Mac OS
-***
- */
-
-void set_filetype (const char *name)
-{
-  FInfo fi;
-  int i;
-  short rc;
-
-  for (i = 0; i < NSUFFIX; i++)
-  {
-    if (suffixcmp (suffix_table[i].suffix, name))
-    {
-       rc = getfinfo(name, 0, &fi);
-       fi.fdType = suffix_table[i].ftype;
-       fi.fdCreator = suffix_table[i].fcreator;
-       rc = setfinfo(name, 0, &fi);
-       break;
-    }
-  }
-}
-#endif
 
 /*
 *** Kill all files that aren't needed any more
@@ -706,11 +658,9 @@ void kill_em (const char *name, const char *inpath, const char *one,
        if (!no_tty)
       {
        set_autolf(0);
-#ifdef __MWERKS__
-       fprintf (o, "\rDeleting: %s", newname);
-#else
+
        fprintf (o, "Deleting: %s\r", newname);
-#endif
+
        fflush (o);
        set_autolf(1);
       }
@@ -852,67 +802,7 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
        {
          if (flag)
          {
-           #if ( defined(__MWERKS__))
-	    fprintf (o, "Enter new name (max %d chars)\n", namsize);
-	    fprintf (o, "or press <CNTL>+C <RETURN> to break : ");
-	    fflush (o);
-
-            if (namsize == 12)
-              strlwr (destnam);
-
-            
-              gets(destnam);
-            
-
-            destnam[namsize] = EOS;
-           #else
-	    fprintf (o, "%s\nEnter new name (max %d chars)\n", no, namsize);
-	    fprintf (o, "or simply press ENTER to break : ");
-	    fflush (o);
-
-            if (namsize == 12)
-              strlwr (destnam);
-
-            i = getc(stdin);
-            if(i != '\n')
-            {
-              ungetc(i, stdin);
-              gets (destnam);
-              fflush (stdin);
-            }
-            else
-              *destnam = EOS;
-            destnam[namsize] = EOS;
-           #endif
-         }
-         else
-           *destnam = EOS;
-
-         if (!strlen (destnam))
-         {
-           if (!flag)
-            fprintf (o, "%s\n", no);
-            fprintf (o, "Break.\n");
-           if (in)
-             fclose (in);
-           return (10);     /* Changed for Mac OS */
-         }
-         i = 0xff; /* indicate, that new name has been specified */
-       }
-     }
-     while (i != 'Y' && i != 'A' && i != 0xff);
-
-     if (i != 0xff)
-     {
-       if (i == 'A')
-       {
-         fprintf (o, "%s\n", always);
-         noquery = 1;
-       }
-       else
-	 fprintf (o, "%s\n", yes);
-     }
-#ifndef __MWERKS__        /* is this really necessary ? */
+    
      fprintf (o, "\n");
 #endif
 
@@ -1452,7 +1342,7 @@ void strip (char *string)
 
 
 
- #if (defined (__unix__) || defined (__MWERKS__) || defined (OSK) )
+ #if (defined (__unix__)  || defined (OSK) )
   #define _SETFTIME_OK
 
   /*
@@ -1688,12 +1578,7 @@ int strnicmp (const char *s1, const char *s2, size_t n)
   #define _IOCTL_
  #endif
 
-#ifdef __MWERKS__
-/*
-*** getch - MacOS
-*** Get one character from keyboard and empty keyboard buffer.
-***
- */
+
 
  int getch (void)
  {
@@ -1778,6 +1663,6 @@ int strnicmp (const char *s1, const char *s2, size_t n)
   #undef _IOCTL_
  #endif
 
-#endif /** ifdef __MWERKS__ **/
+
 
 #endif /** ifndef _HAVE_GETCH **/

@@ -323,11 +323,9 @@ int encode_file (char *name, long blocksize, char *search,
           sprintf (filename, "%s%s", altname, ".7pl");
 
         if (!no_tty)
-        #ifdef __MWERKS__
-          fprintf (o, "'%s': Writing.\n", filename);
-        #else
+      
           fprintf (o, "'%s': Writing.\r", filename);
-        #endif
+      
       }
       else
       {
@@ -338,11 +336,9 @@ int encode_file (char *name, long blocksize, char *search,
           sprintf (filename, "%s.p%02x", altname, part);
 
         if (!no_tty && range[part])
-        #ifdef __MWERKS__
-          fprintf (o, "\r'%s': Writing part %03d of %03d.",
-        #else
+        
           fprintf (o, "'%s': Writing part %03d of %03d.\r",
-        #endif
+        
                         filename, part, parts);
       }
 
@@ -448,11 +444,9 @@ int encode_file (char *name, long blocksize, char *search,
       if (!no_tty)
       {
         set_autolf(0);
-        #ifdef __MWERKS__
-        fprintf (o, "\rCompiling: '%s'", filename);
-        #else
+        
         fprintf (o, "Compiling: '%s'\r", filename);
-        #endif
+       
         fflush (o);
         set_autolf(1);
       }
@@ -537,11 +531,9 @@ int encode_file (char *name, long blocksize, char *search,
             if (!no_tty)
             {
               set_autolf(0);
-              #ifdef __MWERKS__
-              fprintf (o, "\rCompiling: '%s'", filename);
-              #else
+              
               fprintf (o, "Compiling: '%s'\r", filename);
-              #endif
+              
               fflush (o);
               set_autolf(1);
             }
@@ -722,10 +714,7 @@ int encode_file (char *name, long blocksize, char *search,
       fprintf (o, ".\n");
     }
 
-    #ifdef __MWERKS__
-     if (parts > 1)
-       fprintf (o, "\n");
-    #endif
+   
 
     if (join)
     {

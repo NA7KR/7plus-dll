@@ -7,11 +7,9 @@
 ***
  */
 
-#ifdef __MWERKS__
- const char processing[] = "\rProcessing '%s'. Missing lines left: %ld";
-#else
+
  const char processing[] = "Processing '%s'. Missing lines left: %ld      \r";
-#endif
+
 
 const char inv_idxfile[] = "\007Invalid index info.\n";
 
@@ -445,9 +443,7 @@ int correct_meta (char *name, int itsacor, int quietmode)
   if (test_file (NULLFP, newname, 2, MAXFNAME-1) == 10)
     return (10);
   replace (newname, metafile, idxptr->timestamp);
-#ifdef __MWERKS__
-  set_filetype (newname);
-#endif
+
 
   #ifndef _HAVE_CHSIZE
    sprintf (indexfile, "%s%s.7ix", genpath, _file);

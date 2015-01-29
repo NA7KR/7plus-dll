@@ -109,40 +109,7 @@
  /* needed for timestamp-functions    (Odo,DL1XAO)                 */
 #endif /* __TOS__ */
 
-#ifdef __MWERKS__       /* Mac OS using Metrowerks CodeWarrior */
- #include <console.h>
- #include <sioux.h>
- #include <types.h>
- #include <stat.h>
- #include <stdlib.h>
- #include <unix.h>
- #include <unistd.h>
- #include <files.h>
- #define  _680X0_
- #define TWO_CHAR_SEP
- #define MAXPATH 256
- #define MAXDRIVE 16
- #define MAXDIR 256
- #define MAXFILE 32
- #define MAXEXT 32
- #define PATHSEP ":"
- #define PATHCHAR ':'
- #define LFN
- #define MAXFNAME MAXFILE
- #define _HAVE_GMTIME
- #define _HAVE_MKTIME
 
- /* Set length of table for suffix mapping (currently only on Mac OS).
-    For definition see globals in main unit (7PLUS.C) */
- #define NSUFFIX 15
-
- struct  suffix_index
- {
-   char  *suffix;
-   long  ftype;
-   long  fcreator;
- };
-#endif /* __MWERKS__ */
 
 
 #ifdef __unix__
@@ -288,10 +255,7 @@ int   crc_file       (const char *file, const char *s1, const char *s2,
 int   copy_file      (const char *to,  const char *from, ulong timestamp);
 void  replace        (const char *oldfil, const char *newfil,  ulong timestamp);
 
-#ifdef __MWERKS__
- int   suffixcmp      (char *string, const char *name);
- void  set_filetype   (const char *name);
-#endif
+
 
 void  kill_em        (const char *name, const char *inpath, const char *one,
                       const char *two,  const char *three,  const char *four,
@@ -343,10 +307,7 @@ int   extract_files  (char *name, char *search);
 int   join_control   (char *file1, char *file2);
 int   join_err       (char *file1, char *file2);
 
-/** unix.c **/
-#ifdef __MWERKS__
-   extern char *strdup (const char *);
-#endif /* __MWERKS__ */
+
 
 #ifdef __unix__
  #ifdef __i386__

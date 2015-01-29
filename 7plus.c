@@ -128,27 +128,7 @@ struct  m_index *idxptr;
 
 
 
-#ifdef __MWERKS__
-/* Define look-up table for suffix mapping. Use only lower case
-   characters for the suffix. Don't forget to change the value
-   of NSUFFIX in header file 7PLUS.H when adding more suffixes. */
-struct  suffix_index suffix_table[NSUFFIX] =
-            {".sit", 'SITD', 'SIT!',
-             ".z",   'ZIVM', 'LZIV',
-             ".lzh", 'LHA ', 'LARC',
-             ".zip", 'ZIP ', 'ZIP ',
-             ".gz",  'Gzip', 'Gzip',
-             ".cpt", 'PACT', 'CPCT',
-             ".arj", 'DArj', 'DArj',
-             ".tar", 'TARF', 'TAR!',
-             ".hqx", 'TEXT', 'HQXr',
-             ".txt", 'TEXT', 'R*ch',
-             ".gif", 'GIFf', 'GKON',
-             ".tif", 'TIFF', 'GKON',
-             ".eps", 'EPSF', 'GKON',
-             ".epsf",'EPSF', 'GKON',
-             ".jpg", 'JPEG', 'GKON'};
-#endif /* __MWERKS__*/
+
 
 #ifdef __TOS__
   int   nowait  = 0;
@@ -185,16 +165,6 @@ const char logon_ctrl[] =
 
 
 
-#ifdef __MWERKS__
- "\n"
- "+----------------------------------------------------+\n"
- "|%s|\n"
- "|%s|\n"
- "|%s|\n"
- "| Macintosh version 1.0  by DK2HD @DB0RBS.#BW.DEU.EU |\n"
- "+----------------------------------------------------+\n";
- #define LOGON_OK
-#endif
 
 #ifndef LOGON_OK /* default logon */
  "\n"
@@ -425,29 +395,14 @@ int main (int argc, char **argv)
   return (ret);
 #else
 
-#ifdef __MWERKS__
-  int ret, prompt='C';
 
-  _fcreator = 'Mc7+';         /* Set file creator to 7Plus Mac */
-  SIOUXSettings.autocloseonquit = TRUE;
-  SIOUXSettings.asktosaveonclose = FALSE;
-  SIOUXSettings.rows = (short) screenlength() + 1;
-
-  while (prompt == 'C')
-  {
-    ret = go_at_it (argc, argv);
-    printf("Type ""c"" to continue or any other key to stop > ");
-    prompt = toupper(getch());
-  }
-  return (ret);
-#else
 
 #ifdef OSK
   stdin->_flag |= _UNBUF;
 #endif
 
   return (go_at_it (argc, argv));
-#endif
+
 #endif
 }
 #endif /* #ifdef __DLL__ #else */
@@ -460,9 +415,7 @@ int go_at_it (int argc, char **argv)
   char argname[MAXPATH];
   int  ret, i, extract, genflag, join, cor;
   long blocksize;
-#ifdef __MWERKS__
-  long save_fc;
-#endif
+
 
   extract = genflag = join = cor = twolinesend = 0;
   p = r = s = t = endstr = sendstr = NULLCP;
@@ -483,10 +436,7 @@ int go_at_it (int argc, char **argv)
   /* Default blocksize (abt 10000 bytes) */
   blocksize = 138 * 62;
 
-#ifdef __MWERKS__
-  fprintf (o, logon_ctrl, logon[0], logon[1], logon[2]);
-  argc = ccommand(&argv);
-#endif
+
 
   while (++i<argc)
   {
@@ -641,14 +591,9 @@ int go_at_it (int argc, char **argv)
 
     if (!stricmp (argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
     {
-#ifdef __MWERKS__
-      save_fc = _fcreator;
-      _fcreator = 'R*ch';         /* Set file creator to BBEdit */
+
       o = fopen ("7plus.out", OPEN_WRITE_TEXT);
-      _fcreator = save_fc;
-#else
-      o = fopen ("7plus.out", OPEN_WRITE_TEXT);
-#endif
+
       noquery = 1;
     }
 
@@ -673,9 +618,7 @@ int go_at_it (int argc, char **argv)
   if (no_tty)
     fprintf (o, "%s", s_logon);
   else
-#ifndef __MWERKS__
-    fprintf (o, logon_ctrl, logon[0], logon[1], logon[2]);
-#endif
+
 
 
   if (!p ) /* No File specified, show help */
@@ -693,18 +636,14 @@ int go_at_it (int argc, char **argv)
       if (++n == scrlines && !noquery)
       {
         set_autolf(0);
-#ifdef __MWERKS__
-        fprintf (o, "Press RETURN to continue....");
-#else
+
         fprintf (o, "Press RETURN to continue....\r");
-#endif
+
         fflush (stdout);
         while (!getch ());
         fflush (stdin);
         n = 0;
-#ifndef __MWERKS__
-        fprintf (o, "                            \r");
-#endif
+
         set_autolf(1);
       }
       fprintf (o, help[i++]);

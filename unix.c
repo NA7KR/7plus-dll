@@ -3,15 +3,7 @@
 \*--------------------------------*/
 #include "7plus.h"
 
-#ifdef __MWERKS__
-  char *strdup (const char *s1)
-  { char *s;
 
-    s = malloc (strlen(s1) + 1);
-    strcpy (s , s1);
-    return (s);
-  }
-#endif /* __MWERKS__ */
 
 #ifdef __unix__
 

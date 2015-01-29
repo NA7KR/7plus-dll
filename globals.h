@@ -30,9 +30,7 @@ extern int     no_tty;
 extern int     twolinesend;
 extern struct m_index *idxptr;
 
-#ifdef __MWERKS__
- extern struct suffix_index suffix_table[];
-#endif
+
 
 #ifdef __TOS__
   extern int   nowait;

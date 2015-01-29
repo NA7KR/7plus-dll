@@ -524,10 +524,7 @@ int decode_file (char *name, int flag)
   }
   progress (filename, part-1, parts, lines, rebuilt, "done...");
 
-#ifdef __MWERKS__
-  if (!no_tty)
-    fprintf (o, "\n");
-#endif
+
 
   idxptr->lines_left = lines;
 
@@ -547,14 +544,7 @@ int decode_file (char *name, int flag)
       if (test_file (NULLFP, srcname, 2, MAXFNAME-1) == 10)
         return (10);
       replace (srcname, metafile, ftimestamp);
-#ifdef __MWERKS__
-      set_filetype (srcname);
-#endif
 
-#ifndef __MWERKS__
-      if (!no_tty)
-        fprintf (o, "\n");
-#endif
 
       if (autokill)
         kill_em (_file, inpath, (parts==1)?"7pl":"p",
@@ -566,10 +556,7 @@ int decode_file (char *name, int flag)
     }
   }
 
-#ifndef __MWERKS__
-  if (!no_tty)
-    fprintf (o, "\n");
-#endif
+
 
   if (!flag || no_tty)
   {
@@ -764,13 +751,10 @@ void progress (const char *filename, int part, int of_parts, long errors,
 
   set_autolf(0);
 
-#ifdef __MWERKS__
-  fprintf (o, "\r%-12s %3d %3d %6ld  %6ld   %-30s",
-    filename, part, of_parts, errors, rebuilt, status);
-#else
+
   fprintf (o, "%-12s %3d %3d %6ld  %6ld   %-30s\r",
     filename, part, of_parts, errors, rebuilt, status);
-#endif
+
 
   fflush (o);
   set_autolf(1);
