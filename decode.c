@@ -17,7 +17,7 @@ int control_decode(char *name)
 	*_ext = EOS;
 
 	fnsplit(name, _drive, _dir, _file, _ext);
-	sprintf(newname, "%s%s%s.cor", _drive, _dir, _file);
+	sprintf_s(newname, "%s%s%s.cor", _drive, _dir, _file);
 
 	if (!test_exist(newname))
 		cor_exists = 1;
@@ -28,7 +28,7 @@ int control_decode(char *name)
 	   7PLUS parts */
 	if (i == 19)
 	{
-		sprintf(newname, "%s%s%s.7mf", _drive, _dir, _file);
+		sprintf_s(newname, "%s%s%s.7mf", _drive, _dir, _file);
 		j = correct_meta(newname, 0, cor_exists ? 1 : 0);
 		if (j == 16)
 			i = 11;
@@ -38,12 +38,12 @@ int control_decode(char *name)
 
 	if (i == 11 && cor_exists)
 	{
-		sprintf(newname, "%s%s%s.cor", _drive, _dir, _file);
+		sprintf_s(newname, "%s%s%s.cor", _drive, _dir, _file);
 		i = correct_meta(newname, 1, j == 16 ? 2 : 0);
 	}
 
 	/* write 7plus.fls (for server use) */
-	sprintf(filename, "%s"_7PLUS_FLS, genpath);
+	sprintf_s(filename, "%s"_7PLUS_FLS, genpath);
 	if (!i && fls)
 	{
 		if ((out = fopen(filename, OPEN_WRITE_TEXT)) == NULLFP)
@@ -53,7 +53,7 @@ int control_decode(char *name)
 		fclose(out);
 	}
 	else
-		unlink(filename);
+		_unlink(filename);
 
 	return (i);
 }
@@ -90,14 +90,14 @@ int decode_file(char *name, int flag)
 
 	/* Isolate input-path and filename */
 	fnsplit(name, _drive, _dir, _file, _ext);
-	sprintf(inpath, "%s%s", _drive, _dir);
+	sprintf_s(inpath, "%s%s", _drive, _dir);
 	if (*_ext)
 		memmove(_ext, _ext + 1, strlen(_ext));
 	/*build_DOS_name (_file, _ext);*/
 
 	/* Make up names for the meta- and indexfile */
-	sprintf(metafile, "%s%s.7mf", genpath, _file);
-	sprintf(indexfile, "%s%s.7ix", genpath, _file);
+	sprintf_s(metafile, "%s%s.7mf", genpath, _file);
+	sprintf_s(indexfile, "%s%s.7ix", genpath, _file);
 
 	if (!test_exist(metafile))
 		return (19);
@@ -116,7 +116,7 @@ int decode_file(char *name, int flag)
 		{
 			if (sscanf(_ext, "p%x", &part) == 1)
 			{
-				sprintf(srcname, "%s%s.%s", inpath, _file, _ext);
+				sprintf_s(srcname, "%s%s.%s", inpath, _file, _ext);
 				if (test_exist(srcname))
 				{
 					fprintf(o, cant, srcname);
@@ -131,7 +131,7 @@ int decode_file(char *name, int flag)
 			part = 1;
 			for (part = 1; part < 256; part++)
 			{
-				sprintf(srcname, "%s%s.p%02x", inpath, _file, part);
+				sprintf_s(srcname, "%s%s.p%02x", inpath, _file, part);
 				if (!test_exist(srcname))
 					break;
 			}
@@ -149,7 +149,7 @@ int decode_file(char *name, int flag)
 			parts = 1;
 			if (!stricmp(_ext, "p01"))
 				parts = 2;
-			sprintf(srcname, "%s%s.%s", inpath, _file, _ext);
+			sprintf_s(srcname, "%s%s.%s", inpath, _file, _ext);
 			if (test_exist(srcname))
 			{
 				fprintf(o, cant, srcname);
@@ -160,14 +160,14 @@ int decode_file(char *name, int flag)
 		{
 			/* Find out, if it's a split file */
 			parts = 2;
-			sprintf(srcname, "%s%s.p01", inpath, _file);
+			sprintf_s(srcname, "%s%s.p01", inpath, _file);
 			if (test_exist(srcname))
 			{
 				parts = 1;
-				sprintf(srcname, "%s%s.7pl", inpath, _file);
+				sprintf_s(srcname, "%s%s.7pl", inpath, _file);
 				if (test_exist(srcname))
 				{
-					sprintf(srcname, "%s.7pl or %s.p01", _file, _file);
+					sprintf_s(srcname, "%s.7pl or %s.p01", _file, _file);
 					fprintf(o, cant, srcname);
 					return (2);
 				}
@@ -199,14 +199,14 @@ int decode_file(char *name, int flag)
 
 		/* If more than 1 part, generate filename for messages and handling. */
 		if (parts == 1)
-			sprintf(filename, "%s.7pl", _file);
+			sprintf_s(filename, "%s.7pl", _file);
 		else
-			sprintf(filename, "%s.p%02x", _file, part);
+			sprintf_s(filename, "%s.p%02x", _file, part);
 
 		/* If we're already at part > 1, generate filename for next part. */
 		if (part != 1 && parts != 257)
 		{
-			sprintf(srcname, "%s%s", inpath, filename);
+			sprintf_s(srcname, "%s%s", inpath, filename);
 			if ((in = fopen(srcname, OPEN_READ_BINARY)) == NULLFP)
 			{
 				if (sysop != 2)
@@ -297,7 +297,7 @@ int decode_file(char *name, int flag)
 
 		strlwr(destname);                  /* Convert to lower case */
 		fnsplit(destname, dummi, dummi, orgdestname, dummi2);
-		sprintf(destname, "%s%s", orgdestname, dummi2);
+		sprintf_s(destname, "%s%s", orgdestname, dummi2);
 		strcpy(orgdestname, destname);
 		check_fn(destname);
 
@@ -539,7 +539,7 @@ int decode_file(char *name, int flag)
 	{
 		if (_binbytes == binbytes)
 		{
-			sprintf(srcname, "%s%s", genpath, orgname);
+			sprintf_s(srcname, "%s%s", genpath, orgname);
 			if (test_file(NULLFP, srcname, 2, MAXFNAME - 1) == 10)
 				return (10);
 			replace(srcname, metafile, ftimestamp);
@@ -658,9 +658,9 @@ void w_index_err(struct m_index *idxp, const char* localname, int flag)
 	if (!flag)
 	{
 		if (localname != NULL)
-			sprintf(filename2, "%s%s", genpath, localname);
+			sprintf_s(filename2, "%s%s", genpath, localname);
 		else
-			sprintf(filename2, "%s%s", genpath, filename);
+			sprintf_s(filename2, "%s%s", genpath, filename);
 		check_fn(filename2);
 #ifndef _HAVE_CHSIZE
 		strcat(filename2, ".7ix");
@@ -676,9 +676,9 @@ void w_index_err(struct m_index *idxp, const char* localname, int flag)
 	strcat(filename, ".err");
 
 	if (localname != NULL)
-		sprintf(filename2, "%s%s%s", genpath, localname, ".err");
+		sprintf_s(filename2, "%s%s%s", genpath, localname, ".err");
 	else
-		sprintf(filename2, "%s%s", genpath, filename);
+		sprintf_s(filename2, "%s%s", genpath, filename);
 
 	check_fn(filename2);
 

@@ -29,7 +29,7 @@ int join_control (char *file1, char *file2)
   {
     if ((q = strrchr (errnam, '.')) != NULL)
       *q = EOS;
-    sprintf (dummi, ".e%02x", errn++);
+	sprintf_s(dummi, sizeof(dummi), ".e%02x", errn++);
     strcat (errnam, dummi);
 
     if (n > 4)
@@ -226,13 +226,13 @@ int join_err (char *file1, char *file2)
 
   if (timestamp[0] && timestamp[1] && timestamp[0] != timestamp[1])
   {
-    unlink ("7plus.tmp");
+    _unlink ("7plus.tmp");
     fprintf (o, "\007The two error reports do not refer to the same original "
 		"file!\nThe timestamps contained are different!\nBreak.\n");
     return (13);
   }
 
-  unlink (file[0]);
+  _unlink (file[0]);
   rename ("7plus.tmp", file[0]);
   crc_file (file[0], "7P",  "00\n", 0);
 

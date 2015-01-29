@@ -119,7 +119,7 @@ int mcrc(char *line, int flag)
 	register uint crc;
 	char test[3], *p;
 
-	sprintf(test, "\xb0\xb1");
+	sprintf_s(test, sizeof(test), "\xb0\xb1");
 
 	if ((p = strstr(line, test)) == NULL)
 		return (0);
@@ -230,7 +230,7 @@ int write_index(FILE *ifile, struct m_index *idxptr, int flag)
 		   Following output is not appended, but written to the beginning
 		   of the file, although the file length grows by the correct amount!
 		   After doing chzise first, it works. */
-		chsize(fileno(ifile), (long)idxptr->length);
+		_chsize(_fileno(ifile), (long)idxptr->length);
 		fseek(ifile, (long)idxptr->length, SEEK_SET);
 #endif
 
@@ -538,13 +538,13 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 void replace(const char *old, const char *new, ulong timestamp)
 {
 
-	if (access(old, 2))
-		chmod(old, S_IREAD | S_IWRITE);
-	unlink(old);
+	if (__access(old, 2))
+		_chmod(old, S_IREAD | S_IWRITE);
+	_unlink(old);
 	if (rename(new, old))
 	{
 		copy_file(old, new, timestamp);
-		unlink(new);
+		_unlink(new);
 	}
 	else
 	{
@@ -603,13 +603,13 @@ void kill_em(const char *name, const char *inpath, const char *one,
 		for (j = 1; j < 256; j++)
 		{
 			if (len == 3)
-				sprintf(newname, "%s%s.%s", inpath, name, p);
+				sprintf_s(newname, sizeof(newname), "%s%s.%s", inpath, name, p);
 			else
-				sprintf(newname, "%s%s.%s%02x", inpath, name, p, j);
+				sprintf_s(newname, sizeof(newname), "%s%s.%s%02x", inpath, name, p, j);
 
 			k++;
 
-			if (!unlink(newname))
+			if (!_unlink(newname))
 			{
 				l = 0;
 				if (!no_tty)
@@ -656,7 +656,7 @@ void kill_dest(FILE *in, FILE *out, const char *name)
 	if (in)
 		fclose(in);
 	if (*name)
-		unlink(name);
+		_unlink(name);
 }
 
 /*
@@ -668,7 +668,7 @@ void kill_dest(FILE *in, FILE *out, const char *name)
 int test_exist(const char *filename)
 {
 
-	if (access(filename, 0))
+	if (_access(filename, 0))
 		return (1);
 	return (0);
 
@@ -696,7 +696,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 	ret = 0;
 
 	/* Loop as long as file with same name exists. */
-	while (!access(destnam, 0))
+	while (!_access(destnam, 0))
 	{
 		if (noquery)
 		{
@@ -720,13 +720,13 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				k = MAXFILE - 2;
 			while (1 == 1)
 			{
-				sprintf(newnam, "%d", i);
+				sprintf_s(newnam, sizeof(newnam), "%d", i);
 				j = strlen(newnam);
 				if (strlen(__file) > (size_t)(k - j))
-					sprintf(newnam, "%s%s%*.*s$%d%s", __drive, __dir, k - j, k - j, __file, i, __ext);
+					sprintf_s(newnam, sizeof(newnam), "%s%s%*.*s$%d%s", __drive, __dir, k - j, k - j, __file, i, __ext);
 				else
-					sprintf(newnam, "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
-				if (!access(newnam, 0))
+					sprintf_s(newnam, sizeof(newnam), "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
+				if (!_access(newnam, 0))
 				{
 					/* File with new name already exists */
 					i++;
@@ -742,7 +742,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 		fflush(o);
 		do
 		{
-			i = getch();
+			i = _getch();
 			i = toupper(i);
 			fflush(stdin);
 			if (i == 'N')
@@ -867,7 +867,7 @@ void strip(char *string)
 
 	i = 0;
 
-	strlwr(string);
+	_strlwr(string);
 
 	if (*string)
 	{

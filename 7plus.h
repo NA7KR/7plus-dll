@@ -2,9 +2,7 @@
 >  7plus.h  <
 \*---------*/
 
-
-
-
+#define _CRT_SECURE_NO_WARNINGS 
 #define YES "yes"
 #define ALWAYS "always"
 #define NO  "no"
@@ -30,10 +28,8 @@
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
-
-#ifdef __DLL__
 #include <windows.h>
-#endif
+
 
 
 
@@ -207,8 +203,8 @@ struct ffblk {
 	short lfn_handle;	    /* LFN: the handle used by findfirst/findnext */
 	unsigned short lfn_ctime; /* LFN: file creation time */
 	unsigned short lfn_cdate; /* LFN: file creation date */
-	unsigned short lfn_atime; /* LFN: file last access time (usually 0) */
-	unsigned short lfn_adate; /* LFN: file last access date */
+	unsigned short lfn_atime; /* LFN: file last _access time (usually 0) */
+	unsigned short lfn_adate; /* LFN: file last _access date */
 	char ff_reserved[5];      /* used to hold the state of the search */
 	unsigned char ff_attrib;  /* actual attributes of the file found */
 	unsigned short ff_ftime;  /* hours:5, minutes:6, (seconds/2):5 */

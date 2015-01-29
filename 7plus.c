@@ -438,7 +438,7 @@ int go_at_it(int argc, char **argv)
 
 
 		if (!stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
-			sprintf(delimit, "\r");    /* for direct binary upload. */
+			sprintf_s(delimit, sizeof(delimit), "\r");    /* for direct binary upload. */
 
 		if (!stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
@@ -545,7 +545,7 @@ int go_at_it(int argc, char **argv)
 		if (findfirst (p, &ffblk, 0) == 0)
 		{
 			fnsplit (p, _drive, _dir, NULL, NULL);
-			sprintf (argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
+			sprintf_s (argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
 		}
 	}
 
@@ -553,7 +553,7 @@ int go_at_it(int argc, char **argv)
 	fnsplit(argname, _drive, _dir, _file, _ext);
 
 	if (genflag)
-		sprintf(genpath, "%s%s", _drive, _dir);
+		sprintf_s(genpath, "%s%s", _drive, _dir);
 
 	if (extract)
 	{

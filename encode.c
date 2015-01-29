@@ -39,7 +39,7 @@ int encode_file(char *name, long blocksize, char *search,
 
 	if (fls)
 		if (!test_exist(_7PLUS_FLS))
-			unlink(_7PLUS_FLS);
+			_unlink(_7PLUS_FLS);
 
 	if (search)
 	{
@@ -47,7 +47,7 @@ int encode_file(char *name, long blocksize, char *search,
 
 		/* Get searchpath for unencoded original file. */
 		fnsplit(search, _drive, _dir, _file, _ext);
-		sprintf(inpath, "%s%s", _drive, _dir);
+		sprintf_s(inpath, "%s%s", _drive, _dir);
 	}
 
 	q = name;
@@ -112,7 +112,7 @@ int encode_file(char *name, long blocksize, char *search,
 	if (!correct && search)
 	{
 		/* Setup output path for encoded files (if specified) */
-		sprintf(searchbin, "%s%s%s%s", _drive, _dir, _file, _ext);
+		sprintf_s(searchbin, "%s%s%s%s", _drive, _dir, _file, _ext);
 		if (searchbin[strlen(searchbin) - 1] != PATHCHAR)
 			strcat(searchbin, PATHSEP);
 	}
@@ -132,7 +132,7 @@ int encode_file(char *name, long blocksize, char *search,
 		strcpy(format_file, head_foot);
 		fnsplit(format_file, _drive, _dir, _file, _ext);
 		if (*searchbin && !(*_drive || *_dir))
-			sprintf(format_file, "%s%s%s", searchbin, _file, _ext);
+			sprintf_s(format_file, "%s%s%s", searchbin, _file, _ext);
 		else
 			if (head_foot == def_format)
 			{
@@ -154,11 +154,11 @@ int encode_file(char *name, long blocksize, char *search,
 			return (2);
 	}
 	if (sendstr)
-		sprintf(go_buf, "%s%s%%O %%P/%%Q%s", sendstr,
+		sprintf_s(go_buf, "%s%s%%O %%P/%%Q%s", sendstr,
 		twolinesend ? delimit : " ",
 		delimit);
 	if (endstr)
-		sprintf(stop_buf, "%s%s", endstr, delimit);
+		sprintf_s(stop_buf, "%s%s", endstr, delimit);
 
 	/* Get file's timestamp */
 
@@ -238,7 +238,7 @@ int encode_file(char *name, long blocksize, char *search,
 
 	/* generate filenames */
 	fnsplit(q, NULL, NULL, _file, _ext);
-	sprintf(orgname, "%s%s", _file, _ext);
+	sprintf_s(orgname, "%s%s", _file, _ext);
 	if (strlen(orgname) > 60)
 	{
 		fprintf(o, "\n\007Filename of original file is too long (max 60 chars).\n"
@@ -247,7 +247,7 @@ int encode_file(char *name, long blocksize, char *search,
 		{
 			_ext[4] = EOS;
 			_file[56] = EOS;
-			sprintf(orgname, "%s%s", _file, _ext);
+			sprintf_s(orgname, "%s%s", _file, _ext);
 		}
 		else
 			orgname[60] = EOS;
@@ -259,15 +259,15 @@ int encode_file(char *name, long blocksize, char *search,
 
 	strcpy(destname, _file);
 
-	sprintf(hdrname, "%s%s%s", _file, _ext[0] ? "." : "", _ext);
+	sprintf_s(hdrname, "%s%s%s", _file, _ext[0] ? "." : "", _ext);
 	strupr(hdrname);
 
 	if (simulate && !correct)
 	{
 		if (!*altname)
-			sprintf(filename, "%s%s", searchbin ? searchbin : "", _7PLUS_FLS);
+			sprintf_s(filename, "%s%s", searchbin ? searchbin : "", _7PLUS_FLS);
 		else
-			sprintf(filename, "%s.fls", altname);
+			sprintf_s(filename, "%s.fls", altname);
 		if ((out = fopen(filename, OPEN_WRITE_TEXT)) == NULLFP)
 			return (14);
 		fprintf(out, "%d %s\n", parts, destname);
@@ -315,10 +315,10 @@ int encode_file(char *name, long blocksize, char *search,
 			if (parts == 1)
 			{
 				if (!*altname)
-					sprintf(filename, "%s%s%s", searchbin ? searchbin : "",
+					sprintf_s(filename, "%s%s%s", searchbin ? searchbin : "",
 					destname, ".7pl");
 				else
-					sprintf(filename, "%s%s", altname, ".7pl");
+					sprintf_s(filename, "%s%s", altname, ".7pl");
 
 				if (!no_tty)
 
@@ -328,10 +328,10 @@ int encode_file(char *name, long blocksize, char *search,
 			else
 			{
 				if (!*altname)
-					sprintf(filename, "%s%s.p%02x", searchbin ? searchbin : "",
+					sprintf_s(filename, "%s%s.p%02x", searchbin ? searchbin : "",
 					destname, part);
 				else
-					sprintf(filename, "%s.p%02x", altname, part);
+					sprintf_s(filename, "%s.p%02x", altname, part);
 
 				if (!no_tty && range[part])
 
@@ -346,10 +346,10 @@ int encode_file(char *name, long blocksize, char *search,
 			if (join)
 			{
 				if (!*altname)
-					sprintf(filename, "%s%s%s", searchbin ? searchbin : "",
+					sprintf_s(filename, "%s%s%s", searchbin ? searchbin : "",
 					destname, ".upl");
 				else
-					sprintf(filename, "%s%s", altname, ".upl");
+					sprintf_s(filename, "%s%s", altname, ".upl");
 			}
 			/* check, if output file already exists. */
 			if ((join < 2) && range[part])
@@ -359,9 +359,9 @@ int encode_file(char *name, long blocksize, char *search,
 		else /* we're creating a correction file, set name accordingly. */
 		{
 			fnsplit(corrname, NULL, NULL, destname, NULL);
-			sprintf(filename, "%s%s.cor", genpath, destname);
+			sprintf_s(filename, "%s%s.cor", genpath, destname);
 			if (*altname)
-				sprintf(filename, "%s.cor", altname);
+				sprintf_s(filename, "%s.cor", altname);
 		}
 
 		/* If -J is active, only open an output file in the first round */
@@ -399,7 +399,7 @@ int encode_file(char *name, long blocksize, char *search,
 			top_bottom(out, go_buf, orgname /*hdrname*/, "p", part, parts);
 
 			/* output header */
-			sprintf(line, " go_7+. %03d of %03d %-12s %07ld %04X %03X (7PLUS v2.2) "
+			sprintf_s(line, " go_7+. %03d of %03d %-12s %07ld %04X %03X (7PLUS v2.2) "
 				"\xb0\xb1\xb2%c", part, parts, hdrname, size,
 				(uint)(((blocksize + 61) / 62) * 64), blocklines, _extended);
 
@@ -409,8 +409,7 @@ int encode_file(char *name, long blocksize, char *search,
 
 			if (part == 1 && _extended == '*')
 			{
-				sprintf(line, "///////////////////////////////////////////////////"
-					"///////////\xb0\xb1\xb2*");
+				sprintf_s(line, sizeof(line), "///////////////////////////////////////////////////" "///////////\xb0\xb1\xb2*");
 				memcpy(line + 1, orgname, strlen(orgname));
 				mcrc(line, 1);
 				add_crc2(line);
@@ -425,11 +424,11 @@ int encode_file(char *name, long blocksize, char *search,
 			strupr(dummi2);
 			top_bottom(out, go_buf, dummi2, "c", part, part);
 
-			sprintf(cor_head, " go_text. %s%s7PLUS correction: %s %ld %03X",
+			sprintf_s(cor_head, " go_text. %s%s7PLUS correction: %s %ld %03X",
 				dummi2, delimit, orgcorrname, size, corrlines);
 			if (ftimestamp)
 			{
-				sprintf(dummi, " [%lX]", ftimestamp);
+				sprintf_s(dummi, " [%lX]", ftimestamp);
 				strcat(cor_head, dummi);
 			}
 			strcat(cor_head, delimit);
@@ -491,7 +490,7 @@ int encode_file(char *name, long blocksize, char *search,
 							delimit, delimit, delimit);
 
 
-						sprintf(line, "%s.c%02x", destname, part);
+						sprintf_s(line, "%s.c%02x", destname, part);
 						strupr(line);
 						top_bottom(out, stop_buf, line, "c", part, part);
 
@@ -513,14 +512,14 @@ int encode_file(char *name, long blocksize, char *search,
 						fnsplit(corrname, NULL, NULL, destname, NULL);
 						check_fn(destname);
 						if (!*altname)
-							sprintf(filename, "%s%s.c%02x", genpath, destname, part++);
+							sprintf_s(filename, "%s%s.c%02x", genpath, destname, part++);
 						else
-							sprintf(filename, "%s.c%02x", altname, part++);
+							sprintf_s(filename, "%s.c%02x", altname, part++);
 
 						out = fopen(filename, OPEN_WRITE_TEXT);
 						setvbuf(out, NULL, _IOFBF, buflen);
 
-						sprintf(line, "%s.c%02x", destname, part - 1);
+						sprintf_s(line, "%s.c%02x", destname, part - 1);
 						strupr(line);
 						top_bottom(out, go_buf, line, "c", part, part);
 
@@ -619,14 +618,13 @@ int encode_file(char *name, long blocksize, char *search,
 			/* strupr (filename); */
 
 			/* Add timestamp */
-			sprintf(line, "                                                  "
-				"            \xb0\xb1\xb2\xdb");
+			sprintf_s(line, sizeof(line), "                                                  "	"            \xb0\xb1\xb2\xdb");
 			strupr(destname);
 			if (parts > 1)
-				sprintf(line2, " stop_7+. (%s.P%02X/%02X) [%lX]",
+				sprintf_s(line2, " stop_7+. (%s.P%02X/%02X) [%lX]",
 				destname, part, parts, ftimestamp);
 			else
-				sprintf(line2, " stop_7+. (%s.7PL) [%lX]", destname, ftimestamp);
+				sprintf_s(line2, " stop_7+. (%s.7PL) [%lX]", destname, ftimestamp);
 			strlwr(destname);
 
 			memcpy(line, line2, strlen(line2));
@@ -728,9 +726,9 @@ int encode_file(char *name, long blocksize, char *search,
 		if (fls)
 		{
 			if (!*altname)
-				sprintf(filename, "%s%s", searchbin ? searchbin : "", _7PLUS_FLS);
+				sprintf_s(filename, "%s%s", searchbin ? searchbin : "", _7PLUS_FLS);
 			else
-				sprintf(filename, "%s.fls", altname);
+				sprintf_s(filename, "%s.fls", altname);
 			if ((out = fopen(filename, OPEN_WRITE_TEXT)) == NULLFP)
 				return (14);
 			fnsplit(destname, NULL, NULL, _file, NULL);

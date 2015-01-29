@@ -1,537 +1,235 @@
-﻿Build started 1/29/2015 1:34:42 PM.
-     1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 1/29/2015 3:13:15 PM.
+     1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c rebuild.c utils.c
          utils.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
      1>utils.c(48): warning C4013: 'BRLND_PUTC_BUG' undefined; assuming extern returning int
-     1>utils.c(122): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(233): warning C4996: 'chsize': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _chsize. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(325) : see declaration of 'chsize'
-     1>utils.c(233): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _fileno. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(718) : see declaration of 'fileno'
-     1>utils.c(413): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>utils.c(507): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>utils.c(508): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
      1>utils.c(521): warning C4013: 'set_filetime' undefined; assuming extern returning int
-     1>utils.c(541): warning C4996: 'access': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _access. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(323) : see declaration of 'access'
-     1>utils.c(542): warning C4996: 'chmod': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _chmod. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(324) : see declaration of 'chmod'
-     1>utils.c(543): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>utils.c(547): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>utils.c(606): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(608): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(612): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>utils.c(659): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>utils.c(671): warning C4996: 'access': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _access. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(323) : see declaration of 'access'
-     1>utils.c(699): warning C4996: 'access': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _access. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(323) : see declaration of 'access'
-     1>utils.c(716): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>utils.c(723): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(726): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(728): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>utils.c(729): warning C4996: 'access': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _access. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(323) : see declaration of 'access'
-     1>utils.c(735): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>utils.c(745): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>utils.c(870): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>utils.c(1217): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(112) : see declaration of 'localtime'
-     1>utils.c(1275): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
+     1>utils.c(541): warning C4013: '__access' undefined; assuming extern returning int
          rebuild.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>rebuild.c(47): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : see declaration of 'strncpy'
-     1>rebuild.c(48): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : see declaration of 'strncpy'
-     1>rebuild.c(52): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>rebuild.c(56): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>rebuild.c(57): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : see declaration of 'strncpy'
-     1>rebuild.c(109): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
          join.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>join.c(25): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>join.c(32): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>join.c(33): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
      1>join.c(78): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(245) : see declaration of 'strdup'
      1>join.c(79): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(245) : see declaration of 'strdup'
-     1>join.c(92): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>join.c(103): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>join.c(108): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>join.c(127): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>join.c(130): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>join.c(132): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>join.c(138): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
      1>join.c(139): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>join.c(155): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>join.c(158): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>join.c(180): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>join.c(229): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>join.c(235): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
          extract.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
      1>extract.c(27): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>extract.c(33): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>extract.c(67): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>extract.c(72): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(74): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(75): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>extract.c(81): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>extract.c(86): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
+     1>extract.c(81): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'unsigned int'
+     1>extract.c(81): warning C4024: 'sscanf_s' : different types for formal and actual parameter 2
+     1>extract.c(86): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'unsigned int'
+     1>extract.c(86): warning C4024: 'sscanf_s' : different types for formal and actual parameter 2
      1>extract.c(89): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>extract.c(90): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>extract.c(92): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(108): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(118): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(119): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>extract.c(120): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(131): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(132): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>extract.c(133): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>extract.c(167): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
+     1>extract.c(108): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>extract.c(108): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
          encode.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>encode.c(42): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>encode.c(46): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(49): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(50): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>encode.c(50): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(50): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>encode.c(57): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>encode.c(65): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(84): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>encode.c(89): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
      1>encode.c(91): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(92): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>encode.c(93): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(97): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(102): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(105): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(106): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(115): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(117): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(120): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(132): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(133): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(135): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(139): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(142): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(151): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(159): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(161): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>encode.c(115): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(115): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(135): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(135): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(157): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [18]'
+     1>encode.c(157): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(161): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(161): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>encode.c(165): warning C4013: 'get_filetime' undefined; assuming extern returning int
-     1>encode.c(240): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(241): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(250): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(260): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(262): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>encode.c(241): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(241): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(250): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(250): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(262): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(262): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>encode.c(263): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(268): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(270): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(271): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(319): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(321): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(332): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(334): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(350): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(352): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(361): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(362): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(364): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(374): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(404): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(413): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(423): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(424): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(425): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
+     1>encode.c(268): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(268): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(270): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(270): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(318): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(318): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(321): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(321): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(331): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>encode.c(331): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(334): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(334): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(349): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(349): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(352): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(352): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(362): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(362): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(364): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(364): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(403): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [62]'
+     1>encode.c(403): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(403): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'int'
+     1>encode.c(403): warning C4024: 'sprintf_s' : different types for formal and actual parameter 3
+     1>encode.c(424): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(429): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(432): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(433): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(435): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>encode.c(438): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>encode.c(465): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>encode.c(471): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>encode.c(475): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>encode.c(481): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(230) : see declaration of 'fscanf'
-     1>encode.c(494): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(495): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
+     1>encode.c(427): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [44]'
+     1>encode.c(427): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(431): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(431): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(431): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'ulong'
+     1>encode.c(431): warning C4024: 'sprintf_s' : different types for formal and actual parameter 3
+     1>encode.c(493): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(493): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(494): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(513): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(516): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(518): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(520): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(523): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(524): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
+     1>encode.c(515): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>encode.c(515): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(517): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(517): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(522): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>encode.c(522): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(523): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(623): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(624): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
+     1>encode.c(622): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(627): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(629): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(630): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
+     1>encode.c(624): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [32]'
+     1>encode.c(624): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(627): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [25]'
+     1>encode.c(627): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(628): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(731): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(733): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>encode.c(734): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(736): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(759): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>encode.c(766): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(772): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
+     1>encode.c(729): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>encode.c(729): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(731): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>encode.c(731): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>encode.c(770): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>encode.c(811): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(831): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>encode.c(832): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(833): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(834): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(835): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
+     1>encode.c(833): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(836): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
+     1>encode.c(834): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(864): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
+     1>encode.c(862): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>encode.c(879): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
+     1>encode.c(877): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>encode.c(930): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>encode.c(936): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(204) : see declaration of 'strtok'
-     1>encode.c(944): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>encode.c(949): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>encode.c(981): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(204) : see declaration of 'strtok'
-         test.c
          decode.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>decode.c(19): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>decode.c(20): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(31): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(41): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(46): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(49): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>decode.c(56): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
-     1>decode.c(92): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>decode.c(93): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(99): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(100): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(117): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>decode.c(119): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(134): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>decode.c(20): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>decode.c(20): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(31): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>decode.c(31): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(41): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>decode.c(41): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(46): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [12]'
+     1>decode.c(46): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(93): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(93): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(99): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>decode.c(99): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(100): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>decode.c(100): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(119): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [8]'
+     1>decode.c(119): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(134): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [11]'
+     1>decode.c(134): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(150): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>decode.c(152): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(163): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(167): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(170): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(178): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>decode.c(202): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(204): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(209): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(210): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>decode.c(287): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
+     1>decode.c(152): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [8]'
+     1>decode.c(152): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(163): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>decode.c(163): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(167): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>decode.c(167): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(170): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [17]'
+     1>decode.c(170): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(202): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>decode.c(202): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(204): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>decode.c(204): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(209): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(209): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(298): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>decode.c(299): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>decode.c(300): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(301): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>decode.c(320): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
+     1>decode.c(300): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(300): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(326): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>decode.c(349): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>decode.c(353): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>decode.c(356): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>decode.c(358): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>decode.c(359): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
-     1>decode.c(362): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : see declaration of 'strncpy'
-     1>decode.c(385): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>decode.c(432): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>decode.c(542): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(656): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>decode.c(661): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(663): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(669): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>decode.c(670): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>decode.c(676): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(118) : see declaration of 'strcat'
-     1>decode.c(679): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(681): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>decode.c(685): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
+     1>decode.c(542): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(542): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(661): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(661): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(663): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(663): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(679): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>decode.c(679): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>decode.c(681): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>decode.c(681): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>decode.c(686): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>decode.c(688): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>decode.c(689): warning C4996: 'strupr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strupr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(259) : see declaration of 'strupr'
-     1>decode.c(718): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
          correct.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
-     1>correct.c(36): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>correct.c(37): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>correct.c(41): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
+     1>correct.c(37): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>correct.c(37): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>correct.c(43): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>correct.c(47): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>correct.c(49): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>correct.c(71): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>correct.c(78): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
+     1>correct.c(49): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [9]'
+     1>correct.c(49): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>correct.c(104): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>correct.c(110): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>correct.c(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>correct.c(167): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
-     1>correct.c(194): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>correct.c(205): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
+     1>correct.c(110): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [13]'
+     1>correct.c(110): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>correct.c(151): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [13]'
+     1>correct.c(151): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>correct.c(211): warning C4996: 'strlwr': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strlwr. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(254) : see declaration of 'strlwr'
-     1>correct.c(228): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
-     1>correct.c(251): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
      1>correct.c(260): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>correct.c(390): warning C4996: 'unlink': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _unlink. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(278) : see declaration of 'unlink'
      1>correct.c(406): warning C4996: 'chsize': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _chsize. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\io.h(325) : see declaration of 'chsize'
      1>correct.c(406): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _fileno. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(718) : see declaration of 'fileno'
-     1>correct.c(434): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>correct.c(434): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>correct.c(434): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
          7plus.c
-     1>f:\code\7plsrc.225\7plus.h(189): warning C4273: 'getch' : inconsistent dll linkage
+     1>f:\code\7plsrc.225\7plus.h(185): warning C4273: 'getch' : inconsistent dll linkage
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see previous definition of 'getch'
      1>7plus.c(311): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(320): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
      1>7plus.c(327): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(336): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
      1>7plus.c(341): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(347): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(304) : see declaration of 'sscanf'
      1>7plus.c(351): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(360): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(375): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(385): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>7plus.c(390): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
-     1>7plus.c(402): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>7plus.c(407): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(413): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>7plus.c(416): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(420): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
@@ -548,12 +246,8 @@
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(440): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(441): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
      1>7plus.c(443): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
-     1>7plus.c(446): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(211) : see declaration of 'fopen'
      1>7plus.c(451): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(253) : see declaration of 'stricmp'
      1>7plus.c(455): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
@@ -568,17 +262,11 @@
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(718) : see declaration of 'fileno'
      1>7plus.c(494): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>7plus.c(537): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
      1>7plus.c(545): warning C4013: 'findfirst' undefined; assuming extern returning int
-     1>7plus.c(547): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>7plus.c(548): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
-     1>7plus.c(553): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(854) : see declaration of '_splitpath'
-     1>7plus.c(556): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(356) : see declaration of 'sprintf'
+     1>7plus.c(548): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [7]'
+     1>7plus.c(548): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
+     1>7plus.c(556): warning C4047: 'function' : 'size_t' differs in levels of indirection from 'char [5]'
+     1>7plus.c(556): warning C4024: 'sprintf_s' : different types for formal and actual parameter 2
      1>7plus.c(582): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(255) : see declaration of 'strnicmp'
      1>7plus.c(591): warning C4996: 'strnicmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strnicmp. See online help for details.
@@ -607,9 +295,10 @@
      1>7plus.obj : error LNK2019: unresolved external symbol _gettextinfo referenced in function _screenlength
      1>utils.obj : error LNK2019: unresolved external symbol _BRLND_PUTC_BUG referenced in function _my_putc
      1>utils.obj : error LNK2019: unresolved external symbol _set_filetime referenced in function _copy_file
-     1>F:\Code\7plsrc.225\Debug\7plus.exe : fatal error LNK1120: 4 unresolved externals
-     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Rebuild target(s)) -- FAILED.
+     1>utils.obj : error LNK2019: unresolved external symbol ___access referenced in function _replace
+     1>F:\Code\7plsrc.225\Debug\7plus.exe : fatal error LNK1120: 5 unresolved externals
+     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:01.32
+Time Elapsed 00:00:02.67
