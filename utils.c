@@ -31,13 +31,7 @@
  #include <time.h>
 #endif
 
-#ifdef _AMIGA_
- struct utimbuf {
-   time_t actime;
-   time_t modtime;
- };
- extern time_t mktime (struct tm *utm);
-#endif
+
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
@@ -858,7 +852,7 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
        {
          if (flag)
          {
-           #if (defined(_AMIGA_) || defined(__MWERKS__))
+           #if ( defined(__MWERKS__))
 	    fprintf (o, "Enter new name (max %d chars)\n", namsize);
 	    fprintf (o, "or press <CNTL>+C <RETURN> to break : ");
 	    fflush (o);
@@ -866,11 +860,9 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
             if (namsize == 12)
               strlwr (destnam);
 
-            #ifdef _AMIGA_
-              scanf("%s",destnam);
-            #else
+            
               gets(destnam);
-            #endif
+            
 
             destnam[namsize] = EOS;
            #else
@@ -1458,40 +1450,7 @@ void strip (char *string)
    return (*retval);
  }
 
- #ifdef _AMIGA_
-  #define _SETFTIME_OK
-  /*
-   * Set file's timestamp
-   * This function only works on AMIGA-systems
-   */
-  void set_filetime (const char *filename, ulong ftimestamp)
-  {
-    time_t atime;
-    struct ftime *fti;
-    struct tm utm;
-    struct DateStamp fdate;
 
-    /* convert MS/DOS ftimestamp to UNIX atime */
-    fti = (struct ftime *) &ftimestamp;
-    utm.tm_sec   = fti->ft_tsec * 2;
-    utm.tm_min   = fti->ft_min;
-    utm.tm_hour  = fti->ft_hour;
-    utm.tm_mday  = fti->ft_day;
-    utm.tm_mon   = fti->ft_month - 1;
-    utm.tm_year  = fti->ft_year +80;
-    utm.tm_wday  = utm.tm_yday  =  0;
-    utm.tm_isdst = -1;
-    atime = mktime (&utm);
-
-    fdate.ds_Days = (atime/86400)-2922; /* 86400sec per Day + systimecorr.*/
-    fdate.ds_Minute = (atime % 86400) / 60;
-    fdate.ds_Tick = (atime % 60) * TICKS_PER_SECOND;
-
-    SetFileDate((char *)filename,&fdate);
-
-    return(1);
-  }
- #endif /* _AMIGA_ */
 
  #if (defined (__unix__) || defined (__MWERKS__) || defined (OSK) || defined (__OS2__))
   #define _SETFTIME_OK

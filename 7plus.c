@@ -126,10 +126,7 @@ int     no_tty   = 0;
 int     twolinesend = 0;
 struct  m_index *idxptr;
 
-#ifdef _AMIGA_
- /* Kennung fuer Versionstring auf dem Amiga */
- char vers[] = "$VER: 7PLUS "VERSION"/68000 "AMIGADATE;
-#endif
+
 
 #ifdef __MWERKS__
 /* Define look-up table for suffix mapping. Use only lower case
@@ -190,14 +187,7 @@ const char logon_ctrl[] =
  #define LOGON_OK
 #endif
 
-#ifdef _AMIGA_
- "\n"
- "\033[3m%s\n"
- "%s\n"
- "%s\033[0m\n"
- "\n";
- #define LOGON_OK
-#endif
+
 
 #ifdef __MWERKS__
  "\n"
@@ -259,10 +249,7 @@ const char *help[] = {
 
 #define EXMPL "c:\\pr\\"
 
-#ifdef _AMIGA_
- #undef EXMPL
- #define EXMPL "dh0:/pr/"
-#endif
+
 
 #if defined(__linux__) || defined(__NetBSD__)
  #undef EXMPL

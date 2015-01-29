@@ -2,8 +2,7 @@
 >  7plus.h  <
 \*---------*/
 
-/* Uncomment next line, if compiling on AMIGA! */
-/* #define _AMIGA_ */
+
 
 #define YES "yes"
 #define ALWAYS "always"
@@ -120,37 +119,7 @@
  #endif
 #endif /* __OS2__ */
 
-#ifdef _AMIGA_
- #define  _680X0_
- #include <sys/types.h>
- #include <sys/stat.h>
- #include <stddef.h>
- #include <proto/dos.h>
- #include <libraries/dos.h>
- #include <libraries/dosextens.h>
- #include <exec/memory.h>
- #include <stdlib.h>
- #undef  YES
- #define YES ""
- #undef  NO
- #define NO ""
- #undef ALWAYS
- #define ALWAYS ""
- #define SEEK_SET 0
- #define SEEK_CUR 1
- #define SEEK_END 2
- #define MAXPATH  300
- #define MAXDRIVE 31
- #define MAXDIR   220
- #define MAXFILE  31
- #define MAXEXT   31
- #define PATHSEP  "/"
- #define PATHCHAR '/'
- #define LFN
- #define MAXFNAME MAXFILE
- #define _HAVE_GETCH
- #define getch getchar
-#endif /* _AMIGA_ */
+
 
 #ifdef __TOS__
  #define MAXPATH   119
