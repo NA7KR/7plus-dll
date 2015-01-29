@@ -1,10 +1,11 @@
 /* Version */
-#define VERSION "2.17"
-#define DATE "960309"
+#define VERSION "2.25"
+#define PL7_DATE "20000320"
+#define AMIGADATE "20.03.00"
 
-/*************************************************************************
-*** 7PLUS ASCII- Encoder/Decoder, Axel Bauda, DG1BBQ @DB0CL.#HB.DEU.EU  ***
-**************************************************************************
+/**********************************************************
+*** 7PLUS ASCII- Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
+***********************************************************
 ***
 *** Compile:
 *** --------
@@ -32,22 +33,23 @@
 *** --------
 *** | UNIX |   support by Torsten H. Bischoff, DF6NL @ DB0BOX
 *** --------
-*** Supported systems are:
-***   Interactive UNIX 386
-***   SCO XENIX 386
-***   VAX BSD 4.3/ Ultrix 4.1
+***            Supported systems are:  Interactive UNIX 386
+***                                    SCO XENIX 386
+***                                    VAX BSD 4.3/ Ultrix 4.1
 ***
-*** Compile: make -funix.mak
+***            Compile: make -funix.mak
+***
+*** ---------  Adjustments made by Mario DL5MLO @OK0PKL.TCH.EU
+*** | LINUX |  Tested only on an I486.
+*** ---------  Compile: make -flinux.mak
+***
+*** ---------  Adjustments made by Berndt VK5ABN
+*** | NETBSD | Compile: make -fnetbsd.mak
+*** ---------
 ***
 *** ---------
-*** | LINUX |  support by Mario Lorenz, DL5MLO@OK0PKL.TCH.EU
-*** ---------
-***  Tested only on an i486. Compile: make -flinux.mak
-*** ---------
-*** | AMIGA |  Lattice SAS/C V5.1b
-*** ---------
-***            Compile : LC -v -d_AMIGA_ $.o
-***                      BLINK c.o LIB lib:lc.lib,lib:amiga2.0.lib ND SC SD
+*** | AMIGA |  egcs or gcc
+*** ---------  Compile: make -f amiga.mak
 ***
 *** ------------
 *** | OS-9/68K |    GNU C 1.42
@@ -55,6 +57,9 @@
 ***            copy os9/stat.h /dd/defs/stat.h
 ***            Compile : make -f=os9_68k.mak
 ***
+*** ----------
+*** | Mac OS | Metrowerks CodeWarrior
+*** ----------
 ***
 ***
 *** Other systems: Find out for yourself :->  Good luck!
@@ -68,34 +73,42 @@
 *** When porting or modifying this source, make SURE it can still be compiled
 *** on all systems! Do this by using #ifdef directives! Please let me know
 *** about the modifications or portations, so I can include them in the origi-
-*** nal 7PLUS.
+*** nal 7PLUS source.
 ***
-**************************************************************************
-***  7PLUS ASCII-Encoder/Decoder, Axel Bauda, DG1BBQ @DB0CL.#HB.DEU.EU  ***
-**************************************************************************
+**********************************************************
+*** 7PLUS ASCII-Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
+**********************************************************
 ***
 *** File converter for transfer of arbitrary binary data
 *** via store & forward.
 ***
-*** 7PLUS is HAMWARE. No commercial use. Pass on only in it's entirety!
-*** There is no warranty for the proper functioning. Use at own risk.
-***
+*** 7PLUS is HAMWARE. No commercial use. No Sale. Pass on only in it's
+*** entirety! There is no warranty for the proper functioning. Use at own
+*** risk.
 ***
  */
 
 #include "7plus.h"
 
 /** globals **/
+
 FILE    *o;
 uint    crctab[256];
 byte    decode[256];
 byte    code  [216];
-byte    extended = INDICATE;
+char    range [257];
+#ifdef LFN
+ byte    _extended = '*';  /* Allow long filenames */
+#else
+ byte    _extended = 0xdb; /* Stick to 8.3 */
+#endif
 size_t  buflen;
 char    _drive[MAXDRIVE], _dir[MAXDIR], _file[MAXFILE], _ext[MAXEXT];
 char    spaces[] = "                                                   ";
 char    *endstr;
+char    *sendstr;
 char    genpath[MAXPATH];
+char    altname[MAXPATH];
 char    delimit[]    = "\n";
 char def_format[]    = "format.def";
 const char cant[]    = "\007\n'%s': Can't open. Break.\n";
@@ -103,13 +116,42 @@ const char notsame[] = "\007Filesize in %s differs from the original file!\n"
                        "Break.\n";
 const char nomem[]   = "\007Argh error: Not enough memory present! "
                        "Can't continue.....\n";
-int     noquery = 0;
-int     force   = 0;
-int     fls     = 0;
-int     autokill= 0;
-int     sysop   = 0;
-int     no_tty  = 0;
+int     noquery  = 0;
+int     force    = 0;
+int     fls      = 0;
+int     autokill = 0;
+int     simulate = 0;
+int     sysop    = 0;
+int     no_tty   = 0;
+int     twolinesend = 0;
 struct  m_index *idxptr;
+
+#ifdef _AMIGA_
+ /* Kennung fuer Versionstring auf dem Amiga */
+ char vers[] = "$VER: 7PLUS "VERSION"/68000 "AMIGADATE;
+#endif
+
+#ifdef __MWERKS__
+/* Define look-up table for suffix mapping. Use only lower case
+   characters for the suffix. Don't forget to change the value
+   of NSUFFIX in header file 7PLUS.H when adding more suffixes. */
+struct  suffix_index suffix_table[NSUFFIX] =
+            {".sit", 'SITD', 'SIT!',
+             ".z",   'ZIVM', 'LZIV',
+             ".lzh", 'LHA ', 'LARC',
+             ".zip", 'ZIP ', 'ZIP ',
+             ".gz",  'Gzip', 'Gzip',
+             ".cpt", 'PACT', 'CPCT',
+             ".arj", 'DArj', 'DArj',
+             ".tar", 'TARF', 'TAR!',
+             ".hqx", 'TEXT', 'HQXr',
+             ".txt", 'TEXT', 'R*ch',
+             ".gif", 'GIFf', 'GKON',
+             ".tif", 'TIFF', 'GKON',
+             ".eps", 'EPSF', 'GKON',
+             ".epsf",'EPSF', 'GKON',
+             ".jpg", 'JPEG', 'GKON'};
+#endif /* __MWERKS__*/
 
 #ifdef __TOS__
   int   nowait  = 0;
@@ -131,15 +173,17 @@ const char logon_ctrl[] =
  #endif
 
  "\n"
- BKG"ออออออออออออออออออออออออออออออออออออออออออออออออออออฏ"DFT"\n"
- BKG""CHR"%s"BKG""DFT"\n"
- BKG""CHR"%s"BKG""DFT"\n"
- BKG"ศออออออออออออออออออออออออออออออออออออออออออออออออออออฆ"DFT"\n";
+ BKG"ษออออออออออออออออออออออออออออออออออออออออออออออออออออป"DFT"\n"
+ BKG"บ"CHR"%s"BKG"บ"DFT"\n"
+ BKG"บ"CHR"%s"BKG"บ"DFT"\n"
+ BKG"บ"CHR"%s"BKG"บ"DFT"\n"
+ BKG"ศออออออออออออออออออออออออออออออออออออออออออออออออออออผ"DFT"\n";
  #define LOGON_OK
 #endif
 
 #ifdef __TOS__
  "\033p\033v\n"
+ "%s\n"
  "%s\n"
  "%s\n"
  "\033q\n";
@@ -149,8 +193,20 @@ const char logon_ctrl[] =
 #ifdef _AMIGA_
  "\n"
  "\033[3m%s\n"
+ "%s\n"
  "%s\033[0m\n"
  "\n";
+ #define LOGON_OK
+#endif
+
+#ifdef __MWERKS__
+ "\n"
+ "+----------------------------------------------------+\n"
+ "|%s|\n"
+ "|%s|\n"
+ "|%s|\n"
+ "| Macintosh version 1.0  by DK2HD @DB0RBS.#BW.DEU.EU |\n"
+ "+----------------------------------------------------+\n";
  #define LOGON_OK
 #endif
 
@@ -159,13 +215,21 @@ const char logon_ctrl[] =
  "[]--------------------------------------------------[]\n"
  "|%s|\n"
  "|%s|\n"
+ "|%s|\n"
  "[]--------------------------------------------------[]\n";
 #endif
 
-const char *logon[] = { "     7PLUS - file converter for store & forward     ",
-                 " version "VERSION" ("DATE"), (C) DG1BBQ@DB0CL.#HB.DEU.EU " };
+#ifdef LFN
+ #define _LFN "/LFN"
+#else
+ #define _LFN "/8.3"
+#endif
 
-const char s_logon[] = "\n[7+ v"VERSION" ("DATE"), (C) DG1BBQ]\n";
+const char *logon[] = { "     7PLUS - file converter for store & forward     ",
+                        " * no commercial use * no sale * circulate freely * ",
+                " version "VERSION""_LFN" ("PL7_DATE") (C) Axel Bauda, DG1BBQ " };
+
+const char s_logon[] = "\n[7+ v"VERSION""_LFN" ("PL7_DATE"), (C) DG1BBQ]\n";
 
 const char *help[] = {
 "\n",
@@ -184,12 +248,13 @@ const char *help[] = {
 "  -s 30      30 lines/part (max 512 lines/part).\n",
 "  -sp 3      3 parts of roughly equal size (max 255 parts).\n",
 "  -sb 3000   Parts of roughly 3000 bytes (max 36000).\n",
-"  -r 5-10    When encoding, only create part 5 through 10. Be sure to split\n",
-"             the same way as for the first upload!\n",
+"  -r 5-10,1  When encoding, only create part 5 through 10 and part 1.\n",
+"             Be sure to split the same way as for the first upload!\n",
 "  -t /ex     Append string '/ex' to encoded files (BBS file termination).\n",
-"  -j         Join all parts into a single output file 'file.upl'.\n",
+"  -send \"sp dg1bbq @db0ver\" Add send command for BBS (-send2 = 2 line send).\n",
 "  -tb file   Get head and footlines from format file 'file' when encoding.\n",
 "             Produces ready-for-upload files. See manual.\n",
+"  -j         Join all parts into a single output file 'file.upl'.\n",
 "\n",
 
 #define EXMPL "c:\\pr\\"
@@ -197,12 +262,17 @@ const char *help[] = {
 #ifdef _AMIGA_
  #undef EXMPL
  #define EXMPL "dh0:/pr/"
-#endif 
+#endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__NetBSD__)
  #undef EXMPL
  #define EXMPL "/pr/"
-#endif 
+#endif
+
+#ifdef __MWERKS__
+ #undef EXMPL
+ #define EXMPL "HD:Folder:"
+#endif
 
 "7plus file.err "EXMPL"\n",
 "  Create correction file. Look for original unencoded file in '"EXMPL"'.\n",
@@ -217,12 +287,14 @@ const char *help[] = {
 
 #ifdef _HAVE_CHSIZE
  #define MF "7mf"
+ #define MG "meta"
 #else
  #define MF "7ix"
+ #define MG "index"
 #endif
 
 "7plus file."MF"\n",
-"  Create new error report from metafile, if it's been accidentally erased.\n",
+"  Create new error report from "MG"file, if it's been accidentally erased.\n",
 "\n",
 "7plus logfile -x text\n",
 "  Extract 7PLUS files from 'logfile'. Only extract a file, if its name\n",
@@ -243,6 +315,121 @@ const char *help[] = {
 NULLCP
 };
 
+#ifdef __DLL__
+
+/*
+ * DLL initialisation
+ */
+
+#pragma warn -par
+
+/*
+ * 32 bit DLL initialisation.
+ */
+HANDLE hDLLInst = 0;
+
+BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
+{
+  hDLLInst = hModule;
+
+  switch (dwFunction)
+  {
+   case DLL_PROCESS_ATTACH:
+   case DLL_PROCESS_DETACH:
+   default:
+   break;
+  }
+  return TRUE;
+}
+
+#pragma warn +par
+
+/*
+ * The real DLL entry point
+ */
+int __export CALLBACK Do_7plus(char *cmd_line)
+{
+  char *p1, *p2;
+  char **argv;
+  int argc = 0;
+  int i, l;
+  int ret;
+
+  /*
+   * Count the args.
+   *
+   * Long Windows 9x file names may contain spaces,
+   * a long file name could look like this...
+   *
+   * "This is a long win9x file called fumph.zip"
+   *
+   * Note the " " surrounding the file name.
+   */
+  l = strlen(cmd_line);
+
+  for (i = 0; i <= l; i++)
+  {
+    if (cmd_line[i] == '"')
+    {
+      i++;
+      while (cmd_line[i] != '"') i++;
+      i++;
+    }
+    /*
+     * Replace ' ' with '\0' unless surrounded with quotes
+     * to indicate the spaces are inside a long file name.
+     */
+    if (cmd_line[i] == ' ')
+    {
+      cmd_line[i] = 0;
+      argc++;
+    }
+  }
+
+  /*
+   * The number of args should be one more than the spaces.
+   */
+  argc++;
+
+  /*
+   * Allocate the pointers.
+   */
+  argv = (char **) calloc (argc, sizeof (char *));
+
+  /*
+   * Process cmd_line again setting up argv.
+   */
+  p1 = cmd_line;
+
+  for (i = 0; i < argc; i++)
+  {
+    argv[i] = p1;
+    p2 = strchr(p1,0);
+    if (p2) p1 = p2+1;
+  }
+
+  /*
+   * Remove any quotes
+   */
+  for (i = 0; i < argc; i++)
+    if (argv[i] [0] == '"')
+      for (l = 0; argv[i] [l]; l++)
+      {
+        argv[i] [l] = argv[i] [l + 1];
+        if (argv[i] [l] == '"')
+          argv[i] [l] = 0;
+      }
+
+  /*
+   * Call real program entry point
+   */
+  ret = go_at_it(argc,argv);
+
+  fclose(o);
+  return ret;
+}
+
+#else /* #ifdef __DLL__ #else */
 
 /* Depending on the system, it may be nessesary to prompt the user for a
    keystroke, before terminating, because user wouldn't be able to read
@@ -254,10 +441,27 @@ int main (int argc, char **argv)
   int ret;
 
   ret = go_at_it (argc, argv);
-  if (!nowait && !noquery && !system(NULLCP))
+  if ((!nowait || !noquery) && !system(NULLCP))
   {
     printf("\n\033p Hit any key \033q");
     getch();
+  }
+  return (ret);
+#else
+
+#ifdef __MWERKS__
+  int ret, prompt='C';
+
+  _fcreator = 'Mc7+';         /* Set file creator to 7Plus Mac */
+  SIOUXSettings.autocloseonquit = TRUE;
+  SIOUXSettings.asktosaveonclose = FALSE;
+  SIOUXSettings.rows = (short) screenlength() + 1;
+
+  while (prompt == 'C')
+  {
+    ret = go_at_it (argc, argv);
+    printf("Type ""c"" to continue or any other key to stop > ");
+    prompt = toupper(getch());
   }
   return (ret);
 #else
@@ -268,27 +472,45 @@ int main (int argc, char **argv)
 
   return (go_at_it (argc, argv));
 #endif
+#endif
 }
+#endif /* #ifdef __DLL__ #else */
 
 /* This is the real main() */
 int go_at_it (int argc, char **argv)
 {
 
   char *p, *r, *s, *t;
-  int  ret, i, extract, genflag, join, first_part, last_part, cor;
+  char argname[MAXPATH];
+  int  ret, i, extract, genflag, join, cor;
   long blocksize;
+#ifdef __MWERKS__
+  long save_fc;
+#endif
 
-  ret = i = extract = genflag = join = cor = 0;
-  p = r = s = t = endstr = NULLCP;
-  *genpath = EOS;
+  extract = genflag = join = cor = twolinesend = 0;
+  p = r = s = t = endstr = sendstr = NULLCP;
+  *genpath = *argname = *altname = EOS;
 
+#ifndef __DLL__
+  i = 0;
   o = stdout;
+#else
+  o = fopen("\\7plus.out","w");
+  noquery = 1;
+  i = -1; /* Args start at 0 with DLL */
+#endif
 
-  first_part = 0;
-  last_part = 256;
+  /* initialize range array */
+  get_range ("1-");
 
   /* Default blocksize (abt 10000 bytes) */
   blocksize = 138 * 62;
+
+#ifdef __MWERKS__
+  fprintf (o, logon_ctrl, logon[0], logon[1], logon[2]);
+  argc = ccommand(&argv);
+#endif
 
   while (++i<argc)
   {
@@ -346,31 +568,13 @@ int go_at_it (int argc, char **argv)
           blocksize = (blocksize /71 -2) *62;
     }
 
-    if (!stricmp (argv[i], "-R")) /* Only reencode part n */
+    if (!stricmp (argv[i], "-R")) /* Only re-encode specified part(s) */
     {
       i++;
       if (i == argc)
         i--;
       else
-      {
-	first_part = 1;
-	if (*argv[i] != '-')
-	{
-	  int zz = 0;
-	  zz = sscanf (argv[i], "%i%[-]%i", &first_part, _dir, &last_part);
-	  if (zz == 1)
-	    last_part = first_part;
-	  if (zz == 2)
-	    last_part = 256;
-	}
-	else
-	  if (sscanf (argv[i], "-%i", &last_part) != 1)
-	    last_part = first_part;
-	if (last_part < first_part)
-	  last_part = first_part;
-	if (first_part == 1)
-	  first_part = 0;
-      }
+        get_range (argv[i]);
     }
 
     if (!stricmp (argv[i], "-TB")) /* File to get head and foot lines from */
@@ -383,21 +587,50 @@ int go_at_it (int argc, char **argv)
       }
       else
         if (*argv[i] != '-')
-         t = argv[i];
+          t = argv[i];
         else
-         t = def_format;
-     }
+          t = def_format;
+    }
 
-    if (!stricmp (argv[i], "-T")) /* Define BBS's termination string */
-    {
+    if (!stricmp (argv[i], "-T")) /* Define BBS's termination string, */
+    {                             /* e.g. "/ex" */
       i++;
       if (i == argc)
         i--;
       else
       {
-        endstr = malloc ((int) strlen (argv[i]) +1);
-        strcpy (endstr, argv[i]);
+        if (t != def_format)
+        {
+          endstr = (char *) malloc ((int) strlen (argv[i]) +1);
+          strcpy (endstr, argv[i]);
+        }
       }
+    }
+
+    if (!strnicmp (argv[i], "-SEND", 5)) /* Define send string, */
+    {                                /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
+      if (argv[i][5] == '2')
+        twolinesend = 1;
+      i++;
+      if (i == argc)
+        i--;
+      else
+      {
+        if (t != def_format)
+        {
+          sendstr = (char *) malloc ((int) strlen (argv[i]) +1);
+          strcpy (sendstr, argv[i]);
+        }
+      }
+    }
+
+    if (!stricmp (argv[i], "-U")) /* Set alternative filename */
+    {
+      i++;
+      if (i == argc)
+        i--;
+      else
+        strcpy (altname, argv[i]);
     }
 
     if (!stricmp (argv[i], "-#")) /* Create 7PLUS.FLS. Contents e.g.:     */
@@ -407,8 +640,11 @@ int go_at_it (int argc, char **argv)
     if (!stricmp (argv[i], "-C")) /* Use 7PLUS-file as a correction file  */
       cor = 1;
 
-    if (!stricmp (argv[i], "-K")) /* Kill obsolete files */
-      autokill = 1;
+    if (!stricmp (argv[i], "-K")) /* Kill obsolete files, stop if gap */
+      autokill = 1;               /* greater than 10 files (faster)   */
+
+    if (!stricmp (argv[i], "-KA"))/* Kill all obsolete files        */
+      autokill = 2;               /* (slow, but better for servers) */
 
     if (!stricmp (argv[i], "-F")) /* Force usage of correction file */
       force = 1;
@@ -429,9 +665,21 @@ int go_at_it (int argc, char **argv)
 
     if (!stricmp (argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
     {
+#ifdef __MWERKS__
+      save_fc = _fcreator;
+      _fcreator = 'R*ch';         /* Set file creator to BBEdit */
       o = fopen ("7plus.out", OPEN_WRITE_TEXT);
+      _fcreator = save_fc;
+#else
+      o = fopen ("7plus.out", OPEN_WRITE_TEXT);
+#endif
       noquery = 1;
     }
+
+    if (!stricmp (argv[i], "-SIM")) /* Simulate encoding and report */
+      simulate = 1;                 /* number of parts and parts */
+                                    /* filename in 7plus.fls */
+
     if (!stricmp (argv[i], "-SYSOP")) /* SYSOP mode. Decode, even if parts */
       sysop = 1;                      /* are missing. */
 
@@ -449,31 +697,39 @@ int go_at_it (int argc, char **argv)
   if (no_tty)
     fprintf (o, "%s", s_logon);
   else
-    fprintf (o, logon_ctrl, logon[0], logon[1]);
+#ifndef __MWERKS__
+    fprintf (o, logon_ctrl, logon[0], logon[1], logon[2]);
+#endif
 
 
   if (!p ) /* No File specified, show help */
   {
     int scrlines;
-    int n = 4;
+    int n = 5;
 
     i = 0;
 
     /* How many lines fit on screen? */
-    scrlines = screenlength () -2;
+    scrlines = screenlength () -1;
 
     while (help[i])
     {
       if (++n == scrlines && !noquery)
       {
         set_autolf(0);
-	fprintf (o, "Press RETURN to continue....\r");
-	fflush (stdout);
-	while (!getch ());
-	fflush (stdin);
-	n = 0;
-	fprintf (o, "                            \r");
-	set_autolf(1);
+#ifdef __MWERKS__
+        fprintf (o, "Press RETURN to continue....");
+#else
+        fprintf (o, "Press RETURN to continue....\r");
+#endif
+        fflush (stdout);
+        while (!getch ());
+        fflush (stdin);
+        n = 0;
+#ifndef __MWERKS__
+        fprintf (o, "                            \r");
+#endif
+        set_autolf(1);
       }
       fprintf (o, help[i++]);
     }
@@ -481,12 +737,16 @@ int go_at_it (int argc, char **argv)
     goto end;
   }
 
-  if ((s = malloc (50000U)) == NULLCP)
+  if ((s = (char *) malloc ((size_t)4000UL)) == NULLCP)
   {
-     fprintf (o, nomem);
-     if (o != stdout)
-       fclose (o);
-     exit (12);
+    fprintf (o, nomem);
+    if (o != stdout)
+      fclose (o);
+    #ifndef __DLL__
+    exit (21);
+    #else
+    return 21;
+    #endif
   }
   free (s);
 
@@ -495,7 +755,11 @@ int go_at_it (int argc, char **argv)
     fprintf (o, nomem);
     if (o != stdout)
       fclose (o);
-    exit (12);
+    #ifndef __DLL__
+    exit (21);
+    #else
+    return 21;
+    #endif
   }
 
   buflen = 16384;
@@ -504,7 +768,23 @@ int go_at_it (int argc, char **argv)
   init_decodetab (); /* decoding-table */
   init_codetab   (); /* encoding-table */
 
-  fnsplit (p, _drive, _dir, _file, _ext);
+  strcpy (argname, p);
+
+#if (defined (__WIN32__)) || (defined (__MSDOS__))
+  { /* Since Win32 does not distinguish the case in filenames, findfirst
+    ** is used to determine how the filename is really spelt casewise.
+    ** It's usefull for DOS also.
+    */
+    struct ffblk ffblk; /* only needed locally */
+    if (findfirst (p, &ffblk, 0) == 0)
+    {
+      fnsplit (p, _drive, _dir, NULL, NULL);
+      sprintf (argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
+    }
+  }
+#endif
+
+  fnsplit (argname, _drive, _dir, _file, _ext);
 
   if (genflag)
     sprintf (genpath, "%s%s", _drive, _dir);
@@ -512,7 +792,7 @@ int go_at_it (int argc, char **argv)
   if (extract)
   {
     if (p)
-      ret = extract_files (p, r);
+      ret = extract_files (argname, r);
     else
     {
       fprintf (o, "\007File to extract from not specified. Break.\n");
@@ -525,18 +805,18 @@ int go_at_it (int argc, char **argv)
   {
     if (cor)
     {
-      ret = correct_meta (p, 0, 0);
+      ret = correct_meta (argname, 0, 0);
       goto end;
     }
 
     if (join)
       if (!strnicmp (".err", _ext, 4) ||
-	  ( toupper(*(_ext+1)) == 'E' &&
-	    isxdigit(*(_ext+2)) &&
-	    isxdigit(*(_ext+3))))
+          ( toupper(*(_ext+1)) == 'E' &&
+            isxdigit(*(_ext+2)) &&
+            isxdigit(*(_ext+3))))
       {
-	ret = join_control (p, r);
-	goto end;
+        ret = join_control (argname, r);
+        goto end;
       }
 
     if (!strnicmp (".cor", _ext, 4) ||
@@ -544,20 +824,20 @@ int go_at_it (int argc, char **argv)
          isxdigit(*(_ext+2)) &&
          isxdigit(*(_ext+3))))
     {
-      ret = correct_meta (p, 1, 0);
+      ret = correct_meta (argname, 1, 0);
       goto end;
     }
 
     if (sysop)
     {
-      ret = control_decode (p);
+      ret = control_decode (argname);
       goto end;
     }
 
     /* Call decode_file() if ext ist 7PL, P01, else encode_file() */
     if (!strnicmp (".7pl", _ext, 4) || !strnicmp (".p01", _ext, 4))
     {
-      ret = control_decode (p);
+      ret = control_decode (argname);
       goto end;
     }
     #ifdef _HAVE_CHSIZE
@@ -566,28 +846,29 @@ int go_at_it (int argc, char **argv)
      if (!strnicmp (".7ix", _ext, 4))
     #endif
      {
-       ret = make_new_err (p);
+       ret = make_new_err (argname);
        goto end;
      }
 
     if (!strnicmp (".x", _ext, 3))
     {
-      ret = extract_files (p, r);
+      ret = extract_files (argname, r);
       goto end;
     }
-    ret = encode_file (p, blocksize, r, first_part, last_part, join, t);
+    ret = encode_file (argname, blocksize, r, join, t);
   }
   else
   {
-    if (!test_exist (p)) /* no EXT, but file exists on disk, then encode */
-      ret = encode_file (p, blocksize, r, first_part, last_part, join, t);
+    if (!test_exist (argname)) /* no EXT, but file exists on disk, then encode */
+      ret = encode_file (argname, blocksize, r, join, t);
     else
-      ret = control_decode (p);
+      ret = control_decode (argname);
   }
 
 end:
   if (o != stdout)
     fclose (o);
+  free (idxptr);
   return (ret);
 }
 
@@ -598,7 +879,7 @@ end:
  */
 int screenlength (void)
 {
-  int scrlines = 25;
+  int scrlines;
 
   #ifdef __OS2__
    #ifdef __EMX__
@@ -623,17 +904,18 @@ int screenlength (void)
       scrlines = VioModeInfo.row;
     }
    #endif
+  #else
+   #if defined (__TURBOC__) && defined (__MSDOS__) && !defined (_Windows)
+    /* Same thing for Turbo C */
+    {
+      struct text_info t;
+      gettextinfo (&t);
+      scrlines = t.screenheight;
+    }
+   #else
+    scrlines = 24;
+   #endif
   #endif
-
-  #if defined (__TURBOC__) && defined (__MSDOS__)
-   /* Same thing for Turbo C */
-   {
-     struct text_info t;
-     gettextinfo (&t);
-     scrlines = t.screenheight;
-   }
-  #endif
-
   return (scrlines);
 }
 
@@ -661,6 +943,7 @@ int screenlength (void)
  17 No CRC found in err/cor-file.
  18 Timestamp in metafile differs from that in the correction file.
  19 Metafile already exists.
+ 20 Can't encode files with 0 filelength.
+ 21 Not enough memory available
 
  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-

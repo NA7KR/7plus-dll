@@ -1,10 +1,19 @@
 /*--------------------------------*\
 | Additions for UNIX-compatibility |
 \*--------------------------------*/
+#include "7plus.h"
+
+#ifdef __MWERKS__
+  char *strdup (const char *s1)
+  { char *s;
+
+    s = malloc (strlen(s1) + 1);
+    strcpy (s , s1);
+    return (s);
+  }
+#endif /* __MWERKS__ */
+
 #ifdef __unix__
-
- #include "7plus.h"
-
 
  #ifdef __vax__
   char *strdup (const char *s1)
@@ -17,17 +26,17 @@
  #endif /* __vax__ */
 
  #ifdef __i386__
+  #define MAXCMD 1024
 
   #ifndef _HAVE_RENAME
-   #define MAXCMD 1024
    int rename (const char *s1, const char *s2)
    {
      char tmp[MAXCMD];
 
      (void) sprintf(tmp, "mv %s %s", s1, s2);
      return (system(tmp));
-   }
-  #endif _HAVE_RENAME
+  }
+  #endif
 
   #ifndef _HAVE_STRSTR
    /*

@@ -1,35 +1,33 @@
 #include "7plus.h"
 #include "globals.h"
 
-const char _7plus_fls[] = "7plus.fls";
-
 /*
 *** encode a file. split, if desired/needed. create correction file.
 ***
 ***
  */
 
-int encode_file (char *name, long blocksize, char *searchbin,
-		 int first_part, int last_part, int join, char *head_foot)
+int encode_file (char *name, long blocksize, char *search,
+                 int join, char *head_foot)
 {
-  int      part, parts, blocklines, curline;
+  int      part, parts, first_part, last_part, blocklines, curline;
   int      correct, corrlines , corrpart, corrline, tune;
   uint     csequence;
   ulong    ftimestamp, ftstamp0 , after[16], *af, h;
   long     binbytes, binb0, position, size, blocksize2, corrsize;
-  char     destname[13], hdrname[MAXFNAME], filename[MAXPATH], corrname[13];
-  char     orgcorrname[13], orgname[66];
+  char     destname[MAXPATH], hdrname[MAXFNAME], filename[MAXPATH], corrname[13];
+  char     orgcorrname[13], orgname[MAXFNAME];
   char     inpath[MAXFPATH], format_file[MAXPATH];
   char     line[81], line2[81], dummi[20], dummi2[20], *q, *r;
-  char     go_buf[257], stop_buf[257], cor_head[129];
+  char     go_buf[257], stop_buf[257], cor_head[129], searchbin[MAXPATH];
 
   FILE     *in, *out, *corr;
-  register i, j, k;
+  register int i, j, k;
 
   correct = i = corrpart = corrlines = blocklines = 0;
   *destname = *hdrname = *filename = *corrname = *inpath = *orgname = EOS;
-  *format_file = *_file = *go_buf = *stop_buf = EOS;
-  in = out = corr = NULLFP;
+  *format_file = *_file = *go_buf = *stop_buf = *searchbin = EOS;
+  out = corr = NULLFP;
   ftimestamp = ftstamp0 = 0UL;
   corrsize = blocksize2 = 0L;
 
@@ -40,24 +38,26 @@ int encode_file (char *name, long blocksize, char *searchbin,
   #endif
 
   if (fls)
-    if (!test_exist (_7plus_fls))
-      unlink (_7plus_fls);
+    if (!test_exist (_7PLUS_FLS))
+      unlink (_7PLUS_FLS);
 
-  if (searchbin)
+  if (search)
   {
+    strcpy (searchbin, search);
+
     /* Get searchpath for unencoded original file. */
-    fnsplit (searchbin, _drive, _dir, _file, _ext);
+    fnsplit (search, _drive, _dir, _file, _ext);
     sprintf (inpath, "%s%s", _drive, _dir);
   }
 
   q = name;
   /* create correction file, if ext of input file is .ERR */
   if ((r = strrchr (q, '.')) != NULL)
+  {
     if (!strnicmp (".err", r, 4))
     {
       /* OK, input file is an error file */
       correct = 1;
-
       if ((i = crc_file (q, "7PLUS error", "00\n", 1)) != 0)
         if (i != 17)
           return (i);
@@ -71,7 +71,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
 
       if (!r)
       {
-	fprintf (o, "\007'%s': invalid error report. Break.\n", q);
+        fprintf (o, "\007'%s': invalid error report. Break.\n", q);
         fclose (corr);
         return (7);
       }
@@ -92,7 +92,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
       strcpy (orgcorrname, corrname);
       strupr (orgcorrname);
 
-      if (extended != '*' || !*orgname)
+      if (_extended != '*' || !*orgname)
       {
         strcpy (orgname, corrname);
         check_fn (corrname);
@@ -107,6 +107,15 @@ int encode_file (char *name, long blocksize, char *searchbin,
       }
       q = inpath;
     }
+  }
+
+  if (!correct && search)
+  {
+    /* Setup output path for encoded files (if specified) */
+    sprintf (searchbin, "%s%s%s%s", _drive, _dir, _file, _ext);
+      if (searchbin[strlen(searchbin)-1] != PATHCHAR)
+        strcat (searchbin, PATHSEP);
+  }
 
   if ((in = fopen (q, OPEN_READ_BINARY)) == NULL)
   {
@@ -115,33 +124,41 @@ int encode_file (char *name, long blocksize, char *searchbin,
   }
 
   /* read format information */
-   if (head_foot && !correct)
-   {
-     /* try to find name.def, e.g. when encoding 'test.dat',
-        look for 'test.def' */
+  if (head_foot)
+  {
+    /* try to find name.def, e.g. when encoding 'test.dat',
+       look for 'test.def' */
 
-     strcpy (format_file, head_foot);
-     fnsplit (format_file, _drive, _dir, _file, _ext);
-     if (searchbin)
-       sprintf (format_file, "%s%s%s", searchbin, _file, _ext);
-     else
-       if (head_foot == def_format)
-       {
-	 strcpy (format_file, name);
-	 if ((r = strrchr (format_file, '.')) != NULL)
-	   *r = EOS;
-	 strcat (format_file, ".def");
-	 /* if default format file 'format.def' does not exist, use previously
-	    constructed name */
-	 if (!test_exist (format_file))
-	 {
-	   head_foot = format_file;
-	   join = 1; /* if name.def found, switch on join option */
-	 }
-       }
-     if (read_tb (format_file, go_buf, stop_buf))
-       return (2);
-   }
+    strcpy (format_file, head_foot);
+    fnsplit (format_file, _drive, _dir, _file, _ext);
+    if (*searchbin && !(*_drive || *_dir))
+      sprintf (format_file, "%s%s%s", searchbin, _file, _ext);
+    else
+      if (head_foot == def_format)
+      {
+        strcpy (format_file, name);
+        if ((r = strrchr (format_file, '.')) != NULL)
+          *r = EOS;
+        strcat (format_file, ".def");
+        /* if default format file 'format.def' does not exist, use previously
+           constructed name */
+        if (!test_exist (format_file))
+        {
+          head_foot = format_file;
+          join = 1; /* if name.def found, switch on join option */
+        }
+        else
+          strcpy (format_file, head_foot);
+      }
+    if (read_tb (format_file, go_buf, stop_buf))
+      return (2);
+  }
+  if (sendstr)
+    sprintf (go_buf, "%s%s%%O %%P/%%Q%s", sendstr,
+                                           twolinesend?delimit:" ",
+                                           delimit);
+  if (endstr)
+    sprintf (stop_buf, "%s%s", endstr, delimit);
 
   /* Get file's timestamp */
   #if (defined(__MSDOS__) || defined(__TOS__))
@@ -156,6 +173,13 @@ int encode_file (char *name, long blocksize, char *searchbin,
   size = ftell (in);        /* get size. */
   fseek (in, 0L, SEEK_SET); /* reposition to beginning of file. */
 
+  if (!size)
+  {
+    fprintf (o, "\nSorry. Can't encode files with zero filelength!\n");
+    fclose (in);
+    exit (20);
+  }
+
   if (correct && binb0 && size != binb0)
   {
     fprintf (o, notsame, "error report");
@@ -164,7 +188,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
     return (15);
   }
 
-  part = parts = 1;
+  parts = 1;
 
   if (!correct)
   {
@@ -203,7 +227,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
     if (parts > 255)
     {
       fprintf (o, "\007Not more than 255 parts allowed.\n"
-		  "Choose different blocksize. Break.\n");
+        "Choose different blocksize. Break.\n");
       fclose (in);
       return (8);
     }
@@ -217,35 +241,72 @@ int encode_file (char *name, long blocksize, char *searchbin,
   /* generate filenames */
   fnsplit (q, NULL, NULL, _file, _ext);
   sprintf (orgname, "%s%s", _file, _ext);
+  if (strlen (orgname) > 60)
+  {
+    fprintf (o, "\n\007Filename of original file is too long (max 60 chars).\n"
+                "Truncating \"%s\" to ", orgname);
+    if (*_ext)
+    {
+      _ext[4] = EOS;
+      _file[56] = EOS;
+      sprintf (orgname, "%s%s", _file, _ext);
+    }
+    else
+      orgname[60] = EOS;
+
+    fprintf (o, "\"%s\"!", orgname);
+  }
+
   build_DOS_name (_file, _ext);
 
   strcpy (destname, _file);
+
   sprintf (hdrname, "%s%s%s", _file, _ext[0]?".":"", _ext);
   strupr (hdrname);
 
+  if (simulate && !correct)
+  {
+    if (!*altname)
+      sprintf (filename, "%s%s", searchbin?searchbin:"", _7PLUS_FLS);
+    else
+      sprintf (filename, "%s.fls", altname);
+    if ((out = fopen (filename, OPEN_WRITE_TEXT)) == NULLFP)
+      return (14);
+    fprintf (out, "%d %s\n", parts, destname);
+    fprintf (o, "\nNumber of parts: %d, Filename of parts: \"%s\"\n", parts,
+                                                                      destname);
+    fclose (out);
+    fclose (in);
+    return (0);
+  }
+
   if (!correct)
     fprintf (o, "\n-----------\n"
-		"Encoding...\n"
-		"-----------\n\n");
+                  "Encoding...\n"
+                  "-----------\n\n");
   else
     fprintf (o, "\n---------------------------\n"
-		"Creating correction file...\n"
-		"---------------------------\n\n");
+                  "Creating correction file...\n"
+                  "---------------------------\n\n");
 
-  if (!first_part)
-    part = 1;
-  else
+  for (i = 1; (i < 256) && !range[i]; i++);
+  first_part = i;
+
+  for (i = 255; (i > 0) && !range[i]; i--);
+  last_part = i;
+
+  if (last_part >  parts)
+    last_part = parts;
+
+  if (first_part > parts)
   {
-    if (first_part > parts || first_part < 0)
-    {
-      fprintf (o, "\007Can't encode part %d of %d... You're pulling my leg!\n",
-							   first_part, parts);
-      return (1);
-    }
-    part = first_part;
+    fprintf (o, "\007Can't encode part %d of %d... You're pulling my leg!\n",
+                     first_part, parts);
+    return (1);
   }
+
   /* encode parts */
-  for (; part<parts+1 ; part++)
+  for (part = 1; part<parts+1 ; part++)
   {
     if (!correct)
     {
@@ -255,50 +316,85 @@ int encode_file (char *name, long blocksize, char *searchbin,
 
       if (parts == 1)
       {
-	sprintf (filename, "%s%s%s", searchbin?searchbin:"",
-							   destname, ".7pl");
+        if (!*altname)
+          sprintf (filename, "%s%s%s", searchbin?searchbin:"",
+                        destname, ".7pl");
+        else
+          sprintf (filename, "%s%s", altname, ".7pl");
 
         if (!no_tty)
-	  fprintf (o, "'%s': Writing.\r", filename);
+        #ifdef __MWERKS__
+          fprintf (o, "'%s': Writing.\n", filename);
+        #else
+          fprintf (o, "'%s': Writing.\r", filename);
+        #endif
       }
       else
       {
-	sprintf (filename, "%s%s.p%02x", searchbin?searchbin:"",
-							     destname, part);
+        if (!*altname)
+          sprintf (filename, "%s%s.p%02x", searchbin?searchbin:"",
+                          destname, part);
+        else
+          sprintf (filename, "%s.p%02x", altname, part);
 
-        if (!no_tty)
-	  fprintf (o, "'%s': Writing part %03d of %03d.\r",
-						      filename, part, parts);
+        if (!no_tty && range[part])
+        #ifdef __MWERKS__
+          fprintf (o, "\r'%s': Writing part %03d of %03d.",
+        #else
+          fprintf (o, "'%s': Writing part %03d of %03d.\r",
+        #endif
+                        filename, part, parts);
       }
 
       fflush (o);
       set_autolf(1);
 
       if (join)
-	sprintf (filename, "%s%s%s", searchbin?searchbin:"",
-							   destname, ".upl");
-
+      {
+        if (!*altname)
+          sprintf (filename, "%s%s%s", searchbin?searchbin:"",
+                        destname, ".upl");
+        else
+          sprintf (filename, "%s%s", altname, ".upl");
+      }
       /* check, if output file already exists. */
-      if (join < 2)
-        test_file (out, filename, 0, 12);
+      if ((join < 2) && range[part])
+        if (test_file (out, filename, 0, 12) == 10)
+         return (10);
     }
     else /* we're creating a correction file, set name accordingly. */
     {
       fnsplit (corrname, NULL, NULL, destname, NULL);
       sprintf (filename, "%s%s.cor", genpath, destname);
+      if (*altname)
+        sprintf (filename, "%s.cor", altname);
     }
 
-    /* If -J is active, only open an output in the first round */
+    /* If -J is active, only open an output file in the first round */
     if (join < 2)
     {
       if (join)
         join++;
-      out = fopen (filename, OPEN_WRITE_TEXT);
-      setvbuf (out, NULL, _IOFBF, buflen);
+      if (range[part] || join || correct)
+      {
+        if ((out = fopen (filename, OPEN_WRITE_TEXT)) == NULL)
+        {
+          fprintf (o, "\n\n\007Write error. Break.\n");
+          exit (1);
+        }
+        setvbuf (out, NULL, _IOFBF, buflen);
+      }
+      else
+        out = NULL;
     }
 
     if (!correct)
     {
+      if (!range[part])
+      {
+        fseek (in, blocksize2, SEEK_CUR);
+        continue;
+      }
       if (part == parts && parts > 1)
       {
         if (size % blocksize)
@@ -306,18 +402,18 @@ int encode_file (char *name, long blocksize, char *searchbin,
         blocksize = ((blocksize + 61 ) / 62) *62;
       }
 
-      top_bottom (out, go_buf, hdrname, part, parts);
+      top_bottom (out, go_buf, orgname /*hdrname*/, "p", part, parts);
 
       /* output header */
-      sprintf (line, " go_7+. %03d of %03d %-12s %07ld %04X %03X (7PLUS v2.1) "
+      sprintf (line, " go_7+. %03d of %03d %-12s %07ld %04X %03X (7PLUS v2.2) "
                      "\xb0\xb1\xb2%c", part, parts, hdrname, size,
-                     (uint)(((blocksize+61)/62) * 64), blocklines, extended);
+                     (uint)(((blocksize+61)/62) * 64), blocklines, _extended);
 
       mcrc (line, 1);
       add_crc2 (line);
       fprintf (out, "%s%s", line, delimit);
 
-      if (part == 1 && extended == '*')
+      if (part == 1 && _extended == '*')
       {
         sprintf (line, "///////////////////////////////////////////////////"
                        "///////////\xb0\xb1\xb2*");
@@ -333,6 +429,8 @@ int encode_file (char *name, long blocksize, char *searchbin,
       fnsplit (orgcorrname, NULL, NULL, dummi2, NULL);
       strcat (dummi2, ".COR");
       strupr (dummi2);
+      top_bottom (out, go_buf, dummi2, "c", part, part);
+
       sprintf (cor_head, " go_text. %s%s7PLUS correction: %s %ld %03X",
                                 dummi2, delimit, orgcorrname, size, corrlines);
       if (ftimestamp)
@@ -350,18 +448,18 @@ int encode_file (char *name, long blocksize, char *searchbin,
       if (!no_tty)
       {
         set_autolf(0);
-	fprintf (o, "Compiling: '%s'\r", filename);
-	fflush (o);
+        #ifdef __MWERKS__
+        fprintf (o, "\rCompiling: '%s'", filename);
+        #else
+        fprintf (o, "Compiling: '%s'\r", filename);
+        #endif
+        fflush (o);
         set_autolf(1);
       }
     }
 
     curline = j = 0;
     binbytes = 0L;
-
-    if (first_part)
-      fseek (in, (long) blocksize2 * (first_part -1), SEEK_SET);
-    first_part = 0;
 
     /* get bytes from original file until it ends or blocksize is reached. */
     while ((!feof(in) && ((binbytes < blocksize) || parts == 1)) || correct)
@@ -378,14 +476,13 @@ int encode_file (char *name, long blocksize, char *searchbin,
         {
           if (corrline  == 0xfff)
           {
-            corrpart = 0;
             fscanf (corr, "%s", dummi2);
             corrpart = get_hex (dummi2);
             if (!corrpart)
             {
               sscanf (dummi2, "[%lX]", &ftstamp0);
               corrsize = (long) blocksize+1;
-	      fprintf (o, "\n");
+              fprintf (o, "\n");
             }
             else
             {
@@ -400,9 +497,12 @@ int encode_file (char *name, long blocksize, char *searchbin,
             /* if we were creating a correction file, complete it. */
             fprintf (out, " P00:%s________%s stop_text.%s",
                                                    delimit, delimit, delimit);
-            if (endstr)
-              fprintf (out, "%s%s", endstr, delimit);
-            
+
+
+            sprintf (line, "%s.c%02x", destname, part);
+            strupr (line);
+            top_bottom (out, stop_buf, line, "c", part , part);
+
             if (!corrpart)
               break;
 
@@ -414,24 +514,35 @@ int encode_file (char *name, long blocksize, char *searchbin,
               fclose (in);
               return (1);
             }
-	    fclose (out);
+            fclose (out);
 
             crc_file (filename, "7P", " P00:\n", 0);
 
-	    fnsplit (corrname, NULL, NULL, destname, NULL);
+            fnsplit (corrname, NULL, NULL, destname, NULL);
             check_fn (destname);
-	    sprintf (filename, "%s%s.c%02x", genpath, destname, part++);
+            if (!*altname)
+              sprintf (filename, "%s%s.c%02x", genpath, destname, part++);
+            else
+              sprintf (filename, "%s.c%02x", altname, part++);
 
             out = fopen (filename, OPEN_WRITE_TEXT);
             setvbuf (out, NULL, _IOFBF, buflen);
+
+            sprintf (line, "%s.c%02x", destname, part-1);
+            strupr (line);
+            top_bottom (out, go_buf, line, "c", part, part);
 
             corrsize += fprintf (out, "%s", cor_head) +tune;
 
             if (!no_tty)
             {
               set_autolf(0);
-	      fprintf (o, "Compiling: '%s'\r", filename);
-	      fflush (o);
+              #ifdef __MWERKS__
+              fprintf (o, "\rCompiling: '%s'", filename);
+              #else
+              fprintf (o, "Compiling: '%s'\r", filename);
+              #endif
+              fflush (o);
               set_autolf(1);
             }
           }
@@ -456,7 +567,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
           af[j] = 0L;
           for (k=(j==7)?2:3; k>-1; k--)
           {
-            if ((h = fgetc (in)) == EOF)
+            if ((int)(h = fgetc (in)) == EOF)
             {
               if (!i && !j && k == 3)
                 i = 255;
@@ -494,7 +605,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
       }
 
       for (i=0;i<64;i++)
-	crc_calc (csequence, line2[i]);
+        crc_calc (csequence, line2[i]);
 
       /* package line number and crc into three radix216 bytes and add
          to code line. */
@@ -503,7 +614,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
       line2[j++] = code[(int) (after[0] % 0xd8L)];
       after[0]  /= 0xd8L;
       line2[j++] = code[(int) (after[0] % 0xd8L)];
-      line2[j++] = code[(int) (after[0] / 0xd8L)];
+      line2[j]   = code[(int) (after[0] / 0xd8L)];
 
       add_crc2 (line2);
       corrsize += fprintf (out, "%s", line2) +tune;
@@ -515,7 +626,7 @@ int encode_file (char *name, long blocksize, char *searchbin,
 
     if (!correct) /* put end indicator into output file. */
     {
-      strupr (filename);
+      /* strupr (filename); */
 
       /* Add timestamp */
       sprintf (line, "                                                  "
@@ -532,22 +643,31 @@ int encode_file (char *name, long blocksize, char *searchbin,
       mcrc (line, 1);
       add_crc2 (line);
       fprintf (out, "%s%s", line, delimit);
-      top_bottom (out, stop_buf, hdrname, part, parts);
-      if (endstr)
-        fprintf (out, "%s%s", endstr, delimit);
+      top_bottom (out, stop_buf, hdrname, "p", part, parts);
     }
     else
     {
       if (no_tty)
       {
-	fprintf (o, "Compiled correction file '%s.cor'", destname);
-	if (part>1)
-	  fprintf (o, " through '%s.c%02x'", destname, part-1);
-	fprintf (o, ".\n");
+        fprintf (o, "Compiled correction file '");
+        if (!*altname)
+          fprintf (o, "%s.cor'", destname);
+        else
+          fprintf (o, "'%s.cor'", altname);
+
+   if (part>1)
+        {
+          fprintf (o, " through '");
+          if (!*altname)
+            fprintf (o, "%s.c%02x'", destname, part-1);
+          else
+            fprintf (o, "%s.c%02x'", altname, part-1);
+        }
+        fprintf (o, ".\n");
       }
       if (ftstamp0 && ftstamp0 != ftimestamp)
-	fprintf (o, "\007Warning: Timestamp in error report differs from the "
-		    "original file!\n");
+        fprintf (o, "\007Warning: Timestamp in error report differs from the "
+                    "original file!\n");
     }
     if (ferror(out)) /* did any errors occur while writing? */
     {
@@ -558,12 +678,17 @@ int encode_file (char *name, long blocksize, char *searchbin,
     }
     /* OK. This part is done. Close output file only when producing seperate
          parts */
+
+    if (join && !*stop_buf)
+      fprintf (out, "%s%s", delimit, delimit);
+
     if (!join || correct)
-      fclose (out);
+      if (out)
+        fclose (out);
 
     if (correct) /* If creating a COR file, append CRC line */
       crc_file (filename, "7P", " P00:\n", 0);
-	  
+
     if ((part == last_part) || correct)
       part = 256;
   } /* end of for() */
@@ -577,24 +702,50 @@ int encode_file (char *name, long blocksize, char *searchbin,
   {
     if (no_tty)
     {
-      fprintf (o, "Encoded '%s%s.%s'", searchbin?searchbin:"",
-					    destname, (parts==1)?"7pl":"p01");
+      fprintf (o, "Encoded ");
+      if (!*altname)
+        fprintf (o, "'%s%s", searchbin?searchbin:"", destname);
+      else
+        fprintf (o, "'%s", altname);
+      fprintf (o, ".%s'", (parts==1)?"7pl":"p01");
+
+
       if (parts > 1)
-      fprintf (o, " through '%s%s.p%02x'",
-				     searchbin?searchbin:"", destname, parts);
+      {
+        fprintf (o, " through ");
+        if (!*altname)
+          fprintf (o, "'%s%s", searchbin?searchbin:"", destname);
+        else
+          fprintf (o, "'%s", altname);
+        fprintf (o, ".p%02x'", parts);
+      }
       fprintf (o, ".\n");
     }
 
+    #ifdef __MWERKS__
+     if (parts > 1)
+       fprintf (o, "\n");
+    #endif
+
     if (join)
-      fprintf (o, "\n\nCombined output written to '%s%s%s'\n",
-				    searchbin?searchbin:"", destname, ".upl");
+    {
+
+      fprintf (o, "\n\nCombined output written to ");
+      if (!*altname)
+        fprintf (o, "'%s%s%s'\n", searchbin?searchbin:"", destname, ".upl");
+      else
+        fprintf (o, "'%s%s'\n", altname, ".upl");
+    }
 
     fprintf (o, "\n\nEncoding successful!\n");
     if (fls)
     {
-      sprintf (filename, "%s%s", searchbin?searchbin:"", _7plus_fls);
+      if (!*altname)
+        sprintf (filename, "%s%s", searchbin?searchbin:"", _7PLUS_FLS);
+      else
+        sprintf (filename, "%s.fls", altname);
       if ((out = fopen (filename, OPEN_WRITE_TEXT)) == NULLFP)
-	return (14);
+        return (14);
       fnsplit (destname, NULL, NULL, _file, NULL);
       fprintf (out, "%d %s\n", parts, _file);
       fclose (out);
@@ -616,8 +767,7 @@ int read_tb (char *name, char *go_top, char *go_bottom)
   int i, j, prev;
   char *p, *q, line [81], compare[10];
 
-  i = j = prev = 0;
-  q = NULL;
+  j = prev = 0;
 
   if ((rfile = fopen (name, OPEN_READ_TEXT)) == NULLFP)
   {
@@ -644,7 +794,7 @@ int read_tb (char *name, char *go_top, char *go_bottom)
       {
         prev = j;
 
-        q[i] = j = fgetc(rfile);
+        q[i] = (char) (j = fgetc(rfile));
 
         #ifndef OSK  /* OSK uses CR as line sep. VERY strange.. Reminds me of
                         the good ol' C64 days ;-> */
@@ -691,14 +841,16 @@ int read_tb (char *name, char *go_top, char *go_bottom)
 ***
  */
 
-int top_bottom (FILE *wfile, char *top_bot, char *orgname, int part, int parts)
+int top_bottom (FILE *wfile, char *top_bot, char *orgname,
+                char *type, int part, int parts)
 {
   int i;
-  char __file[9], __ext[5];
+  char __file[MAXFNAME], __ext[MAXEXT], _type[2];
 
   fnsplit (orgname, NULL, NULL, _file, _ext);
   strcpy (__file, _file);
   strcpy (__ext , _ext );
+  strcpy (_type , type);
   strlwr (_file);
   strlwr (_ext );
 
@@ -717,17 +869,49 @@ int top_bottom (FILE *wfile, char *top_bot, char *orgname, int part, int parts)
                   break;
         case 'O': fprintf (wfile, "%s%s", __file, __ext);
                   break;
-        case 'n': fprintf (wfile, "%s.p%02x", _file, part);
+        case 'n': if (part == 1 && parts == 1)
+                  {
+                    if (*type == 'p')
+                      fprintf (wfile, "%s.7pl", _file);
+                    else
+                      fprintf (wfile, "%s.cor", _file);
+                  }
+                  else
+                  {
+                    if (*type == 'c')
+                      part -= 1;
+                    strlwr(_type);
+                    fprintf (wfile, "%s.%s%02x", _file, _type, part);
+                  }
                   break;
-        case 'N': fprintf (wfile, "%s.P%02X", __file, part);
+        case 'N': if (part == 1 && parts == 1)
+                  {
+                    if (*type == 'p')
+                      fprintf (wfile, "%s.7PL", _file);
+                    else
+                      fprintf (wfile, "%s.COR", _file);
+                  }
+                  else
+                  {
+                    if (*type == 'c')
+                      part -= 1;
+                    strupr (_type);
+                    fprintf (wfile, "%s.%s%02X", _file, _type, part);
+                  }
                   break;
         case 'p': fprintf (wfile, "%d", part);
                   break;
         case 'P': fprintf (wfile, "%02X", part);
                   break;
-        case 'q': fprintf (wfile, "%d", parts);
+        case 'q': if (*type == 'p')
+                    fprintf (wfile, "%d", parts);
+                  else
+                    fprintf (wfile, "X");
                   break;
-        case 'Q': fprintf (wfile, "%02X", parts);
+        case 'Q': if (*type == 'p')
+                    fprintf (wfile, "%02X", parts);
+                  else
+                    fprintf (wfile, "X");
                   break;
         case '%': fprintf (wfile, "%s", "%");
                   break;
@@ -749,3 +933,76 @@ int top_bottom (FILE *wfile, char *top_bot, char *orgname, int part, int parts)
 
   return (0);
 }
+
+/*
+*** Evaluate specified range. Be as tollerant as possible.
+*** Syntax: '-5,1-2,5,12-' means: parts 1,2,3,4,5 and 12-255.
+*** Ranges not required to be in correct order.
+*** Overlapping of ranges is allowed, but spaces are not.
+ */
+void get_range (char *rangestring)
+{
+  int i, start, end;
+  char *p;
+  char rstring[260];
+
+  strcpy (rstring, rangestring);
+
+  for (i = 0; i < 256; i++)
+    range[i] = 0;
+
+  /* get first range */
+  p = strtok (rstring, ",");
+
+  do
+  {
+    start = end = 0;
+
+    if (*p == '-')
+    {
+      sscanf (p+1, "%i", &end);
+      start = 1;
+    }
+    else
+    {
+      i = sscanf (p, "%i-%i", &start, &end);
+      if (i == 2 && !end)
+        end = 1;
+
+      if (p[(int)strlen(p)-1] == '-')
+        end = 255;
+    }
+
+    if (start > 255)
+      start = 255;
+
+    if (end > 255)
+      end = 255;
+
+    if (start == 0)
+      start = 1;
+
+    if (!end)
+       end = start;
+
+    if (end < start)
+    {
+      /* End lower than beginning. Trade places */
+      i = start;
+      start = end;
+      end = i;
+    }
+
+    /* add range to array */
+    for (i = start ;i <= end; i++)
+      range[i] = 1;
+    range[0] = 1;
+  }
+  while((p = strtok (NULL, ",")) != NULL); /* get next range */
+
+  /* No range was defined. Set range to 1-255 */
+  if (!range[0])
+    for (i = 1; i < 256; i++)
+      range[i] = 1;
+}
+
