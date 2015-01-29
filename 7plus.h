@@ -60,8 +60,7 @@
 #define _HAVE_GMTIME
 #define _HAVE_MKTIME
 #define _HAVE_GETCH
-#define ext
-#define name
+
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -98,6 +97,7 @@ struct  m_index
 {
 	char  filename[14];  /*12  chars +2*/
 	char  full_name[258];/*256 chars +2*/
+	
 	long length;
 	ulong timestamp;
 	int  splitsize;
@@ -116,12 +116,10 @@ int   go_at_it(int argc, char **argv);
 int   screenlength(void);
 
 /** encode.c **/
-int   encode_file(char *name, long blocksize, char *searchbin,
-	int join, char *head_foot);
+int   encode_file(char *name, long blocksize, char *searchbin, int join, char *head_foot);
 void  get_range(char *rangestring);
 int   read_tb(char *name, char *go_top, char *go_bottom);
-int   top_bottom(FILE *wfile, char *top_bot, char *orgname, char *type,
-	int part, int parts);
+int   top_bottom(FILE *wfile, char *top_bot, char *orgname, char *type, int part, int parts);
 /** decode.c **/
 int   control_decode(char *name);
 int   decode_file(char *name, int flag);

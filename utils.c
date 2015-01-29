@@ -2,13 +2,6 @@
 #include "globals.h"
 #include <sys/utime.h>
 
-
-
-#if !defined (BRLND_PUTC_BUG)
-#define BRLND_PUTC_BUG
-#endif
-
-
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
 /*
@@ -161,8 +154,8 @@ int read_index(FILE *ifile, struct m_index *idxptr)
 	ulong i, begin, end;
 
 #ifdef _HAVE_CHSIZE
-	fseek (ifile, -4L, SEEK_END);
-	fseek (ifile, (long) read_ulong (ifile), SEEK_SET);
+	fseek(ifile, -4L, SEEK_END);
+	fseek(ifile, (long)read_ulong(ifile), SEEK_SET);
 #endif
 
 	/* clear index */
@@ -210,7 +203,7 @@ int read_index(FILE *ifile, struct m_index *idxptr)
 	idxptr->length = read_ulong(ifile);
 
 #ifdef _HAVE_CHSIZE
-	fseek (ifile, 0L, SEEK_SET);
+	fseek(ifile, 0L, SEEK_SET);
 #endif
 
 	return (0);
@@ -237,8 +230,8 @@ int write_index(FILE *ifile, struct m_index *idxptr, int flag)
 		   Following output is not appended, but written to the beginning
 		   of the file, although the file length grows by the correct amount!
 		   After doing chzise first, it works. */
-		chsize (fileno (ifile), (long) idxptr->length);
-		fseek (ifile, (long) idxptr->length, SEEK_SET);
+		chsize(fileno(ifile), (long)idxptr->length);
+		fseek(ifile, (long)idxptr->length, SEEK_SET);
 #endif
 
 		fprintf(ifile, "7PLUS-index\n");
@@ -700,7 +693,6 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 {
 	/* FILE *out; */
 	int  i, ret;
-
 	ret = 0;
 
 	/* Loop as long as file with same name exists. */
@@ -721,25 +713,19 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			char newnam[MAXPATH];
 			int i = 1;
 			int j, k;
-
 			fnsplit(destnam, __drive, __dir, __file, __ext);
-
 			if (flag == 3)
 				k = 7;
 			else
 				k = MAXFILE - 2;
-
 			while (1 == 1)
 			{
 				sprintf(newnam, "%d", i);
 				j = strlen(newnam);
-
 				if (strlen(__file) > (size_t)(k - j))
-					sprintf(newnam, "%s%s%*.*s$%d%s",
-					__drive, __dir, k - j, k - j, __file, i, __ext);
+					sprintf(newnam, "%s%s%*.*s$%d%s", __drive, __dir, k - j, k - j, __file, i, __ext);
 				else
 					sprintf(newnam, "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
-
 				if (!access(newnam, 0))
 				{
 					/* File with new name already exists */
@@ -752,212 +738,184 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 		} /* if */
 
 		ret = 1;
-		fprintf(o, "\007\nOutputfile '%s' already exists, overwrite? [y/n/a] ",
-			destnam);
+		fprintf(o, "\007\nOutputfile '%s' already exists, overwrite? [y/n/a] ", destnam);
 		fflush(o);
 		do
 		{
 			i = getch();
 			i = toupper(i);
-
 			fflush(stdin);
-
 			if (i == 'N')
 			{
 				if (flag)
 				{
-
 					fprintf(o, "\n");
-
-
 					/*   fclose (out); */
-
 					if (i != 0xff)
 						break;
 				}
-
 				return (ret);
 			}
+		}
+		while (i != 'Y' && i != 'A' && i != 0xff);
+	}
+}
+/*
+	*** initialize decoding table
+	***
+	***
+	*/
 
+void init_decodetab(void)
+{
+	register int i;
+	register byte j;
 
-			/*
-			*** initialize decoding table
-			***
-			***
-			*/
+	for (i = 0; i < 256; i++)
+		decode[i] = 255;
 
-			void init_decodetab(void);
-			{
-				register int i;
-				register byte j;
+	j = 0;
+	for (i = 0x21; i < 0x2a; i++)
+		decode[i] = j++;
 
-				for (i = 0; i < 256; i++)
-					decode[i] = 255;
+	for (i = 0x2b; i < 0x7f; i++)
+		decode[i] = j++;
 
-				j = 0;
-				for (i = 0x21; i < 0x2a; i++)
-					decode[i] = j++;
+	for (i = 0x80; i < 0x91; i++)
+		decode[i] = j++;
 
-				for (i = 0x2b; i < 0x7f; i++)
-					decode[i] = j++;
+	decode[0x92] = j++;
 
-				for (i = 0x80; i < 0x91; i++)
-					decode[i] = j++;
+	for (i = 0x94; i < 0xfd; i++)
+		decode[i] = j++;
+}
 
-				decode[0x92] = j++;
+/*
+*** initialize encoding table
+***
+***
+*/
 
-				for (i = 0x94; i < 0xfd; i++)
-					decode[i] = j++;
-			}
+void init_codetab(void)
+{
+	register byte i, j;
 
-			/*
-			*** initialize encoding table
-			***
-			***
-			*/
+	j = 0;
 
-			void init_codetab(void);
-			{
-				register byte i, j;
+	for (i = 0x21; i < 0x2a; i++, j++)
+		code[j] = i;
 
-				j = 0;
+	for (i = 0x2b; i < 0x7f; i++, j++)
+		code[j] = i;
 
-				for (i = 0x21; i < 0x2a; i++, j++)
-					code[j] = i;
+	for (i = 0x80; i < 0x91; i++, j++)
+		code[j] = i;
 
-				for (i = 0x2b; i < 0x7f; i++, j++)
-					code[j] = i;
+	code[j++] = 0x92;
 
-				for (i = 0x80; i < 0x91; i++, j++)
-					code[j] = i;
+	for (i = 0x94; i < 0xfd; i++, j++)
+		code[j] = i;
+}
 
-				code[j++] = 0x92;
+/*
+*** Tnx to DC4OX.
+***
+*** calculate CRC-table
+***
+*/
 
-				for (i = 0x94; i < 0xfd; i++, j++)
-					code[j] = i;
-			}
+void init_crctab(void)
+{
+	uint m, n, r, mask;
 
-			/*
-			*** Tnx to DC4OX.
-			***
-			*** calculate CRC-table
-			***
-			*/
+	static uint bitrmdrs[] = { 0x9188, 0x48C4, 0x2462, 0x1231,
+		0x8108, 0x4084, 0x2042, 0x1021 };
 
-			void init_crctab(void);
-			{
-				uint m, n, r, mask;
+	for (n = 0; n < 256; ++n)
+	{
+		for (mask = 0x0080, r = 0, m = 0; m < 8; ++m, mask >>= 1)
+			if (n & mask)
+				r = bitrmdrs[m] ^ r;
+		crctab[n] = r;
+	}
+}
 
-				static uint bitrmdrs[] = { 0x9188, 0x48C4, 0x2462, 0x1231,
-					0x8108, 0x4084, 0x2042, 0x1021 };
+/*
+*** Create a MSDOS/ATARI compatible filename.
+***
+***
+*/
 
-				for (n = 0; n < 256; ++n)
-				{
-					for (mask = 0x0080, r = 0, m = 0; m < 8; ++m, mask >>= 1)
-						if (n & mask)
-							r = bitrmdrs[m] ^ r;
-					crctab[n] = r;
-				}
-			}
+void build_DOS_name(char *name, char *ext)
+{
 
-			/*
-			*** Create a MSDOS/ATARI compatible filename.
-			***
-			***
-			*/
+	strip(name);
 
-			void build_DOS_name(char *name, char *ext);
-			{
+	if (*ext)
+		memmove(ext, ext + 1, strlen(ext));
 
-				strip(name);
+	strip(ext);
 
-				if (*ext)
-					memmove(ext, ext + 1, strlen(ext));
+	/* truncate name and extension to 8/3 */
+	name[8] = EOS;
+	ext[3] = EOS;
+}
 
-				strip(ext);
+void strip(char *string)
+{
+	register int i;
 
-				/* truncate name and extension to 8/3 */
-				name[8] = EOS;
-				ext[3] = EOS;
-			}
+	i = 0;
 
-			void strip(char *string)
-			{
-				register int i;
+	strlwr(string);
 
-				i = 0;
+	if (*string)
+	{
+		do
+		{
+			if (string[i] < 32 || string[i] > 126)
+				string[i] = '_';
 
-				strlwr(string);
+			if (strchr(" <>=,';:*?&[]{}|^()/.\\\"~+@", string[i]) != NULL)
+				string[i] = '_';
+		} while (string[++i]);
 
-				if (*string)
-				{
-					do
-					{
-						if (string[i] < 32 || string[i] > 126)
-							string[i] = '_';
-
-						if (strchr(" <>=,';:*?&[]{}|^()/.\\\"~+@", string[i]) != NULL)
-							string[i] = '_';
-					} while (string[++i]);
-
-					string[i] = EOS;
-				}
-			}
+		string[i] = EOS;
+	}
+}
 
 
 
 #define _SETFTIME_OK
-			/*
-			*** Set file's timestamp
-			***
-			***
-			*/
-			void set_filetime(FILE *_file, ulong ftimestamp);
-			{
-
-
-				if (setftime (fileno(_file), (struct ftime *)&ftimestamp) == EOF)
-					fprintf (o, "\007\nCan't set file's timestamp!");
-			}
+/*
+*** Set file's timestamp
+***
+***
+*/
+void set_filetime(FILE *_file, ulong ftimestamp)
+{
+	if (setftime(fileno(_file), (struct ftime *)&ftimestamp) == EOF)
+		fprintf(o, "\007\nCan't set file's timestamp!");
+}
 
 #ifndef _HAVE_GMTIME
-			/*
-			* mktime function from GNU C library V1.03; modified:
-			* - expanded DEFUN and CONST macros from ansidecl.h
-			* - inserted __isleap macro from time.h
-			* - inserted __mon_lengths array and __offtime function from offtime.c
-			* - inserted gmtime function from gmtime.c
-			* - commented out call of localtime function
-			* Be aware of the following copyright message for mktime !!!
-			*/
+/*
+* mktime function from GNU C library V1.03; modified:
+* - expanded DEFUN and CONST macros from ansidecl.h
+* - inserted __isleap macro from time.h
+* - inserted __mon_lengths array and __offtime function from offtime.c
+* - inserted gmtime function from gmtime.c
+* - commented out call of localtime function
+* Be aware of the following copyright message for mktime !!!
+* How many days are in each month.  */
 
-			/* Copyright (C) 1991 Free Software Foundation, Inc.
-			This file is part of the GNU C Library.
-
-			The GNU C Library is free software; you can redistribute it and/or
-			modify it under the terms of the GNU Library General Public License as
-			published by the Free Software Foundation; either version 2 of the
-			License, or (at your option) any later version.
-
-			The GNU C Library is distributed in the hope that it will be useful,
-			but WITHOUT ANY WARRANTY; without even the implied warranty of
-			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-			Library General Public License for more details.
-
-			You should have received a copy of the GNU Library General Public
-			License along with the GNU C Library; see the file COPYING.LIB.  If
-			not, write to the Free Software Foundation, Inc., 675 Mass Ave,
-			Cambridge, MA 02139, USA.  */
-
-
-			/* How many days are in each month.  */
-			const unsigned short int __mon_lengths[2][12] =
-			{
-				/* Normal years.  */
-				{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
-				/* Leap years.  */
-				{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
-			};
+const unsigned short int __mon_lengths[2][12] =
+{
+	/* Normal years.  */
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+	/* Leap years.  */
+	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
+};
 
 #define  __isleap(year)  \
 	((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
@@ -968,503 +926,503 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 #define  SECS_PER_HOUR  (60 * 60)
 #define  SECS_PER_DAY  (SECS_PER_HOUR * 24)
 
-			/* Returns the `struct tm' representation of *T,
-			   offset OFFSET seconds east of UCT.  */
-			struct tm *
-				__offtime(const time_t *t, long int offset)
-			{
-				static struct tm tbuf;
-				register long int days, rem;
-				register int y;
-				register const unsigned short int *ip;
+/* Returns the `struct tm' representation of *T,
+   offset OFFSET seconds east of UCT.  */
+struct tm *
+	__offtime(const time_t *t, long int offset)
+{
+	static struct tm tbuf;
+	register long int days, rem;
+	register int y;
+	register const unsigned short int *ip;
 
-				if (t == NULL)
-					return NULL;
+	if (t == NULL)
+		return NULL;
 
-				days = *t / SECS_PER_DAY;
-				rem = *t % SECS_PER_DAY;
-				rem += offset;
-				while (rem < 0)
-				{
-					rem += SECS_PER_DAY;
-					--days;
-				}
-				while (rem >= SECS_PER_DAY)
-				{
-					rem -= SECS_PER_DAY;
-					++days;
-				}
-				tbuf.tm_hour = rem / SECS_PER_HOUR;
-				rem %= SECS_PER_HOUR;
-				tbuf.tm_min = rem / 60;
-				tbuf.tm_sec = rem % 60;
-				/* January 1, 1970 was a Thursday.  */
-				tbuf.tm_wday = (4 + days) % 7;
-				if (tbuf.tm_wday < 0)
-					tbuf.tm_wday += 7;
-				y = 1970;
-				while (days >= (rem = __isleap(y) ? 366 : 365))
-				{
-					++y;
-					days -= rem;
-				}
-				while (days < 0)
-				{
-					--y;
-					days += __isleap(y) ? 366 : 365;
-				}
-				tbuf.tm_year = y - 1900;
-				tbuf.tm_yday = days;
-				ip = __mon_lengths[__isleap(y)];
-				for (y = 0; days >= ip[y]; ++y)
-					days -= ip[y];
-				tbuf.tm_mon = y;
-				tbuf.tm_mday = days + 1;
-				tbuf.tm_isdst = -1;
+	days = *t / SECS_PER_DAY;
+	rem = *t % SECS_PER_DAY;
+	rem += offset;
+	while (rem < 0)
+	{
+		rem += SECS_PER_DAY;
+		--days;
+	}
+	while (rem >= SECS_PER_DAY)
+	{
+		rem -= SECS_PER_DAY;
+		++days;
+	}
+	tbuf.tm_hour = rem / SECS_PER_HOUR;
+	rem %= SECS_PER_HOUR;
+	tbuf.tm_min = rem / 60;
+	tbuf.tm_sec = rem % 60;
+	/* January 1, 1970 was a Thursday.  */
+	tbuf.tm_wday = (4 + days) % 7;
+	if (tbuf.tm_wday < 0)
+		tbuf.tm_wday += 7;
+	y = 1970;
+	while (days >= (rem = __isleap(y) ? 366 : 365))
+	{
+		++y;
+		days -= rem;
+	}
+	while (days < 0)
+	{
+		--y;
+		days += __isleap(y) ? 366 : 365;
+	}
+	tbuf.tm_year = y - 1900;
+	tbuf.tm_yday = days;
+	ip = __mon_lengths[__isleap(y)];
+	for (y = 0; days >= ip[y]; ++y)
+		days -= ip[y];
+	tbuf.tm_mon = y;
+	tbuf.tm_mday = days + 1;
+	tbuf.tm_isdst = -1;
 
-				return &tbuf;
-			}
+	return &tbuf;
+}
 
 
-			/* Return the `struct tm' representation of *T in UTC.  */
-			struct tm *
-				gmtime(const time_t *t)
-			{
-				return __offtime(t, 0L);
-			}
+/* Return the `struct tm' representation of *T in UTC.  */
+struct tm *
+	gmtime(const time_t *t)
+{
+	return __offtime(t, 0L);
+}
 #endif /* ifndef _HAVE_GMTIME */
 
 #ifndef _HAVE_MKTIME
 
-			/* Return the `time_t' representation of TP and normalizes TP.
-			   Return (time_t) -1 if TP is not representable as a `time_t'.
-			   Note that 31 Dec 1969 23:59:59 is not representable
-			   because it is represented as (time_t) -1.  */
-			time_t mktime(register struct tm *tp)
-			{
-				static struct tm min, max;
-				static char init = 0;
+/* Return the `time_t' representation of TP and normalizes TP.
+   Return (time_t) -1 if TP is not representable as a `time_t'.
+   Note that 31 Dec 1969 23:59:59 is not representable
+   because it is represented as (time_t) -1.  */
+time_t mktime(register struct tm *tp)
+{
+	static struct tm min, max;
+	static char init = 0;
 
-				register time_t result;
-				register time_t t;
-				register int i;
-				register const unsigned short *l;
-				register struct tm *new;
-				time_t end;
+	register time_t result;
+	register time_t t;
+	register int i;
+	register const unsigned short *l;
+	register struct tm *new;
+	time_t end;
 
-				if (tp == NULL)
-				{
-					errno = EINVAL;
-					invalid();
-				}
+	if (tp == NULL)
+	{
+		errno = EINVAL;
+		invalid();
+	}
 
-				if (!init)
-				{
-					init = 1;
-					end = (time_t)LONG_MIN;
-					new = gmtime(&end);
-					if (new != NULL)
-						min = *new;
-					else
-						min.tm_sec = min.tm_min = min.tm_hour =
-						min.tm_mday = min.tm_mon = min.tm_year = INT_MIN;
+	if (!init)
+	{
+		init = 1;
+		end = (time_t)LONG_MIN;
+		new = gmtime(&end);
+		if (new != NULL)
+			min = *new;
+		else
+			min.tm_sec = min.tm_min = min.tm_hour =
+			min.tm_mday = min.tm_mon = min.tm_year = INT_MIN;
 
-					end = (time_t)LONG_MAX;
-					new = gmtime(&end);
-					if (new != NULL)
-						max = *new;
-					else
-						max.tm_sec = max.tm_min = max.tm_hour =
-						max.tm_mday = max.tm_mon = max.tm_year = INT_MAX;
-				}
+		end = (time_t)LONG_MAX;
+		new = gmtime(&end);
+		if (new != NULL)
+			max = *new;
+		else
+			max.tm_sec = max.tm_min = max.tm_hour =
+			max.tm_mday = max.tm_mon = max.tm_year = INT_MAX;
+	}
 
-				/* Make all the elements of TP that we pay attention to
-				   be within the ranges of reasonable values for those things.  */
+	/* Make all the elements of TP that we pay attention to
+	   be within the ranges of reasonable values for those things.  */
 #define  normalize(elt, min, max, nextelt)\
-		while (tp->elt < min)                     \
-			{                                         \
+			while (tp->elt < min)                     \
+						{                                         \
 	  --tp->nextelt;                          \
 	  tp->elt += max + 1;                     \
-			}                                         \
-				while (tp->elt > max)                     \
-					{                                         \
+						}                                         \
+										while (tp->elt > max)                     \
+															{                                         \
 	  ++tp->nextelt;                          \
 	  tp->elt -= max + 1;                     \
-					}
+															}
 
-				normalize(tm_sec, 0, 59, tm_min);
-				normalize(tm_min, 0, 59, tm_hour);
-				normalize(tm_hour, 0, 24, tm_mday);
+	normalize(tm_sec, 0, 59, tm_min);
+	normalize(tm_min, 0, 59, tm_hour);
+	normalize(tm_hour, 0, 24, tm_mday);
 
-				/* Normalize the month first so we can use
-				   it to figure the range for the day.  */
-				normalize(tm_mon, 0, 11, tm_year);
-				normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
-					tm_mon);
+	/* Normalize the month first so we can use
+	   it to figure the range for the day.  */
+	normalize(tm_mon, 0, 11, tm_year);
+	normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
+		tm_mon);
 
-				/* Normalize the month again, since normalizing
-				   the day may have pushed it out of range.  */
-				normalize(tm_mon, 0, 11, tm_year);
+	/* Normalize the month again, since normalizing
+	   the day may have pushed it out of range.  */
+	normalize(tm_mon, 0, 11, tm_year);
 
-				/* Normalize the day again, because normalizing
-				   the month may have changed the range.  */
-				normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
-					tm_mon);
+	/* Normalize the day again, because normalizing
+	   the month may have changed the range.  */
+	normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
+		tm_mon);
 
-				/* Check for out-of-range values.  */
+	/* Check for out-of-range values.  */
 #define  lowhigh(field, minmax, cmp)  (tp->field cmp minmax.field)
 #define  low(field)                   lowhigh(field, min, <)
 #define  high(field)                  lowhigh(field, max, >)
 #define  oor(field)                   (low(field) || high(field))
 #define  lowbound(field)              (tp->field == min.field)
 #define  highbound(field)             (tp->field == max.field)
-				if (oor(tm_year))
+	if (oor(tm_year))
+		invalid();
+	else
+		if (lowbound(tm_year))
+		{
+			if (low(tm_mon))
+				invalid();
+			else
+				if (lowbound(tm_mon))
+				{
+					if (low(tm_mday))
+						invalid();
+					else
+						if (lowbound(tm_mday))
+						{
+							if (low(tm_hour))
+								invalid();
+							else
+								if (lowbound(tm_hour))
+								{
+									if (low(tm_min))
+										invalid();
+									else
+										if (lowbound(tm_min))
+										{
+											if (low(tm_sec))
+												invalid();
+										}
+								}
+						}
+				}
+		}
+		else
+			if (highbound(tm_year))
+			{
+				if (high(tm_mon))
 					invalid();
 				else
-					if (lowbound(tm_year))
+					if (highbound(tm_mon))
 					{
-						if (low(tm_mon))
+						if (high(tm_mday))
 							invalid();
 						else
-							if (lowbound(tm_mon))
+							if (highbound(tm_mday))
 							{
-								if (low(tm_mday))
+								if (high(tm_hour))
 									invalid();
 								else
-									if (lowbound(tm_mday))
+									if (highbound(tm_hour))
 									{
-										if (low(tm_hour))
+										if (high(tm_min))
 											invalid();
 										else
-											if (lowbound(tm_hour))
+											if (highbound(tm_min))
 											{
-												if (low(tm_min))
+												if (high(tm_sec))
 													invalid();
-												else
-													if (lowbound(tm_min))
-													{
-														if (low(tm_sec))
-															invalid();
-													}
 											}
 									}
 							}
 					}
-					else
-						if (highbound(tm_year))
-						{
-							if (high(tm_mon))
-								invalid();
-							else
-								if (highbound(tm_mon))
-								{
-									if (high(tm_mday))
-										invalid();
-									else
-										if (highbound(tm_mday))
-										{
-											if (high(tm_hour))
-												invalid();
-											else
-												if (highbound(tm_hour))
-												{
-													if (high(tm_min))
-														invalid();
-													else
-														if (highbound(tm_min))
-														{
-															if (high(tm_sec))
-																invalid();
-														}
-												}
-										}
-								}
-						}
-				t = 0;
-				for (i = 1970; i > 1900 + tp->tm_year; --i)
-					t -= __isleap(i) ? 366 : 365;
-				for (i = 1970; i < 1900 + tp->tm_year; ++i)
-					t += __isleap(i) ? 366 : 365;
-				l = __mon_lengths[__isleap(1900 + tp->tm_year)];
-				for (i = 0; i < tp->tm_mon; ++i)
-					t += l[i];
-				t += tp->tm_mday - 1;
-				result = ((t * 60 * 60 * 24) +
-					(tp->tm_hour * 60 * 60) +
-					(tp->tm_min * 60) +
-					tp->tm_sec);
-
-				end = result;
-#if 0
-				if (tp->tm_isdst < 0)
-					new = localtime(&end);
-				else
-#endif
-					new = gmtime(&end);
-				if (new == NULL)
-					invalid();
-				new->tm_isdst = tp->tm_isdst;
-				*tp = *new;
-
-				return result;
 			}
+	t = 0;
+	for (i = 1970; i > 1900 + tp->tm_year; --i)
+		t -= __isleap(i) ? 366 : 365;
+	for (i = 1970; i < 1900 + tp->tm_year; ++i)
+		t += __isleap(i) ? 366 : 365;
+	l = __mon_lengths[__isleap(1900 + tp->tm_year)];
+	for (i = 0; i < tp->tm_mon; ++i)
+		t += l[i];
+	t += tp->tm_mday - 1;
+	result = ((t * 60 * 60 * 24) +
+		(tp->tm_hour * 60 * 60) +
+		(tp->tm_min * 60) +
+		tp->tm_sec);
+
+	end = result;
+#if 0
+	if (tp->tm_isdst < 0)
+		new = localtime(&end);
+	else
+#endif
+		new = gmtime(&end);
+	if (new == NULL)
+		invalid();
+	new->tm_isdst = tp->tm_isdst;
+	*tp = *new;
+
+	return result;
+}
 #endif /* ifndef _HAVE_MKTIME */
 
 #ifndef _FTIMEDEFINED
-			/*
-			 * these functions have to convert a MS/DOS time to a UNIX time
-			 * and vice versa.
-			 * here comes the MS/DOS time structure
-			 */
+/*
+ * these functions have to convert a MS/DOS time to a UNIX time
+ * and vice versa.
+ * here comes the MS/DOS time structure
+ */
 #ifdef _680X0_  /* use this struct on 680x0 systems */
-			struct ftime
-			{
-				unsigned int ft_year  : 7; /* Year minus 1980 */
-				unsigned int ft_month : 4;   /* 1..12 */
-				unsigned int ft_day   : 5;   /* 1..31 */
-				unsigned int ft_hour  : 5;   /* 0..23 */
-				unsigned int ft_min   : 6;   /* 0..59 */
-				unsigned int ft_tsec  : 5;   /* 0..59 /2 (!) */
-			};
+struct ftime
+{
+	unsigned int ft_year  : 7; /* Year minus 1980 */
+	unsigned int ft_month : 4;   /* 1..12 */
+	unsigned int ft_day   : 5;   /* 1..31 */
+	unsigned int ft_hour  : 5;   /* 0..23 */
+	unsigned int ft_min   : 6;   /* 0..59 */
+	unsigned int ft_tsec  : 5;   /* 0..59 /2 (!) */
+};
 #else  /* and this one on 80x86 systems */
-			struct ftime
-			{
-				unsigned  ft_tsec : 5;   /* 0..59 /2 (!) */
-				unsigned  ft_min : 6;   /* 0..59 */
-				unsigned  ft_hour : 5;   /* 0..23 */
-				unsigned  ft_day : 5;   /* 1..31 */
-				unsigned  ft_month : 4;   /* 1..12 */
-				unsigned  ft_year : 7; /* Year minus 1980 */
-			};
+struct ftime
+{
+	unsigned  ft_tsec : 5;   /* 0..59 /2 (!) */
+	unsigned  ft_min : 6;   /* 0..59 */
+	unsigned  ft_hour : 5;   /* 0..23 */
+	unsigned  ft_day : 5;   /* 1..31 */
+	unsigned  ft_month : 4;   /* 1..12 */
+	unsigned  ft_year : 7; /* Year minus 1980 */
+};
 #endif
 #endif /* _FTIMEDEFINED */
 
-			/*
-			 * Get file's timestamp and package it into a 32-bit word (MS_DOS-format).
-			 * This function should work on any system (even on AMIGAs) :-)
-			 */
-			ulong get_filetime(const char *filename);
-			{
-				struct ftime fti;
-				ulong *retval = (ulong *)&fti;
-				struct tm *utm;
-				struct stat fst;
+/*
+ * Get file's timestamp and package it into a 32-bit word (MS_DOS-format).
+ * This function should work on any system (even on AMIGAs) :-)
+ */
+ulong get_filetime(const char *filename)
+{
+	struct ftime fti;
+	ulong *retval = (ulong *)&fti;
+	struct tm *utm;
+	struct stat fst;
 
-				*retval = 0UL;
+	*retval = 0UL;
 
-				/* get file status */
-				if (stat(filename, &fst) == 0)
-				{
-					/* get time of last modification and convert it to MS/DOS time */
-					utm = localtime(&fst.st_mtime);
+	/* get file status */
+	if (stat(filename, &fst) == 0)
+	{
+		/* get time of last modification and convert it to MS/DOS time */
+		utm = localtime(&fst.st_mtime);
 
-					if (utm)
-					{
+		if (utm)
+		{
 
-						fti.ft_tsec = utm->tm_sec / 2;
+			fti.ft_tsec = utm->tm_sec / 2;
 
-						fti.ft_min = utm->tm_min;
-						fti.ft_hour = utm->tm_hour;
-						fti.ft_day = utm->tm_mday;
-						fti.ft_month = utm->tm_mon + 1;
-						fti.ft_year = utm->tm_year - 80;
+			fti.ft_min = utm->tm_min;
+			fti.ft_hour = utm->tm_hour;
+			fti.ft_day = utm->tm_mday;
+			fti.ft_month = utm->tm_mon + 1;
+			fti.ft_year = utm->tm_year - 80;
 
-						return (*retval);
-					}
-				}
+			return (*retval);
+		}
+	}
 
-				/* error exit */
-				fprintf(o, "\007\nCan't get file's timestamp!\n");
-				return (*retval);
-			}
+	/* error exit */
+	fprintf(o, "\007\nCan't get file's timestamp!\n");
+	return (*retval);
+}
 
 
 
 
 
 #ifndef _SETFTIME_OK
-			/*
-			 * Set file's timestamp
-			 *
-			 */
-			void set_filetime(const char *filename, ulong ftimestamp)
-			{
-				/* error exit */
-				fprintf(o, "\007\nset_filetime not (yet) implemented on this system!\n"
-					"7PLUS should NOT be circulated until it is implemented!!\n"
-					"Axel, DG1BBQ.\n");
-				return;
-			}
+/*
+ * Set file's timestamp
+ *
+ */
+void set_filetime(const char *filename, ulong ftimestamp)
+{
+	/* error exit */
+	fprintf(o, "\007\nset_filetime not (yet) implemented on this system!\n"
+		"7PLUS should NOT be circulated until it is implemented!!\n"
+		"Axel, DG1BBQ.\n");
+	return;
+}
 #endif
-#endif
 
 
-			/*
-			*** get_hex: some compilers have real big trouble when reading hex values from
-			***          a file with fscanf() that have leading zeros! e.g. 00A will be
-			***          read as two separate values (0 and A)! grr!!
-			***          get_hex skips all leading zeros to eliminate the problem.
-			***
-			*/
 
-			uint get_hex(char *hex)
-			{
-				register int i = 0;
-				uint   ret = 0;
+/*
+*** get_hex: some compilers have real big trouble when reading hex values from
+***          a file with fscanf() that have leading zeros! e.g. 00A will be
+***          read as two separate values (0 and A)! grr!!
+***          get_hex skips all leading zeros to eliminate the problem.
+***
+*/
 
-				while (hex[i] == '0')
-					i++;
-				sscanf(hex + i, "%x", &ret);
-				return (ret);
-			}
+uint get_hex(char *hex)
+{
+	register int i = 0;
+	uint   ret = 0;
+
+	while (hex[i] == '0')
+		i++;
+	sscanf(hex + i, "%x", &ret);
+	return (ret);
+}
 
 
 #ifndef _HAVE_FNSPLIT
-			/*
-			***       filenamesplit
-			***       (by DL1MEN, taken from SP-ST, modified for portability)
-			***
-			***       split filename up into drive, path, name and extension.
-			***
-			*/
+/*
+***       filenamesplit
+***       (by DL1MEN, taken from SP-ST, modified for portability)
+***
+***       split filename up into drive, path, name and extension.
+***
+*/
 
-			void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
-			{
-				char drv[MAXDRIVE], pat[MAXDIR], fna[MAXFILE], fty[MAXEXT], tmp[MAXPATH];
-				char *p;
+void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
+{
+	char drv[MAXDRIVE], pat[MAXDIR], fna[MAXFILE], fty[MAXEXT], tmp[MAXPATH];
+	char *p;
 
-				strcpy(tmp, pth);
-
-
-				if ((p = strchr(tmp, ':')) != NULL)
-				{
-					*p++ = EOS;
-					strcpy(drv, tmp);
-				}
-				else
-				{
-					p = tmp;
-					drv[0] = EOS;
-				}
+	strcpy(tmp, pth);
 
 
-				if ((pth = strrchr(p, PATHCHAR)) != NULL)
-				{
-					*pth++ = EOS;
-					strcpy(pat, p);
-				}
-				else
-				{
-					pth = p;
-					pat[0] = EOS;
-				}
-				if ((p = strrchr(pth, '.')) != NULL)
-				{
-					strcpy(fty, p);
-					fty[MAXEXT - 1] = EOS;
-					*p = EOS;
-				}
-				else
-					fty[0] = EOS;
+	if ((p = strchr(tmp, ':')) != NULL)
+	{
+		*p++ = EOS;
+		strcpy(drv, tmp);
+	}
+	else
+	{
+		p = tmp;
+		drv[0] = EOS;
+	}
 
-				strcpy(fna, pth);
-				fna[MAXFILE - 1] = EOS;
 
-				if (dr)
-				{
-					strcpy(dr, drv);
-					if (drv[0])
-						strcat(dr, ":");
-				}
-				if (pa)
-				{
-					strcpy(pa, pat);
-					if (pat[0])
-						strcat(pa, PATHSEP);
-				}
-				if (fn)
-					strcpy(fn, fna);
-				if (ft)
-					strcpy(ft, fty);
-			}
+	if ((pth = strrchr(p, PATHCHAR)) != NULL)
+	{
+		*pth++ = EOS;
+		strcpy(pat, p);
+	}
+	else
+	{
+		pth = p;
+		pat[0] = EOS;
+	}
+	if ((p = strrchr(pth, '.')) != NULL)
+	{
+		strcpy(fty, p);
+		fty[MAXEXT - 1] = EOS;
+		*p = EOS;
+	}
+	else
+		fty[0] = EOS;
+
+	strcpy(fna, pth);
+	fna[MAXFILE - 1] = EOS;
+
+	if (dr)
+	{
+		strcpy(dr, drv);
+		if (drv[0])
+			strcat(dr, ":");
+	}
+	if (pa)
+	{
+		strcpy(pa, pat);
+		if (pat[0])
+			strcat(pa, PATHSEP);
+	}
+	if (fn)
+		strcpy(fn, fna);
+	if (ft)
+		strcpy(ft, fty);
+}
 #endif /** ifndef _HAVE_FNSPLIT **/
 
 #ifndef _HAVE_ICMP
-			/* The following functions are unfortunately not avialable on all compilers */
+/* The following functions are unfortunately not avialable on all compilers */
 
-			/*
-			*** strupr - convert string to upper case.
-			***
-			***
-			*/
+/*
+*** strupr - convert string to upper case.
+***
+***
+*/
 
-			char *strupr(char *string)
-			{
-				char *strcnvt(char *string, int flag);
+char *strupr(char *string)
+{
+	char *strcnvt(char *string, int flag);
 
-				return (strcnvt(string, 1));
-			}
+	return (strcnvt(string, 1));
+}
 
-			/*
-			*** strlwr - convert string to lower case.
-			***
-			***
-			*/
+/*
+*** strlwr - convert string to lower case.
+***
+***
+*/
 
-			char *strlwr(char *string)
-			{
-				char *strcnvt(char *string, int flag);
+char *strlwr(char *string)
+{
+	char *strcnvt(char *string, int flag);
 
-				return (strcnvt(string, 0));
-			}
+	return (strcnvt(string, 0));
+}
 
-			/*
-			*** strcnvt - convert string to upper (flag == 1) or lower (flag == 0) case.
-			***
-			***
-			*/
+/*
+*** strcnvt - convert string to upper (flag == 1) or lower (flag == 0) case.
+***
+***
+*/
 
-			char *strcnvt(char *string, int flag)
-			{
-				register int i = 0;
+char *strcnvt(char *string, int flag)
+{
+	register int i = 0;
 
-				while (string[i])
-				{
-					string[i] = (flag) ? toupper(string[i]) : tolower(string[i]);
-					i++;
-				}
+	while (string[i])
+	{
+		string[i] = (flag) ? toupper(string[i]) : tolower(string[i]);
+		i++;
+	}
 
-				return (string);
-			}
+	return (string);
+}
 
-			/*
-			*** stricmp - same as strcmp(), but ignores case.
-			*** s1 and s2 are not modified.
-			***
-			*/
+/*
+*** stricmp - same as strcmp(), but ignores case.
+*** s1 and s2 are not modified.
+***
+*/
 
-			int stricmp(const char *s1, const char *s2)
-			{
-				return (strnicmp(s1, s2, (size_t)80));
-			}
+int stricmp(const char *s1, const char *s2)
+{
+	return (strnicmp(s1, s2, (size_t)80));
+}
 
-			/*
-			*** strnicmp - same as strncmp(), but ignores case.
-			*** s1 and s2 are not modified.
-			***
-			*/
+/*
+*** strnicmp - same as strncmp(), but ignores case.
+*** s1 and s2 are not modified.
+***
+*/
 
-			int strnicmp(const char *s1, const char *s2, size_t n)
-			{
-				char _s1[81], _s2[81];
+int strnicmp(const char *s1, const char *s2, size_t n)
+{
+	char _s1[81], _s2[81];
 
-				strncpy(_s1, s1, 80);
-				strncpy(_s2, s2, 80);
-				strupr(_s1);
-				strupr(_s2);
+	strncpy(_s1, s1, 80);
+	strncpy(_s2, s2, 80);
+	strupr(_s1);
+	strupr(_s2);
 
-				return (strncmp(_s1, _s2, n));
-			}
+	return (strncmp(_s1, _s2, n));
+}
 #endif /** ifndef _HAVE_ICMP **/
 
 #ifndef _HAVE_GETCH
@@ -1475,75 +1433,75 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 
 
 
-			int getch(void)
-			{
-				int c;
+int getch(void)
+{
+	int c;
 
-				c = getchar();
-				if (c == 0x0a)  return (c);
-				while (getchar() != 0x0a);   /* anything will be ignored - wait for LF */
-				return (c);
-			}
+	c = getchar();
+	if (c == 0x0a)  return (c);
+	while (getchar() != 0x0a);   /* anything will be ignored - wait for LF */
+	return (c);
+}
 
 #else
-			/*
-			*** getch - elsewhere
-			*** Disable keyboard buffering and echoing.
-			***
-			*/
+/*
+*** getch - elsewhere
+*** Disable keyboard buffering and echoing.
+***
+*/
 
-			static int first = 1;
+static int first = 1;
 
-			int getch (void)
-			{
-				unsigned char c;
-				int fd;
+int getch(void)
+{
+	unsigned char c;
+	int fd;
 
-				fd = fileno (stdin);
-				if (first)
-				{
-					first = 0;
+	fd = fileno(stdin);
+	if (first)
+	{
+		first = 0;
 #ifdef _IOCTL_
 
-					(void) ioctl(fd, TCGETA, (char *) &sg[OFF]);
+		(void) ioctl(fd, TCGETA, (char *) &sg[OFF]);
 
 #else
-					(void) gtty(fd, &sg[OFF]);
+		(void)gtty(fd, &sg[OFF]);
 #endif
-					sg[ON] = sg[OFF];
-
-#ifdef _IOCTL_
-
-					sg[ON].c_lflag &= ~(ICANON|ECHO);
-
-					sg[ON].c_cc[VMIN] = 1;
-					sg[ON].c_cc[VTIME] = 0;
-#else
-					sg[ON].sg_flags &= ~(ECHO | CRMOD);
-					sg[ON].sg_flags |= CBREAK;
-#endif
-				}
+		sg[ON] = sg[OFF];
 
 #ifdef _IOCTL_
 
-				(void) ioctl(fd, TCSETAW, (char *) &sg[ON]);
+		sg[ON].c_lflag &= ~(ICANON|ECHO);
 
+		sg[ON].c_cc[VMIN] = 1;
+		sg[ON].c_cc[VTIME] = 0;
 #else
-				(void) stty(fd, &sg[ON]);
+		sg[ON].sg_flags &= ~(ECHO | CRMOD);
+		sg[ON].sg_flags |= CBREAK;
 #endif
-
-				read(fd, &c, 1);
+	}
 
 #ifdef _IOCTL_
 
-				(void) ioctl(fd, TCSETAW, (char *) &sg[OFF]);
+	(void) ioctl(fd, TCSETAW, (char *) &sg[ON]);
 
 #else
-				(void) stty(fd, &sg[OFF]);
+	(void)stty(fd, &sg[ON]);
 #endif
 
-				return (int) c;
-			}
+	read(fd, &c, 1);
+
+#ifdef _IOCTL_
+
+	(void) ioctl(fd, TCSETAW, (char *) &sg[OFF]);
+
+#else
+	(void)stty(fd, &sg[OFF]);
+#endif
+
+	return (int)c;
+}
 
 #ifdef _IOCTL_
 #undef _IOCTL_
