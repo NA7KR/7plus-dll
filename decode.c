@@ -1,6 +1,6 @@
 #include "7plus.h"
 #include "globals.h"
-#include "os9/stat.h"
+
 /*
 *** First decode. If there already are CORs for that file, try correcting
 *** afterwards.
@@ -10,10 +10,8 @@ int control_decode (char *name)
 {
   int i, j, cor_exists;
   char newname[MAXPATH];
-  FILE *out;
-  char filename[MAXPATH];
 
-  j = cor_exists = 0;
+  i = j = cor_exists = 0;
   *_ext = EOS;
 
   fnsplit (name, _drive, _dir, _file, _ext);
@@ -30,31 +28,16 @@ int control_decode (char *name)
   {
     sprintf (newname, "%s%s%s.7mf", _drive, _dir, _file);
     j = correct_meta (newname, 0, cor_exists?1:0);
-    if (j == 16)
-      i = 11;
-    else
-      i = j;
+    if (j != 16)
+      return (j);
+    i = 11;
   }
 
   if (i == 11 && cor_exists)
   {
     sprintf (newname, "%s%s%s.cor", _drive, _dir, _file);
-    i = correct_meta (newname, 1, j==16?2:0);
+    return (correct_meta (newname, 1, j==16?2:0));
   }
-
-  /* write 7plus.fls (for server use) */
-  sprintf (filename, "%s"_7PLUS_FLS, genpath);
-  if (!i && fls)
-  {
-    if ((out = fopen (filename, OPEN_WRITE_TEXT)) == NULLFP)
-      return (14);
-    check_fn (idxptr->full_name)
-    fprintf (out, "%s %s\n", idxptr->filename, idxptr->full_name);
-    fclose (out);
-  }
-  else
-    unlink (filename);
-
   return (i);
 }
 
@@ -74,16 +57,16 @@ int decode_file (char *name, int flag)
   int      c_line, c_line2, c_line3, f_lines, blocklines;
   int      defect, rest, length, hcorrupted, ignored;
   uint     csequence, crc;
-  long     binbytes, _binbytes, lines, rebuilt, k, line;
-  ulong    ftimestamp;
+  long     binbytes, _binbytes, lines, rebuilt, k;
+  ulong    ftimestamp, line;
   char     rline[81], *p, dummi[20], dummi2[81];
   char     inpath[MAXFPATH], indexfile[MAXPATH], metafile[MAXPATH];
   char     filename[13], srcname[MAXPATH], orgname[MAXFNAME];
   char     orgname2[66], destname[13], orgdestname[13];
-  register int i, j;
+  register i, j;
 
   *orgname = EOS;
-  out = NULLFP;
+  in = out = NULLFP;
   hcorrupted = ignored = part = blocklines = parts = 0;
   ftimestamp = 0UL;
   binbytes = 0L;
@@ -91,9 +74,7 @@ int decode_file (char *name, int flag)
   /* Isolate input-path and filename */
   fnsplit (name, _drive, _dir, _file, _ext);
   sprintf (inpath, "%s%s", _drive, _dir);
-  if (*_ext)
-    memmove (_ext, _ext +1, strlen (_ext));
-  /*build_DOS_name (_file, _ext);*/
+  build_DOS_name (_file, _ext);
 
   /* Make up names for the meta- and indexfile */
   sprintf (metafile,  "%s%s.7mf", genpath, _file);
@@ -116,10 +97,11 @@ int decode_file (char *name, int flag)
     {
       if (sscanf (_ext, "p%x", &part) == 1)
       {
+        parts = 257;
         sprintf (srcname, "%s%s.%s", inpath, _file, _ext);
         if (test_exist (srcname))
         {
-          fprintf (o, cant, srcname);
+	  fprintf (o, cant, srcname);
           return (2);
         }
       }
@@ -144,33 +126,18 @@ int decode_file (char *name, int flag)
   {
     part = 1;
 
-    if (*_ext)
+    /* Find out, if it's a splitted file */
+    parts = 2;
+    sprintf (srcname, "%s%s.p01", inpath, _file);
+    if (test_exist (srcname))
     {
       parts = 1;
-      if (!stricmp (_ext, "p01"))
-        parts = 2;
-      sprintf (srcname, "%s%s.%s", inpath, _file, _ext);
+      sprintf (srcname, "%s%s.7pl", inpath, _file);
       if (test_exist (srcname))
       {
-        fprintf (o, cant, srcname);
+        sprintf (srcname, "%s.7pl or %s.p01", _file, _file);
+	fprintf (o, cant, srcname);
         return (2);
-      }
-    }
-    else
-    {
-      /* Find out, if it's a split file */
-      parts = 2;
-      sprintf (srcname, "%s%s.p01", inpath, _file);
-      if (test_exist (srcname))
-      {
-        parts = 1;
-        sprintf (srcname, "%s%s.7pl", inpath, _file);
-        if (test_exist (srcname))
-        {
-          sprintf (srcname, "%s.7pl or %s.p01", _file, _file);
-          fprintf (o, cant, srcname);
-          return (2);
-        }
       }
     }
   }
@@ -181,8 +148,8 @@ int decode_file (char *name, int flag)
   setvbuf (in, NULL, _IOFBF, buflen);
 
   fprintf (o, "\n-----------\n"
-                "Decoding...\n"
-                "-----------\n\n");
+		"Decoding...\n"
+		"-----------\n\n");
 
   defect = _parts0 = rest = length = 0;
   lines = rebuilt = 0L;
@@ -211,7 +178,7 @@ int decode_file (char *name, int flag)
       {
         if (sysop != 2)
         {
-          fprintf (o, "\007\n'%s': Not found. Break.\n"
+	  fprintf (o, "\007\n'%s': Not found. Break.\n"
                   "\nYou must have all parts to be able to decode!\n"
                     "              ===\n"
                   "Get the missing files and try again.\n", srcname);
@@ -226,10 +193,9 @@ int decode_file (char *name, int flag)
           if (part == parts)
           {
 
-            j = (int) (((binbytes + 61) % line) /62);
-
-            if (!j)
-             j = blocklines;
+            j = (int) ((binbytes + 61) % line) /62;
+            if (!((binbytes + 61) % line))
+              j = blocklines;
 
             line = binbytes % (blocklines * 62);
             if (!line)
@@ -244,6 +210,7 @@ int decode_file (char *name, int flag)
           line = (long)(part-1) * blocklines;
           for (i = 0; i < j; i++, line++)
             idxptr->lines_ok[(int)(line>>5)] += 1UL << (int)(line&31);
+
           defect = 1;
 
           continue;
@@ -287,14 +254,6 @@ int decode_file (char *name, int flag)
             &binbytes, dummi, dummi2, dummi, dummi, dummi) != 10)
       hcorrupted = 1;
     blocklines = get_hex (dummi2);
-
-    if (!blocklines || !_part || !_parts || !binbytes)
-    {
-      fprintf (o, "'%s': Header is corrupted. Can't continue.\n", filename);
-      kill_dest (in, out, metafile);
-      return (5);
-    }
-
     strlwr (destname);                  /* Convert to lower case */
     fnsplit (destname, dummi, dummi, orgdestname, dummi2);
     sprintf (destname, "%s%s", orgdestname, dummi2);
@@ -339,12 +298,12 @@ int decode_file (char *name, int flag)
 
       *orgname2 = EOS;
 
-      if (dummi[3] == '*' && _part == 1)
+      if (dummi[3] == '*')
       {
         my_fgets (rline, 80, in);
         if (!mcrc (rline, 0))
         {
-          fprintf (o, "\nExtended Filename corrupted. "
+	  fprintf (o, "\nExtended Filename corrupted. "
                   "Using filename from header.\n");
           strcpy (orgname2, idxptr->filename);
           check_fn (orgname2);
@@ -358,7 +317,7 @@ int decode_file (char *name, int flag)
         strcpy (orgname2, orgname);
       strcpy (idxptr->full_name, orgname2);
 
-      if (_extended == '*' && *orgname2)
+      if (extended == '*' && *orgname2)
         strncpy (orgname, orgname2, (size_t)(MAXFNAME-1));
       check_fn (orgname);
 
@@ -386,7 +345,7 @@ int decode_file (char *name, int flag)
       setvbuf (out, NULL, _IOFBF, buflen); /* As always, bufferize */
 
       if (!no_tty)
-        fprintf (o, "File         Pt# of# Errors Rebuilt   Status\n");
+	fprintf (o, "File         Pt# of# Errors Rebuilt   Status\n");
 
       lines = 0;
 
@@ -400,6 +359,7 @@ int decode_file (char *name, int flag)
         lines = (long) (part -1) * blocklines;
         defect = 1;
       }
+
       progress (filename, part, parts, lines, 0, decoding);
     }
 
@@ -454,7 +414,6 @@ int decode_file (char *name, int flag)
             progress (filename, part, parts, lines, rebuilt, rebuilding[1]);
           else
             progress (filename, part, parts, lines, rebuilt, rebuilding[0]);
-
           if (!rebuild (p, 0))
           {
             ignored++; /* Incorrect CRC. Ignore line. */
@@ -524,11 +483,6 @@ int decode_file (char *name, int flag)
   }
   progress (filename, part-1, parts, lines, rebuilt, "done...");
 
-#ifdef __MWERKS__
-  if (!no_tty)
-    fprintf (o, "\n");
-#endif
-
   idxptr->lines_left = lines;
 
   /* Get size of metafile */
@@ -544,32 +498,23 @@ int decode_file (char *name, int flag)
     if (_binbytes == binbytes)
     {
       sprintf (srcname, "%s%s", genpath, orgname);
-      if (test_file (NULLFP, srcname, 2, MAXFNAME-1) == 10)
-        return (10);
+      test_file (NULLFP, srcname, 1, MAXFNAME-1);
       replace (srcname, metafile, ftimestamp);
-#ifdef __MWERKS__
-      set_filetype (srcname);
-#endif
 
-#ifndef __MWERKS__
       if (!no_tty)
-        fprintf (o, "\n");
-#endif
+	fprintf (o, "\n");
 
       if (autokill)
         kill_em (_file, inpath, (parts==1)?"7pl":"p",
-           "cor", "c", "err", "e", parts, 0);
+                                   "cor", "c", "err", "e", 0);
 
       fprintf (o, "\nDecoding successful! '%s', %ld bytes.\n", srcname, binbytes);
-
       return (0);
     }
   }
 
-#ifndef __MWERKS__
   if (!no_tty)
     fprintf (o, "\n");
-#endif
 
   if (!flag || no_tty)
   {
@@ -581,8 +526,8 @@ int decode_file (char *name, int flag)
 
     if ((idxptr->lines_left > (idxptr->length/620L)) && !sysop)
       fprintf (o,
-           "\nWARNING:\n"
-             "========\n"
+	   "\nWARNING:\n"
+	     "========\n"
              "More than 10%% of all lines are corrupted! Are you sure, your "
              "communications\nprogramm is set correctly to handle 7PLUS files "
              "(character conversion ect..)?\nMaybe you didn't get parts of "
@@ -592,13 +537,12 @@ int decode_file (char *name, int flag)
   if (_binbytes != binbytes)
   {
     fprintf (o, "\nDecoded file has wrong length! Disk full?\n"
-                  "This error should never have occured.....I hoped...\n");
+		  "This error should never have occured.....I hoped...\n");
     return (1);
   }
   else
     if (autokill)
-      kill_em (_file, inpath, (parts==1)?"7pl":"p",
-                                            NULL, NULL, NULL, NULL, parts, 0);
+      kill_em (_file, inpath, (parts==1)?"7pl":"p", NULL, NULL, NULL, NULL, 0);
 
   return (11);
 }
@@ -725,8 +669,8 @@ int make_new_err (const char *name)
   FILE   *rfile;
 
   fprintf (o, "\n-----------------------\n"
-                "Recreating error report\n"
-                "-----------------------\n\n");
+		"Recreating error report\n"
+		"-----------------------\n\n");
 
   /* Open meta file */
   if ((rfile = fopen (name, OPEN_READ_BINARY)) == NULLFP)
@@ -763,15 +707,8 @@ void progress (const char *filename, int part, int of_parts, long errors,
     return;
 
   set_autolf(0);
-
-#ifdef __MWERKS__
-  fprintf (o, "\r%-12s %3d %3d %6ld  %6ld   %-30s",
-    filename, part, of_parts, errors, rebuilt, status);
-#else
   fprintf (o, "%-12s %3d %3d %6ld  %6ld   %-30s\r",
     filename, part, of_parts, errors, rebuilt, status);
-#endif
-
   fflush (o);
   set_autolf(1);
 }

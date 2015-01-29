@@ -199,7 +199,7 @@ const char *help[] = {
  #define EXMPL "dh0:/pr/"
 #endif 
 
-#ifdef __linux__
+#ifdef _linux__
  #undef EXMPL
  #define EXMPL "/pr/"
 #endif 

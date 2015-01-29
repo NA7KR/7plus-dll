@@ -59,12 +59,12 @@ struct stat {
   unsigned int st_dev;		/* sg_dvt   (RBF option area)
 							   sg_tbl   (SCF option area)	*/
   unsigned int st_ino;		/* sg_fdpsn (option area)	*/
-  short      st_mode;		/* sg_class (option area) in MSB
+  u_short      st_mode;		/* sg_class (option area) in MSB
 							   fd_att   (file descriptor) in LSB	*/
   short        st_nlink;	/* fd_link  (file descriptor)	*/
   unsigned int st_rdev;		/* only defined			*/
-  short      st_uid;		/* fd_own   (file descriptor)	*/
-  short      st_gid;		/* fd_own   (file descriptor)	*/
+  u_short      st_uid;		/* fd_own   (file descriptor)	*/
+  u_short      st_gid;		/* fd_own   (file descriptor)	*/
   unsigned int st_size;		/* fd_fsize (file descriptor)	*/
   time_t       st_atime;	/* fd_date  (file desctiptor)	*/
   time_t       st_mtime;	/* fd_date  (file desctiptor)	*/

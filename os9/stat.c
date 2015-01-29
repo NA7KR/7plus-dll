@@ -27,7 +27,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <direct.h>
-//KR #include <sgstat.h>
+#include <sgstat.h>
 #include <types.h>			/* u_char,u_chort types etc.	*/
 #include <time.h>
 #include <stat.h>			/* keine OS-9 version			*/

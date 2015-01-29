@@ -1,57 +1,36 @@
 #
-# Makefile for 7PLUS for AmigaOS with GNU CC
+# Makefile for Amiga (Aztec C and others..)
 #
 
-# choose your target for the Makefile.
-TARGET = 7plus
-
-# define the object suffix of your system.
-# for MessDOS you should define "obj".
-O = o
-
-# choose compiler and linker and their flags
-# GNU cc
-CC = gcc
-LD = gcc
-CFLAGS = -O1 -m68000
-LDFLAGS = -s -noixemul
-
-
-# choose defines and special flags for your system:
-# - normally: no defines
-
-DEFINES = -D_AMIGA_
-
-# - BSD, Ultrix, AT&T System V Release 4, SCO UNIX/XENIX: no special flags
-# - Interactive UNIX 386: -posix
-#SPECFLAGS = -posix
-SPECFLAGS =
-
-SRCS =  7plus.c  encode.c  correct.c rebuild.c  decode.c \
-        extract.c join.c  utils.c  unix.c
-
-OBJS =  7plus.$O encode.$O correct.$O rebuild.$O decode.$O \
-        extract.$O join.$O utils.$O unix.$O
-
-.c.o:
-	$(CC) -c $(CFLAGS) $(SPECFLAGS) $(DEFINES) $*.c
-
-TARGET: $(OBJS)
-	$(LD) $(LDFLAGS) $(SPECFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
-
-depend:
-	$(CC) -M $(SRCS) >depend.out
-
-clean:
-	rm -f $(OBJS)
-	rm -f $(TARGET) core a.out depend.out
+OBJS = 7plus.o decode.o encode.o correct.o rebuild.o extract.o join.o utils.o
 
 7plus.o : 7plus.c 7plus.h
-encode.o : encode.c 7plus.h globals.h
-rebuild.o : rebuild.c 7plus.h globals.h
+   cc 7plus.c -psa
+
 decode.o : decode.c 7plus.h globals.h
+   cc decode.c -psa
+
+encode.o : encode.c 7plus.h globals.h
+   cc encode.c -psa
+
 correct.o : correct.c 7plus.h globals.h
+   cc correct.c -psa
+
+rebuild.o : rebuild.c 7plus.h globals.h
+   cc rebuild.c -psa
+
 extract.o : extract.c 7plus.h globals.h
+   cc extract.c -psa
+
 join.o : join.c 7plus.h globals.h
-utils.o : utils.c 7plus.h globals.h 
-unix.o : unix.c 7plus.h
+   cc join.c -psa
+
+utils.o : utils.c 7plus.h globals.h
+   cc utils.c -psa
+
+# not needed on the Amiga.
+# unix.o : unix.c 7plus.h globals.h
+#   cc unix.c -psa
+
+7plus: $(OBJS) 7plus
+   ln -g -o 7plus $(OBJS) -lc16

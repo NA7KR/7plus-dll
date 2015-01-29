@@ -2,6 +2,8 @@
 >  7plus.h  <
 \*---------*/
 
+/* Uncomment next line, if compiling on AMIGA! */
+/* #define _AMIGA_ */
 
 #define YES "yes"
 #define ALWAYS "always"
@@ -11,7 +13,6 @@
 #define OFF 1
 #define LSEP 0x0a
 #define LSEPS "\x0a"
-#define _7PLUS_FLS "7plus.fls"
 
 /* Some compilers are very strict abt the type of NULL-pointers */
 #define NULLFP ((FILE *) 0)
@@ -29,22 +30,221 @@
 #include <errno.h>
 #include <limits.h>
 
+/* Microsoft's Quick C has some different makros and function names **/
+#ifdef _QC
+ #define __MSDOS__
+ #define MAXDRIVE _MAX_DRIVE
+ #define MAXDIR   _MAX_DIR
+ #define MAXFILE  _MAX_FNAME
+ #define MAXEXT   _MAX_EXT
+ #define MAXPATH  _MAX_PATH
+ #define fnsplit  _splitpath
+#endif /* _QC */
 
- #include <windows.h>
+#ifdef __MSDOS__
+ #ifdef __TURBOC__
+  #include <dir.h>
+  #include <io.h>
+ #endif
+ #include <conio.h>
+ #include <stdlib.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #define PATHSEP "\\"
+ #define PATHCHAR '\\'
+ #define INDICATE 0xdb
+ #define TWO_CHAR_SEP
+ #define MAXFNAME MAXFILE+MAXEXT-1
+ #define _HAVE_FNSPLIT
+ #define _HAVE_CHSIZE
+ #define _HAVE_ICMP
+ #define _HAVE_GMTIME
+ #define _HAVE_MKTIME
+ #define _HAVE_GETCH
+#endif /* __MSDOS__ */
+
+#ifdef __OS2__
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <io.h>
+ #ifdef __BORLANDC__
+  #define __IBMC__
+ #endif
+ #define MAXPATH   80 /* I don't have HPFS installed! */
+ #define MAXDRIVE  3
+ #define MAXDIR    66
+ #define MAXFILE   9
+ #define MAXEXT    5
+ #define PATHSEP "\\"
+ #define PATHCHAR '\\'
+ #define INDICATE 0xdb
+ #define TWO_CHAR_SEP
+ #define MAXFNAME MAXFILE+MAXEXT-1
+ #define _HAVE_CHSIZE
+ #define _HAVE_ICMP
+ #define _HAVE_GMTIME
+ #define _HAVE_MKTIME
+ #include <stdlib.h>
+ #ifdef __IBMC__
+  #define _HAVE_GETCH
+  #include <conio.h>
+ #endif
+ #ifdef __EMX__
+  #define chsize ftruncate
+  #include <termio.h>
+  struct termio sg[2];
+ #endif
+#endif /* __OS2__ */
+
+#ifdef _AMIGA_
+ #define  _680X0_
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <stddef.h>
+ #include <proto/dos.h>
+ #include <libraries/dos.h>
+ #include <libraries/dosextens.h>
+ #include <exec/memory.h>
+ #include <stdlib.h>
+ #undef  YES
+ #define YES ""
+ #undef  NO
+ #define NO ""
+ #undef ALWAYS
+ #define ALWAYS ""
+ #define SEEK_SET 0
+ #define SEEK_CUR 1
+ #define SEEK_END 2
+ #define MAXPATH  300
+ #define MAXDRIVE 5
+ #define MAXDIR   220
+ #define MAXFILE  31
+ #define MAXEXT   31
+ #define PATHSEP  "/"
+ #define PATHCHAR '/'
+ #define INDICATE '*'
+ #define MAXFNAME MAXFILE
+ #define _HAVE_GETCH
+ #define getch getchar
+#endif /* _AMIGA_ */
+
+#ifdef __TOS__
+ #define MAXPATH   119
+ #define MAXDRIVE  3
+ #define MAXDIR    102
+ #define MAXFILE   9
+ #define MAXEXT    5
+ #define PATHSEP "\\"
+ #define PATHCHAR '\\'
+ #define INDICATE 0xdb
+ #define TWO_CHAR_SEP
+ #define MAXFNAME MAXFILE+MAXEXT-1
+ #define _HAVE_GETCH
+ #include <stdlib.h>
+ #include <ext.h>
+ /* quick & dirty, swaps upper and lower word                      */
+ unsigned long swapl(unsigned long l)0x4840; /* opcode for SWAP D0 */
+ /* needed for timestamp-functions    (Odo,DL1XAO)                 */
+#endif /* __TOS__ */
 
 
+#ifdef __unix__
+ #ifdef __i386__
+   #ifndef SYSV
+    #define SYSV
+   #endif
+ #endif
+  
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+ #ifdef __linux__
+  #define _HAVE_STRSTR
+  #define _HAVE_RENAME
+  #include <malloc.h>
+  #include <string.h>
+  #include <linux/limits.h> 
+  #include <sys/ioctl.h> 
+#endif /* __linux__ */
+ 
+ #ifdef __M_XENIX__
+  #include <malloc.h>
+  #define SEEK_CUR 1
+  #define SEEK_END 2
+  #define SEEK_SET 0
+  typedef unsigned size_t;
+ #endif /* _M_XENIX__ */
+ 
+ #ifdef SYSV
+  #include <unistd.h> /* not sure, if this one is really necessary */
+  #include <termio.h>
+  struct termio sg[2];
+ #else /* SYSV */
+  #include <sgtty.h>
+  struct sgttyb sg[2];
+ #endif /* SYSV */
 
-//struct termio sg[2];
+/* assumed limits (hope reasonable !!! DF6NL) */
+ #ifdef __linux__
+  #define MAXPATH  PATH_MAX             /* defined in linux/limits.h DL5MLO */
+  #define MAXFILE  NAME_MAX
+  #define MAXEXT   NAME_MAX             /* you can a.asdfasdfasdfasfa */
+  #define MAXDIR   PATH_MAX
+  #define MAXDRIVE NAME_MAX             /* No idea what to put here... */
+  #define MAXFNAME PATH_MAX+NAME_MAX 
+ #else /* __linux__ */
+  #define MAXPATH 256
+  #define MAXDRIVE 16
+  #define MAXDIR 256
+  #define MAXFILE 32
+  #define MAXEXT 32
+  #define MAXFNAME MAXFILE
+ #endif /* __linux__ */
+ 
+ #define PATHSEP "/"
+ #define PATHCHAR '/'
+ #define INDICATE '*'
+ 
+#endif /* __unix__ */
+
+#ifdef OSK
+ /* Assumed limits */
+ #include <types.h>
+ #include <stat.h>
+ #define _680X0_
+ #define _IOFBF 0
+ #undef YES
+ #undef NO
+ #undef ALWAYS
+ #define YES "es"
+ #define NO  "o"
+ #define ALWAYS "lways"
+ #undef LSEP
+ #undef LSEPS
+ #define LSEP 0x0d
+ #define LSEPS "\x0d"
+ #define MAXPATH 256
+ #define MAXDRIVE 16
+ #define MAXDIR 256
+ #define MAXFILE 32
+ #define MAXEXT 256
+ #define PATHSEP "/"
+ #define PATHCHAR '/'
+ #define INDICATE '*'
+ #define MAXFNAME MAXFILE
+ #define _HAVE_GETCH
+ #define getch()  getc(stdin)
+ char *strsave(const char *);
+ #define strdup  strsave
+ #define SEEK_SET   0
+ #define SEEK_CUR   1
+ #define SEEK_END   2
+ #include <termcap.h>
+ #include <stdlib.h>
+#endif /* OSK */
+
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
-#define PATHCHAR '/'
-#define PATHSEP "\\"
 
-#define MAXPATH 256
-#define MAXDRIVE 16
-#define MAXDIR 256
-#define MAXFILE 32
-#define MAXEXT   5
-#define MAXFNAME MAXFILE+MAXEXT-1
 /* flags for fopen() */
 #define OPEN_READ_TEXT "r"
 #define OPEN_WRITE_TEXT "w"
@@ -66,16 +266,26 @@
 
 /** shorthands for unsigned types **/
 typedef unsigned char byte;  /* 8bit unsigned char */
-
+#ifdef __unix__
+ #ifdef __vax__
+   typedef u_long ulong;
+ #endif
+ #ifdef __M_XENIX__
+   typedef unsigned long ulong;
+ #endif
+#else
+ typedef unsigned int  uint;  /* 16 or 32bit unsigned int */
+ typedef unsigned long ulong; /* 32bit unsigned long      */
+#endif
 
 struct  m_index
 {
   char  filename[14];  /*12  chars +2*/
   char  full_name[258];/*256 chars +2*/
-  long length;
-  long timestamp;
-  int  splitsize;
-  long lines_ok[4090];
+  ulong length;
+  ulong timestamp;
+  uint  splitsize;
+  ulong lines_ok[4090];
   long  lines_left;
 };
 
@@ -91,10 +301,10 @@ int   screenlength   (void);
 
 /** encode.c **/
 int   encode_file    (char *name, long blocksize, char *searchbin,
-		      int join, char *head_foot);
-void  get_range      (char *rangestring);
+		      int first_part, int last_part, int join,
+		      char *head_foot);
 int   read_tb        (char *name, char *go_top, char *go_bottom);
-int   top_bottom     (FILE *wfile, char *top_bot, char *orgname, char *type,
+int   top_bottom     (FILE *wfile, char *top_bot, char *orgname,
                                                           int part, int parts);
 /** decode.c **/
 int   control_decode (char *name);
@@ -108,7 +318,7 @@ void  progress       (const char *filename, int part, int of_parts,
 int   correct_meta   (char *name, int itsacor, int quietmode);
 
 /** util.c **/
-char  *my_fgets      (char *string, register int n, FILE *rein);
+char  *my_fgets      (char *string, register n, FILE *rein);
 int   my_putc        (int  outchar, FILE *out);
 void  crc_n_lnum     (uint *crc, int *linenumber, char *line);
 void  crc2           (uint *crc, char *line);
@@ -116,23 +326,17 @@ void  add_crc2       (char *line);
 int   mcrc           (char *line, int flag);
 int   read_index     (FILE *ifile, struct m_index *idxptr);
 int   write_index    (FILE *ifile, struct m_index *idxptr, int flag);
-long read_ulong     (FILE *in);
-int  read_uint      (FILE *in);
+ulong read_ulong     (FILE *in);
+uint  read_uint      (FILE *in);
 void  write_ulong    (FILE *out, ulong val);
 void  write_uint     (FILE *out, uint val);
 int   crc_file       (const char *file, const char *s1, const char *s2,
                                                                      int flag);
 int   copy_file      (const char *to,  const char *from, ulong timestamp);
-void  replace        (const char *oldfil, const char *newfil,  ulong timestamp);
-
-#ifdef __MWERKS__
- int   suffixcmp      (char *string, const char *name);
- void  set_filetype   (const char *name);
-#endif
-
+void  replace        (const char *old, const char *new,  ulong timestamp);
 void  kill_em        (const char *name, const char *inpath, const char *one,
                       const char *two,  const char *three,  const char *four,
-		      const char *five, int _one, int no_lf);
+                      const char *five, int no_lf);
 void  kill_dest      (FILE *in, FILE *out, const char *name);
 int   test_exist     (const char *filename);
 int   test_file      (FILE *in, char *destnam, int flag, int namsize);
@@ -181,11 +385,25 @@ int   join_control   (char *file1, char *file2);
 int   join_err       (char *file1, char *file2);
 
 /** unix.c **/
-#ifdef __MWERKS__
+#ifdef __unix__
+ #ifdef __i386__
+  #ifndef _HAVE_STRSTR
+   char     *strstr    (const char *s1, const char *s2);
+  #endif  /* _HAVE_STRSTR */
+  
+  #ifndef _HAVE_RENAME
+   int      rename     (const char *s1, const char *s2);
+  #endif /* _HAVE_RENAME */
+#endif /* __i386__ */
+
+ #ifdef __vax__
+  #ifdef __STDC__
    extern char *strdup (const char *);
-#endif /* __MWERKS__ */
-
-
+  #else
+   extern char *strdup ();
+  #endif  /* __STDC__ */
+ #endif  /* __vax__ */
+#endif /* __unix__ */
 
 #ifdef OSK
  int  rename        (const char *s1, const char *s2);

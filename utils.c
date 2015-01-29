@@ -1,28 +1,35 @@
+
 #include "7plus.h"
 #include "globals.h"
-#include "os9/stat.h"
 
-#if  defined (__WIN32__)
+#ifdef __OS2__
  #ifdef __BORLANDC__
   #include <utime.h>
   #define _FTIMEDEFINED
-  #define BRLND_PUTC_BUG (short)
  #else
   #include <sys/utime.h>
  #endif
 #endif
 
-#if !defined (BRLND_PUTC_BUG)
- #define BRLND_PUTC_BUG
+#ifdef __unix__
+ #ifdef __M_XENIX__
+  struct utimbuf {
+   time_t actime;
+   time_t modtime;
+  };
+  extern time_t mktime (struct tm *utm);
+ #else
+  #include <utime.h>
+ #endif
 #endif
 
-
-
-#ifdef __MWERKS__
- #include <time.h>
+#ifdef _AMIGA_
+ struct utimbuf {
+   time_t actime;
+   time_t modtime;
+ };
+ extern time_t mktime (struct tm *utm);
 #endif
-
-
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
@@ -32,9 +39,9 @@ const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 ***
  */
 
-char *my_fgets (char *string, register int n, FILE *rein)
+char *my_fgets (char *string, register n, FILE *rein)
 {
-  register int in, i;
+  register in, i;
 
   if (feof (rein))
     return (NULL);
@@ -55,7 +62,7 @@ char *my_fgets (char *string, register int n, FILE *rein)
   }
   string[i] = EOS;
   return (string);
-}
+} 
 
 /*
 ***
@@ -65,9 +72,9 @@ char *my_fgets (char *string, register int n, FILE *rein)
 
 int my_putc (int outchar, FILE *out)
 {
-  register int x;
+  register x;
 
-  if ((x = putc (BRLND_PUTC_BUG(outchar & 0xff), out)) == EOF)
+  if ((x = putc (outchar &0xff, out)) == EOF)
   {
     fprintf (o, "\007\nWrite error! Can't continue.\n");
     exit (1);
@@ -207,11 +214,11 @@ int read_index (FILE *ifile, struct m_index *idxptr)
 
     if ((end>>5) > (begin>>5))
       for (i = begin;i < ((begin |31UL) + 1UL); i++)
-	idxptr->lines_ok[(int)(i>>5)] |= (1UL <<(i&31UL));
+        idxptr->lines_ok[(int)i>>5] |= (1UL <<(i&31UL));
     else
     {
       for (i = begin;i < end; i++)
-	idxptr->lines_ok[(int)(i>>5)] |= (1UL <<(i&31UL));
+        idxptr->lines_ok[(int)i>>5] |= (1UL <<(i&31UL));
       continue;
     }
 
@@ -220,7 +227,7 @@ int read_index (FILE *ifile, struct m_index *idxptr)
 
     if (end&31)
       for (i = end &0xffffffe0UL; i < end; i++)
-	idxptr->lines_ok[(int)(i>>5)] |= (1UL <<(i&31UL));
+        idxptr->lines_ok[(int)i>>5] |= (1UL <<(i&31UL));
   }
   idxptr->length = read_ulong (ifile);
 
@@ -242,7 +249,8 @@ int write_index (FILE *ifile, struct m_index *idxptr, int flag)
   int j, part, prevpart, lines;
   ulong i, begin, end;
 
-  prevpart = lines = 0;
+  part = prevpart = lines = 0;
+  begin = end = 0UL;
 
   if (!flag)
   {
@@ -273,12 +281,12 @@ int write_index (FILE *ifile, struct m_index *idxptr, int flag)
       if (!(i&31UL) && idxptr->lines_ok[j] == 0UL)
       {
         j++;
-	i = ((ulong) j) <<5;
+        i = (ulong) j<<5;
       }
       else
       {
         i++;
-	j = (int) (i>>5);
+        j = (int) i>>5;
       }
     }
 
@@ -292,12 +300,12 @@ int write_index (FILE *ifile, struct m_index *idxptr, int flag)
       if (!(i&31UL) && idxptr->lines_ok[j] == 0xffffffffUL)
       {
         j++;
-	i = ((ulong) j) <<5;
+        i = (ulong) j<<5;
       }
       else
       {
         i++;
-	j = (int) (i>>5);
+        j = (int) i>>5;
       }
     }
     while (j < 4080 && (idxptr->lines_ok[j] &(1UL <<(i & 31UL))));
@@ -316,7 +324,7 @@ int write_index (FILE *ifile, struct m_index *idxptr, int flag)
       {
         for (i = begin; i < end; i++)
         {
-          part = (int) (i / idxptr->splitsize +1);
+          part = (int) i / idxptr->splitsize +1;
           if (part != prevpart)
           {
             if (prevpart)
@@ -347,7 +355,7 @@ int write_index (FILE *ifile, struct m_index *idxptr, int flag)
       {
         for (i = begin; i < end; i++)
         {
-          part = (int) (i / idxptr->splitsize +1);
+          part = (int) i / idxptr->splitsize +1;
           if (part != prevpart)
           {
             prevpart = part;
@@ -432,6 +440,7 @@ int crc_file (const char *file, const char *s1, const char *s2, int flag)
   FILE *in;
 
   crc = cs = 0;
+  p = NULLCP;
 
   if ((in = fopen (file, OPEN_RANDOM_BINARY)) == NULLFP)
   {
@@ -504,7 +513,7 @@ int crc_file (const char *file, const char *s1, const char *s2, int flag)
     if (cs == crc)
       return (0);
 
-    fprintf (o, "\007\n'%s' is corrupted.\n", file);
+    fprintf (o, "\007\n'%s' is corrupted. Break.\n", file);
     return (7);
   }
 
@@ -533,7 +542,7 @@ int copy_file (const char *to, const char *from, ulong timestamp)
   _to   = fopen (to,   OPEN_WRITE_BINARY);
 
   while ((_char = getc (_from)) != EOF)
-   if ((status = putc (BRLND_PUTC_BUG(_char &0xff), _to)) == EOF)
+   if ((status = putc (_char &0xff, _to)) == EOF)
       break;
   fclose (_from);
 
@@ -567,9 +576,6 @@ int copy_file (const char *to, const char *from, ulong timestamp)
 
 void replace (const char *old, const char *new, ulong timestamp)
 {
-
-  if (access (old, 2))
-    chmod (old, S_IREAD | S_IWRITE);
   unlink (old);
   if (rename (new, old))
   {
@@ -593,69 +599,21 @@ void replace (const char *old, const char *new, ulong timestamp)
   }
 }
 
-#ifdef __MWERKS__
-/*
-*** Check whether "string" is the suffix of the string "name".
-***    Return 1 if true, else 0.
-***    Ignore case (suffix must be lower case)
-***
- */
-
-int suffixcmp (char *string, const char *name)
-{
-  int slen, nlen, i, j;
-
-  slen = (int) strlen(string);
-  nlen = (int) strlen(name);
-  for (i = slen-1, j = nlen-1; i >= 0; i--, j--)
-  {
-    if (j < 0)  return (0);      /* name is shorter than string */
-    if (string[i] != tolower(name[j]))  return (0);
-  }
-  return (1);
-}
-
-/*
-*** Set filetype and filecreator based on suffix
-***     when running on Mac OS
-***
- */
-
-void set_filetype (const char *name)
-{
-  FInfo fi;
-  int i;
-  short rc;
-
-  for (i = 0; i < NSUFFIX; i++)
-  {
-    if (suffixcmp (suffix_table[i].suffix, name))
-    {
-       rc = getfinfo(name, 0, &fi);
-       fi.fdType = suffix_table[i].ftype;
-       fi.fdCreator = suffix_table[i].fcreator;
-       rc = setfinfo(name, 0, &fi);
-       break;
-    }
-  }
-}
-#endif
-
 /*
 *** Kill all files that aren't needed any more
-*** (Normally, kill_em will stop erasing if more than 10 consecutive files
-*** are missing. This can be overridden by the -KA option)
+***
+***
  */
 
 void kill_em (const char *name, const char *inpath, const char *one,
               const char *two, const char *three, const char *four,
-	      const char *five, int _one, int no_lf)
+              const char *five, int no_lf)
 {
   const char *p;
   char newname[MAXPATH];
-  int i, j, k, l, len;
+  int i, j, k, l, m, len;
 
-  k = l = 0;
+  k = l = m = 0;
 
   for (i = 0; i < 5; i++)
   {
@@ -680,7 +638,6 @@ void kill_em (const char *name, const char *inpath, const char *one,
      break;
 
     len = (int) strlen(p);
-    l = 0;
 
     for (j = 1; j <256; j++)
     {
@@ -689,41 +646,40 @@ void kill_em (const char *name, const char *inpath, const char *one,
       else
         sprintf (newname, "%s%s.%s%02x", inpath, name, p, j);
 
+      if (unlink (newname))
+      {
+        if (l++ == 5)
+        {
+          l = 0;
+          break;
+        }
+        m = 0;
+      }
+      else
+      {
+        l = 0;
+        m = 1;
+      }
+ 
       k++;
 
-      if (!unlink (newname))
+      if (!no_tty && m)
       {
-       l = 0;
-       if (!no_tty)
-      {
-       set_autolf(0);
-#ifdef __MWERKS__
-       fprintf (o, "\rDeleting: %s", newname);
-#else
-       fprintf (o, "Deleting: %s\r", newname);
-#endif
-       fflush (o);
-       set_autolf(1);
+        set_autolf(0);
+	fprintf (o, "Deleting: %s\r", newname);
+	fflush (o);
+        set_autolf(1);
       }
-     }
-     else
-	   l++;
 
-     if ((l > 10) && i && (autokill != 2))
-      break;
-
-     if (len == 3)
-      break;
-
-     if (!i && _one && (j == _one))
-      break;
+      if (len == 3)
+        break;
     }
-   }
+  }
 
-   if (no_tty)
+  if (no_tty)
     fprintf (o, "Obsolete files deleted!\n");
 
-   if (k && no_lf != 1)
+  if (k && no_lf != 1)
     fprintf (o, "\n");
 }
 
@@ -751,19 +707,14 @@ void kill_dest (FILE *in, FILE *out, const char *name)
 
 int test_exist (const char *filename)
 {
-
-  if (access (filename, 0))
-    return (1);
-  return (0);
-
-/*  FILE *in;
+  FILE *in = NULLFP;
 
   if ((in = fopen (filename, OPEN_READ_TEXT)) != NULLFP)
   {
     fclose (in);
     return (0);
   }
-  return (1); */
+  return (1);
 }
 
 
@@ -775,58 +726,20 @@ int test_exist (const char *filename)
 
 int test_file (FILE *in, char *destnam, int flag, int namsize)
 {
-/* FILE *out; */
+   FILE *out;
    int  i, ret;
 
    ret = 0;
 
-   /* Loop as long as file with same name exists. */
-   while (!access (destnam, 0))
+   /* Loop as long as file can be opened. */
+   while ((out = fopen (destnam, OPEN_READ_BINARY)) != NULLFP)
    {
      if (noquery)
      {
-       if (o == stdout)
-         fprintf (o, "\007\nExisting '%s' overwritten with new file.\n", destnam);
-       else
-         fprintf (o, "Existing '%s' overwritten with new file.\n", destnam);
+       fclose (out);
+       fprintf (o, "\007\nExisting '%s' overwritten with new file.\n", destnam);
        return (ret);
      }
-
-     if (flag > 1) /* autogenerate new filename */
-     {
-       char __drive[MAXDRIVE], __dir[MAXDIR], __file[MAXFILE], __ext[MAXEXT];
-       char newnam[MAXPATH];
-       int i = 1;
-       int j, k;
-
-       fnsplit (destnam, __drive, __dir, __file, __ext);
-
-       if (flag == 3)
-         k = 7;
-       else
-         k = MAXFILE-2;
-
-       while (1==1)
-       {
-         sprintf (newnam, "%d", i);
-         j = strlen (newnam);
-
-         if (strlen (__file) > (size_t)(k-j))
-           sprintf (newnam, "%s%s%*.*s$%d%s",
-                                 __drive, __dir, k-j, k-j, __file, i, __ext);
-         else
-           sprintf (newnam, "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
-
-         if (!access (newnam, 0))
-         {
-           /* File with new name already exists */
-           i++;
-           continue;
-         }
-         strcpy (destnam, newnam);
-         return (0);
-       } /* while (1==1) */
-     } /* if */
 
      ret = 1;
      fprintf (o, "\007\nOutputfile '%s' already exists, overwrite? [y/n/a] ",
@@ -843,7 +756,17 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
        {
          if (flag)
          {
-         
+           #ifdef _AMIGA_
+	    fprintf (o, "Enter new name (max %d chars)\n", namsize);
+	    fprintf (o, "or press <CNTL>+C <RETURN> to break : ");
+	    fflush (o);
+
+            if (namsize == 12)
+              strlwr (destnam);
+
+            scanf("%s",destnam);
+            destnam[namsize] = EOS;
+           #else
 	    fprintf (o, "%s\nEnter new name (max %d chars)\n", no, namsize);
 	    fprintf (o, "or simply press ENTER to break : ");
 	    fflush (o);
@@ -855,13 +778,13 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
             if(i != '\n')
             {
               ungetc(i, stdin);
-              gets (destnam);
+              scanf ("%s", destnam);
               fflush (stdin);
             }
             else
-              *destnam = EOS;
+              destnam[0] = EOS;
             destnam[namsize] = EOS;
-          // #endif
+           #endif
          }
          else
            *destnam = EOS;
@@ -869,11 +792,11 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
          if (!strlen (destnam))
          {
            if (!flag)
-            fprintf (o, "%s\n", no);
-            fprintf (o, "Break.\n");
+	     fprintf (o, "%s\n", no);
+	   fprintf (o, "Break.\n");
            if (in)
              fclose (in);
-           return (10);     /* Changed for Mac OS */
+           exit (10);
          }
          i = 0xff; /* indicate, that new name has been specified */
        }
@@ -884,17 +807,15 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
      {
        if (i == 'A')
        {
-         fprintf (o, "%s\n", always);
+	 fprintf (o, "%s\n", always);
          noquery = 1;
        }
        else
 	 fprintf (o, "%s\n", yes);
      }
-#ifndef __MWERKS__        /* is this really necessary ? */
      fprintf (o, "\n");
-#endif
 
-/*   fclose (out); */
+     fclose (out);
 
      if (i != 0xff)
        break;
@@ -912,7 +833,7 @@ int test_file (FILE *in, char *destnam, int flag, int namsize)
 
 void init_decodetab (void)
 {
-  register int i;
+  register i;
   register byte j;
 
   for (i = 0; i < 256; i++)
@@ -1007,7 +928,7 @@ void build_DOS_name (char *name, char *ext)
 
 void strip (char *string)
 {
-  register int i;
+  register i;
 
   i = 0;
 
@@ -1029,7 +950,7 @@ void strip (char *string)
   }
 }
 
-#if defined (__MSDOS__) || (__TOS__)
+#if (defined(__MSDOS__) || defined(__TOS__))
  /*
  *** Get file's timestamp and package it into a 32-bit word (MS_DOS-format)
  ***
@@ -1399,7 +1320,7 @@ void strip (char *string)
    *retval = 0UL;
 
    /* get file status */
-   if (stat (filename, &fst) == 0)
+   if (stat ((unsigned char *)filename, &fst) == 0)
    {
       /* get time of last modification and convert it to MS/DOS time */
      utm = localtime (&fst.st_mtime);
@@ -1428,9 +1349,41 @@ void strip (char *string)
    return (*retval);
  }
 
+ #ifdef _AMIGA_
+  #define _SETFTIME_OK
+  /*
+   * Set file's timestamp
+   * This function only works on AMIGA-systems
+   */
+  void set_filetime (const char *filename, ulong ftimestamp)
+  {
+    time_t atime;
+    struct ftime *fti;
+    struct tm utm;
+    struct DateStamp fdate;
 
+    /* convert MS/DOS ftimestamp to UNIX atime */
+    fti = (struct ftime *) &ftimestamp;
+    utm.tm_sec   = fti->ft_tsec * 2;
+    utm.tm_min   = fti->ft_min;
+    utm.tm_hour  = fti->ft_hour;
+    utm.tm_mday  = fti->ft_day;
+    utm.tm_mon   = fti->ft_month - 1;
+    utm.tm_year  = fti->ft_year +80;
+    utm.tm_wday  = utm.tm_yday  =  utm.tm_isdst = 0;
+    atime = mktime (&utm);
 
- #if  defined (__MWERKS__) || defined (OSK))
+    fdate.ds_Days = (atime/86400)-2922; /* 86400sec per Day + systimecorr.*/
+    fdate.ds_Minute = (atime % 86400) / 60;
+    fdate.ds_Tick = (atime % 60) * TICKS_PER_SECOND;
+    
+    SetFileDate(filename,&fdate);
+
+    return(1);
+  }
+ #endif /* _AMIGA_ */
+
+ #if (defined (__unix__) || defined (OSK) || defined (__OS2__))
   #define _SETFTIME_OK
 
   /*
@@ -1454,8 +1407,7 @@ void strip (char *string)
     utm.tm_mday  = fti->ft_day;
     utm.tm_mon   = fti->ft_month - 1;
     utm.tm_year  = fti->ft_year + 80;
-    utm.tm_wday  = utm.tm_yday  =  0;
-    utm.tm_isdst = -1;
+    utm.tm_wday  = utm.tm_yday  =  utm.tm_isdst = 0;
 
     atime = mktime(&utm);
 
@@ -1465,7 +1417,7 @@ void strip (char *string)
       utim.actime = atime;
       utim.modtime = atime;
 
-      if (utime (filename, &utim) >= 0)
+      if (utime ((unsigned char *)filename, &utim) >= 0)
         return;
     }
 
@@ -1502,7 +1454,7 @@ void strip (char *string)
 
 uint get_hex (char *hex)
 {
-  register int i = 0;
+  register i = 0;
   uint   ret = 0;
 
   while (hex[i] == '0')
@@ -1528,23 +1480,16 @@ void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
 
   strcpy(tmp,pth);
 
-#if (defined (__MWERKS__) )
-    /* Ignore drive on systems that don't have drives. */
+  if ((p = strchr(tmp,':')) != NULL)
+  {
+    *p++ = EOS;
+    strcpy(drv,tmp);
+  }
+  else
+  {
     p = tmp;
     drv[0] = EOS;
-#else
-    if ((p = strchr(tmp,':')) != NULL)
-    {
-      *p++ = EOS;
-      strcpy(drv,tmp);
-    }
-    else
-    {
-      p = tmp;
-      drv[0] = EOS;
-    }
-#endif
-
+  }
   if ((pth = strrchr(p, PATHCHAR)) != NULL)
   {
     *pth++ = EOS;
@@ -1623,10 +1568,10 @@ char *strlwr (char *string)
 
 char *strcnvt (char *string, int flag)
 {
-  register int i = 0;
+  register i = 0;
 
   while (string[i])
-  {
+  {  
     string[i] = (flag)?toupper (string[i]):tolower (string[i]);
     i++;
   }
@@ -1666,31 +1611,13 @@ int strnicmp (const char *s1, const char *s2, size_t n)
 
 #ifndef _HAVE_GETCH
 
- #if defined(SYSV) || defined(__EMX__) /* use ioctl() */
+ #if defined (SYSV) || defined (__EMX__) /* use ioctl() */
   #define _IOCTL_
  #endif
 
-#ifdef __MWERKS__
 /*
-*** getch - MacOS
-*** Get one character from keyboard and empty keyboard buffer.
-***
- */
-
- int getch (void)
- {
-   int c;
-
-   c = getchar();
-   if (c == 0x0a)  return (c);
-   while (getchar() != 0x0a);   /* anything will be ignored - wait for LF */
-   return (c);
- }
-
-#else
-/*
-*** getch - elsewhere
 *** Disable keyboard buffering and echoing.
+***
 ***
  */
 
@@ -1706,7 +1633,7 @@ int strnicmp (const char *s1, const char *s2, size_t n)
    {
      first = 0;
     #ifdef _IOCTL_
-    
+     (void) ioctl(fd, TCGETA, (char *) &sg[OFF]);
     #else
      (void) gtty(fd, &sg[OFF]);
     #endif
@@ -1722,13 +1649,13 @@ int strnicmp (const char *s1, const char *s2, size_t n)
      sg[ON].c_cc[VMIN] = 1;
      sg[ON].c_cc[VTIME] = 0;
     #else
-    //KR sg[ON].sg_flags &= ~(ECHO | CRMOD);
-   //KR  sg[ON].sg_flags |= CBREAK;
+     sg[ON].sg_flags &= ~(ECHO | CRMOD);
+     sg[ON].sg_flags |= CBREAK;
     #endif
    }
 
   #ifdef _IOCTL_
-   
+   (void) ioctl(fd, TCSETAW, (char *) &sg[ON]);
   #else
    (void) stty(fd, &sg[ON]);
   #endif
@@ -1736,7 +1663,7 @@ int strnicmp (const char *s1, const char *s2, size_t n)
    read(fd, &c, 1);
 
   #ifdef _IOCTL_
-   
+   (void) ioctl(fd, TCSETAW, (char *) &sg[OFF]);
   #else
    (void) stty(fd, &sg[OFF]);
   #endif
@@ -1748,6 +1675,5 @@ int strnicmp (const char *s1, const char *s2, size_t n)
   #undef _IOCTL_
  #endif
 
-#endif /** ifdef __MWERKS__ **/
-
 #endif /** ifndef _HAVE_GETCH **/
+

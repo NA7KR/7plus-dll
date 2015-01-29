@@ -15,11 +15,11 @@ int extract_files (char *name, char *search)
   FILE *in, *out;
   char string[81], destnam[13], writenam[MAXPATH], dummi[20], *p, *q;
 
-  int  i, part, file, /*filen,*/ err, errn, cor, corn, ret, lines, info, offset;
+  int  part, file, err, errn, cor, corn, ret, lines, info, offset;
   ulong bytes, sum;
 
   out = NULLFP;
-  file = /*filen =*/ err = errn = cor = corn = ret = lines = offset = 0;
+  file = err = errn = cor = corn = ret = lines = offset = 0;
   info = 1;
   bytes = sum = 0UL;
 
@@ -27,8 +27,8 @@ int extract_files (char *name, char *search)
     strlwr (search);
 
   fprintf (o, "\n--------------------\n"
-                "7PLUS file extractor\n"
-                "--------------------\n");
+		"7PLUS file extractor\n"
+		"--------------------\n");
 
   if ((in = fopen (name, OPEN_READ_BINARY)) == NULLFP)
   {
@@ -47,15 +47,14 @@ int extract_files (char *name, char *search)
        stripping the space in the first line. */
     if (!strncmp (p, " go_", 4))
       offset = 4;
-/*    if (!strncmp (p, "go_", 3))
+    if (!strncmp (p, "go_", 3))
       offset = 3;
-*/
 
     if (offset)
     { /* Beginning of a 7PLUS file found. */
       if (out)
       {
-        fprintf (o, "%6lu %5d -\n", bytes, lines);
+	fprintf (o, "%6lu %5d -\n", bytes, lines);
         sum += bytes;
         fclose (out);
         out = NULLFP;
@@ -136,38 +135,14 @@ int extract_files (char *name, char *search)
 	  while (!test_exist (writenam));
 	}
 
-/*        if (!err && !cor && !test_exist (writenam))
-        {
-          filen = 0;
-	  do
-          {
-            sprintf (dummi, "%d", ++filen);
-            if ((strlen (_file) + strlen (dummi)) > 8)
-            {
-              strcpy (destnam, _file);
-              strcpy (destnam + 8 - strlen (dummi), dummi);
-              strcat (destnam, ".");
-              strcat (destnam, _ext);
-            }
-            else
-              sprintf (destnam, "%s%d.%s", _file, filen, _ext);
-	    sprintf (writenam, "%s%s", genpath, destnam);
-	  }
-	  while (!test_exist (writenam));
-        }
-*/
         file++;
-
-        i = test_file (in, writenam, 3, 12);
-        if (i == 10)
-          return (10);
-        else
-          if (i)
-            fprintf (o, list_top);
-
-        fprintf (o, "%-12s ", destnam);
-        out = fopen (writenam, OPEN_WRITE_TEXT);
-       
+	if (test_file (in, writenam, 1, 12))
+	  fprintf (o, list_top);
+	fprintf (o, "%-12s ", destnam);
+	out = fopen (writenam, OPEN_WRITE_TEXT);
+        #ifndef _AMIGA_
+         setvbuf (out, NULL, _IOFBF, buflen);
+        #endif
         bytes = 0UL;
         lines = 0;
       }
@@ -189,7 +164,7 @@ int extract_files (char *name, char *search)
       if (info)
       {
         if (offset == 3)
-          fprintf (out, " ");
+          ret = fprintf (out, " ");
 
         ret = fprintf (out, "%s", p);
 

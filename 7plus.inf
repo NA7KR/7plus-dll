@@ -1,0 +1,56 @@
+------------------------------------------------------------------------------
+7PLUS by Axel Bauda, DG1BBQ @DB0CL.#HB.DEU.EU --------------------------------
+------------------------------------------------------------------------------
+
+[English]
+
+To avoid confusion, here's the scheme I use to name the release archive:
+
+7PLXXXYY.LZH
+
+XXX: version number
+
+YY:  EI : executable program for IBM (MSDOS/DRDOS etc.)
+     EO : dito for IBM OS/2
+     ES : executable progamm for Atari-ST/TT-etc.
+     EA : dito for Amiga
+
+     MD : manual, German
+     MG : dito, English
+
+     SR : C source code.
+
+7PLUS may only be passed on including this info, the archive containing the
+executable program, the archive containing the most current manual and the
+file 7PL_HIST.NTS which contains additional changes made to 7PLUS.
+
+The most recent manual is for Version 2.10 (7PL210MD.LZH and 7PL210MG.LZH).
+
+------------------------------------------------------------------------------
+
+[Deutsch]
+
+Um Verwirrungen zu vermeinden, hier das Schema der Dateinamen:
+
+7PLXXXYY.LZH
+
+XXX: Versionsnummer
+
+YY:  EI : ausführbares Programm für IBM (MSDOS/DRDOS etc.)
+     EO : dito für IBM OS/2
+     ES : ausführbares Programm für Atari-ST/TT-etc.
+     EA : Dito für Amiga.
+
+     MD : Anleitung, Deutsch
+     MG : Dito, English.
+
+     SR : C-Quelltexte.
+
+7PLUS darf nur zusammen mit dieser Info, dem Archiv, dass das ausführbare
+Programm enthält, dem Archiv, dass die neueste Anleitung enthält und der Datei
+7PL_HIST.NTS weitergegeben werden. In 7PL_HIST.NTS enthält Informationen,
+die noch nicht in der Anleitung aufgeführt sind.
+
+Die neueste Anleitung ist die für Version 2.10 (7PL210MD.LZH und 7PL210MG.LZH).
+
+73s, Axel.

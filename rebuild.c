@@ -108,14 +108,14 @@ int rebuild (char *line, int flag)
         {
           strcpy (line, buf);
           if (flag)
-            code[215] = (char) oldcode;
+            code[215] = oldcode;
           return (1);
         }
       }
     }
   }
   if (flag)
-    code[215] = (char) oldcode;
+    code[215] = oldcode;
   return (0);
 }
 

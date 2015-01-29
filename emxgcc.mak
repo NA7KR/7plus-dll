@@ -52,4 +52,3 @@ correct.o : correct.c 7plus.h globals.h
 extract.o : extract.c 7plus.h globals.h 
 join.o : join.c 7plus.h globals.h 
 utils.o : utils.c 7plus.h globals.h 
-
