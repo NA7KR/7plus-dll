@@ -44,8 +44,6 @@ char *my_fgets(char *string, register int n, FILE *rein)
 int my_putc(int outchar, FILE *out)
 {
 	register int x;
-
-
 	return (x);
 }
 
@@ -1419,88 +1417,3 @@ int _strnicmp(const char *s1, const char *s2, size_t n)
 }
 #endif /** ifndef _HAVE_ICMP **/
 
-#ifndef _HAVE_GETCH
-
-#if defined(SYSV) /* use ioctl() */
-#define _IOCTL_
-#endif
-
-
-int getch(void)
-{
-	int c;
-
-	c = getchar();
-	if (c == 0x0a)  return (c);
-	while (getchar() != 0x0a);   /* anything will be ignored - wait for LF */
-	return (c);
-}
-
-
-#else
-/*
-*** getch - elsewhere
-*** Disable keyboard buffering and echoing.
-***
-*/
-
-static int first = 1;
-
-int getch(void)
-{
-	unsigned char c;
-	int fd;
-
-	fd = fileno(stdin);
-	if (first)
-	{
-		first = 0;
-#ifdef _IOCTL_
-
-		(void) ioctl(fd, TCGETA, (char *) &sg[OFF]);
-
-#else
-		(void)gtty(fd, &sg[OFF]);
-#endif
-		sg[ON] = sg[OFF];
-
-#ifdef _IOCTL_
-
-		sg[ON].c_lflag &= ~(ICANON|ECHO);
-
-		sg[ON].c_cc[VMIN] = 1;
-		sg[ON].c_cc[VTIME] = 0;
-#else
-		sg[ON].sg_flags &= ~(ECHO | CRMOD);
-		sg[ON].sg_flags |= CBREAK;
-#endif
-	}
-
-#ifdef _IOCTL_
-
-	(void) ioctl(fd, TCSETAW, (char *) &sg[ON]);
-
-#else
-	(void)stty(fd, &sg[ON]);
-#endif
-
-	read(fd, &c, 1);
-
-#ifdef _IOCTL_
-
-	(void) ioctl(fd, TCSETAW, (char *) &sg[OFF]);
-
-#else
-	(void)stty(fd, &sg[OFF]);
-#endif
-
-	return (int)c;
-}
-
-#ifdef _IOCTL_
-#undef _IOCTL_
-#endif
-
-
-
-#endif /** ifndef _HAVE_GETCH **/

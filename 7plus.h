@@ -188,9 +188,6 @@ char  *strcnvt(char *string, int flag);
 int   _stricmp(const char *s1, const char *s2);
 int   _strnicmp(const char *s1, const char *s2, size_t n);
 #endif
-#ifndef _HAVE_GETCH
-int    getch(void);
-#endif
 
 /** rebuild.c **/
 int   rebuild(char *line, int flag);
