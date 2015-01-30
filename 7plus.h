@@ -13,6 +13,8 @@
 #define LSEPS "\x0a"
 #define _7PLUS_FLS "7plus.fls"
 
+#include <conio.h>
+
 /* Some compilers are very strict abt the type of NULL-pointers */
 #define NULLFP ((FILE *) 0)
 #define NULLCP ((char *) 0)
@@ -30,7 +32,12 @@
 #include <limits.h>
 #include <windows.h>
 
+//#include <iostream>
+//#include <conio.h>
 
+//#ifdef _MSC_VER
+//#define getch() _getch()
+//#endif
 
 
 #define MAXDRIVE _MAX_DRIVE

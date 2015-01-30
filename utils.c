@@ -45,7 +45,7 @@ int my_putc(int outchar, FILE *out)
 {
 	register int x;
 
-	
+
 	return (x);
 }
 
@@ -504,8 +504,8 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 	_to = fopen(to, OPEN_WRITE_BINARY);
 
 	while ((_char = getc(_from)) != EOF)
-		
-	fclose(_from);
+
+		fclose(_from);
 
 	if (status != EOF)
 	{
@@ -751,8 +751,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				}
 				return (ret);
 			}
-		}
-		while (i != 'Y' && i != 'A' && i != 0xff);
+		} while (i != 'Y' && i != 'A' && i != 0xff);
 	}
 }
 /*
@@ -889,8 +888,8 @@ void strip(char *string)
 */
 /*void set_filetime(FILE *_file, ulong ftimestamp)
 {
-	if (setftime(fileno(_file), (struct ftime *)&ftimestamp) == EOF)
-		fprintf(o, "\007\nCan't set file's timestamp!");
+if (setftime(fileno(_file), (struct ftime *)&ftimestamp) == EOF)
+fprintf(o, "\007\nCan't set file's timestamp!");
 }
 */
 #ifndef _HAVE_GMTIME
@@ -1034,16 +1033,16 @@ time_t mktime(register struct tm *tp)
 	/* Make all the elements of TP that we pay attention to
 	   be within the ranges of reasonable values for those things.  */
 #define  normalize(elt, min, max, nextelt)\
-			while (tp->elt < min)                     \
-						{                                         \
+				while (tp->elt < min)                     \
+										{                                         \
 	  --tp->nextelt;                          \
 	  tp->elt += max + 1;                     \
-						}                                         \
-										while (tp->elt > max)                     \
-															{                                         \
+										}                                         \
+																				while (tp->elt > max)                     \
+																																			{                                         \
 	  ++tp->nextelt;                          \
 	  tp->elt -= max + 1;                     \
-															}
+																																			}
 
 	normalize(tm_sec, 0, 59, tm_min);
 	normalize(tm_min, 0, 59, tm_hour);
@@ -1427,7 +1426,6 @@ int _strnicmp(const char *s1, const char *s2, size_t n)
 #endif
 
 
-
 int getch(void)
 {
 	int c;
@@ -1437,6 +1435,7 @@ int getch(void)
 	while (getchar() != 0x0a);   /* anything will be ignored - wait for LF */
 	return (c);
 }
+
 
 #else
 /*
