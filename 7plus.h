@@ -25,21 +25,10 @@
 
 /** these includes should work anywhere **/
 #include <stdio.h>
-#include <string.h>
-#include <time.h>
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <windows.h>
-
-
-
-//#include <iostream.h>
-//#include <conio.h>
-
-//#ifdef _MSC_VER
-//#define getch() _getch()
-//#endif
 
 
 #define MAXDRIVE _MAX_DRIVE
@@ -50,11 +39,7 @@
 #define fnsplit  _splitpath
 
 
-#include <io.h>
-#include <conio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #define PATHSEP "\\"
 #define PATHCHAR '\\'
 #define LFN  /* Allow long filenames */
@@ -67,9 +52,6 @@
 #define _HAVE_MKTIME
 //#define _HAVE_GETCH
 
-
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
 

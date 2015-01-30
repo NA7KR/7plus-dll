@@ -1,5 +1,40 @@
-﻿Build started 1/30/2015 8:59:06 AM.
+﻿Build started 1/30/2015 9:20:13 AM.
+     1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
+         utils.c
+     1>utils.c(229): warning C4013: '_chsize' undefined; assuming extern returning int
+     1>utils.c(536): warning C4013: '_access' undefined; assuming extern returning int
+     1>utils.c(537): warning C4013: '_chmod' undefined; assuming extern returning int
+     1>utils.c(537): error C2065: 'S_IREAD' : undeclared identifier
+     1>utils.c(537): error C2065: 'S_IWRITE' : undeclared identifier
+     1>utils.c(1204): error C2079: 'fst' uses undefined struct 'stat'
+     1>utils.c(1209): warning C4013: 'stat' undefined; assuming extern returning int
+     1>utils.c(1212): warning C4013: 'localtime' undefined; assuming extern returning int
+     1>utils.c(1212): error C2224: left of '.st_mtime' must have struct/union type
+     1>utils.c(1212): warning C4047: '=' : 'tm *' differs in levels of indirection from 'int'
+     1>utils.c(1217): error C2037: left of 'tm_sec' specifies undefined struct/union 'tm'
+     1>utils.c(1219): error C2037: left of 'tm_min' specifies undefined struct/union 'tm'
+     1>utils.c(1220): error C2037: left of 'tm_hour' specifies undefined struct/union 'tm'
+     1>utils.c(1221): error C2037: left of 'tm_mday' specifies undefined struct/union 'tm'
+     1>utils.c(1222): error C2037: left of 'tm_mon' specifies undefined struct/union 'tm'
+     1>utils.c(1223): error C2037: left of 'tm_year' specifies undefined struct/union 'tm'
+         rebuild.c
+         join.c
+         extract.c
+         encode.c
+     1>encode.c(165): warning C4013: 'get_filetime' undefined; assuming extern returning int
+         test.c
+         decode.c
+         correct.c
+     1>correct.c(406): warning C4013: '_chsize' undefined; assuming extern returning int
+         7plus.c
+     1>7plus.c(466): warning C4013: '_isatty' undefined; assuming extern returning int
+     1>7plus.c(545): warning C4013: 'findfirst' undefined; assuming extern returning int
+     1>7plus.c(652): warning C4013: 'gettextinfo' undefined; assuming extern returning int
+         Generating Code...
+     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.02
+Time Elapsed 00:00:02.67
