@@ -43,8 +43,10 @@ char *my_fgets(char *string, register int n, FILE *rein)
 
 int my_putc(int outchar, FILE *out)
 {
-	register int x;
-	return (x);
+	//register int x;
+
+	//return (x);
+	return putc(outchar, out);
 }
 
 /*
@@ -510,8 +512,8 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 
 		fclose(_to);
 
-		if (timestamp)
-			set_filetime(to, timestamp);
+//		if (timestamp)
+//			set_filetime(to, timestamp);
 
 	}
 	else
@@ -541,10 +543,10 @@ void replace(const char *old, const char *new, ulong timestamp)
 	}
 	else
 	{
-		if (timestamp)
+//		if (timestamp)
 		{
 
-			set_filetime(old, timestamp);
+//			set_filetime(old, timestamp);
 
 		}
 	}
@@ -751,6 +753,7 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			}
 		} while (i != 'Y' && i != 'A' && i != 0xff);
 	}
+	return(0);
 }
 /*
 	*** initialize decoding table
