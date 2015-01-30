@@ -1,24 +1,21 @@
-﻿Build started 1/30/2015 12:22:27 PM.
+﻿Build started 1/30/2015 1:56:33 PM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
          utils.c
-     1>utils.c(515): warning C4013: 'set_filetime' undefined; assuming extern returning int
          rebuild.c
          join.c
          extract.c
          encode.c
-     1>encode.c(165): warning C4013: 'get_filetime' undefined; assuming extern returning int
          test.c
          decode.c
          correct.c
          7plus.c
-     1>7plus.c(545): warning C4013: 'findfirst' undefined; assuming extern returning int
-     1>7plus.c(652): warning C4013: 'gettextinfo' undefined; assuming extern returning int
          Generating Code...
-     1>f:\code\7plsrc.225\utils.c(756): warning C4715: 'test_file' : not all control paths return a value
+     1>f:\code\7plsrc.225\7plus.c(653): warning C4700: uninitialized local variable 't' used
+     1>f:\code\7plsrc.225\utils.c(759): warning C4715: 'test_file' : not all control paths return a value
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Code\7plsrc.225\Debug\7plus.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\Code\7plsrc.225\Debug\7plus.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Code\7plsrc.225\Debug\7plus.lib" /MACHINE:X86 Debug\7plus.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Code\7plsrc.225\Debug\7plus.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\Code\7plsrc.225\Debug\7plus.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Code\7plsrc.225\Debug\7plus.lib" /MACHINE:X86 /DLL Debug\7plus.obj
          Debug\correct.obj
          Debug\decode.obj
          Debug\test.obj
@@ -27,12 +24,10 @@
          Debug\join.obj
          Debug\rebuild.obj
          Debug\utils.obj
-     1>7plus.obj : error LNK2019: unresolved external symbol _findfirst referenced in function _go_at_it
-     1>7plus.obj : error LNK2019: unresolved external symbol _gettextinfo referenced in function _screenlength
-     1>utils.obj : error LNK2019: unresolved external symbol _set_filetime referenced in function _copy_file
-     1>F:\Code\7plsrc.225\Debug\7plus.exe : fatal error LNK1120: 3 unresolved externals
-     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
+         LINK : F:\Code\7plsrc.225\Debug\7plus.dll not found or not built by the last incremental link; performing full link
+         7plus.vcxproj -> F:\Code\7plsrc.225\Debug\7plus.dll
+     1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:03.15
+Time Elapsed 00:00:01.67

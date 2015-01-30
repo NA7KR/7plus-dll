@@ -29,8 +29,12 @@
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
-#include <windows.h>
+
 #include <stdlib.h>
+
+#ifdef __DLL__
+#include <windows.h>
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -233,9 +237,4 @@ struct text_info {
 	unsigned char cury;
 };
 
-BOOL WINAPI setfiletime(
-	_In_      HANDLE hFile,
-	_In_opt_  const FILETIME *lpCreationTime,
-	_In_opt_  const FILETIME *lpLastAccessTime,
-	_In_opt_  const FILETIME *lpLastWriteTime
-	);
+

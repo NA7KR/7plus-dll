@@ -162,7 +162,7 @@ int encode_file(char *name, long blocksize, char *search,
 
 	/* Get file's timestamp */
 
-	ftimestamp = get_filetime(q);
+	//KRR ftimestamp = get_filetime(q);
 
 
 	/* determine size of original file. This could be done with filestat(),

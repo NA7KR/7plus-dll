@@ -492,7 +492,7 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 ***
 */
 
-void set_filetime(const char* string, ulong timestamp);
+
 
 int copy_file(const char *to, const char *from, ulong timestamp)
 {
@@ -514,7 +514,8 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 		fclose(_to);
 
 		if (timestamp)
-			set_filetime(to, timestamp);
+			;
+//KRR			set_filetime(to, timestamp);
 
 	}
 	else
@@ -547,7 +548,7 @@ void replace(const char *old, const char *new, ulong timestamp)
 		if (timestamp)
 		{
 
-			set_filetime(old, timestamp);
+//KRR			set_filetime(old, timestamp);
 
 		}
 	}

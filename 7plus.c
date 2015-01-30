@@ -542,7 +542,7 @@ int go_at_it(int argc, char **argv)
 	  ** It's usefull for DOS also.
 	  */
 		struct ffblk ffblk; /* only needed locally */
-		if (findfirst (p, &ffblk, 0) == 0)
+//KRR		if (findfirst (p, &ffblk, 0) == 0)
 		{
 			fnsplit (p, _drive, _dir, NULL, NULL);
 			sprintf_s(argname, sizeof(argname), "%s%s%s", _drive, _dir, ffblk.ff_name);
@@ -649,7 +649,7 @@ int screenlength(void)
 	
 	{
 		struct text_info t;
-		gettextinfo (&t);
+//KRR		gettextinfo (&t);
 		scrlines = t.screenheight;
 	}
 
