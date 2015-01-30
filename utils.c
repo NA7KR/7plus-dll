@@ -1,8 +1,6 @@
 #include "7plus.h"
 #include "globals.h"
-#include <io.h>
-#include <time.inl>
-#include <stack>
+#include <sys/utime.h>
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
@@ -46,7 +44,6 @@ char *my_fgets(char *string, register int n, FILE *rein)
 int my_putc(int outchar, FILE *out)
 {
 	//register int x;
-
 	//return (x);
 	return putc(outchar, out);
 }
@@ -495,6 +492,8 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 ***
 */
 
+void set_filetime(const char* string, ulong timestamp);
+
 int copy_file(const char *to, const char *from, ulong timestamp)
 {
 	FILE *_from, *_to;
@@ -514,8 +513,8 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 
 		fclose(_to);
 
-//		if (timestamp)
-//			set_filetime(to, timestamp);
+		if (timestamp)
+			set_filetime(to, timestamp);
 
 	}
 	else
@@ -545,14 +544,15 @@ void replace(const char *old, const char *new, ulong timestamp)
 	}
 	else
 	{
-//		if (timestamp)
+		if (timestamp)
 		{
 
-//			set_filetime(old, timestamp);
+			set_filetime(old, timestamp);
 
 		}
 	}
 }
+
 
 
 
@@ -755,7 +755,6 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 			}
 		} while (i != 'Y' && i != 'A' && i != 0xff);
 	}
-	return(0);
 }
 /*
 	*** initialize decoding table
@@ -1171,7 +1170,17 @@ time_t mktime(register struct tm *tp)
  * and vice versa.
  * here comes the MS/DOS time structure
  */
-
+#ifdef _680X0_  /* use this struct on 680x0 systems */
+struct ftime
+{
+	unsigned int ft_year  : 7; /* Year minus 1980 */
+	unsigned int ft_month : 4;   /* 1..12 */
+	unsigned int ft_day   : 5;   /* 1..31 */
+	unsigned int ft_hour  : 5;   /* 0..23 */
+	unsigned int ft_min   : 6;   /* 0..59 */
+	unsigned int ft_tsec  : 5;   /* 0..59 /2 (!) */
+};
+#else  /* and this one on 80x86 systems */
 struct ftime
 {
 	unsigned  ft_tsec : 5;   /* 0..59 /2 (!) */
@@ -1181,7 +1190,7 @@ struct ftime
 	unsigned  ft_month : 4;   /* 1..12 */
 	unsigned  ft_year : 7; /* Year minus 1980 */
 };
-
+#endif
 #endif /* _FTIMEDEFINED */
 
 /*
@@ -1193,7 +1202,7 @@ ulong get_filetime(const char *filename)
 	struct ftime fti;
 	ulong *retval = (ulong *)&fti;
 	struct tm *utm;
-	struct _stat fst;
+	struct stat fst;
 
 	*retval = 0UL;
 

@@ -11,7 +11,7 @@
 
 #include "7plus.h"
 #include <conio.h>
-#include <io.h>
+
 
 FILE    *o;
 uint    crctab[256];

@@ -25,13 +25,29 @@
 
 /** these includes should work anywhere **/
 #include <stdio.h>
+
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <windows.h>
+#include <stdlib.h>
 
-#define	S_IREAD		0x0001	/* owner read */
-#define	S_IWRITE	0x0002	/* owner write */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <io.h>
+#include <conio.h>
+#include <string.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+//#include <iostream>
+//#include <conio.h>
+
+//#ifdef _MSC_VER
+//#define getch() _getch()
+//#endif
+
 
 #define MAXDRIVE _MAX_DRIVE
 #define MAXDIR   _MAX_DIR
@@ -41,7 +57,6 @@
 #define fnsplit  _splitpath
 
 
-#include <stdlib.h>
 #define PATHSEP "\\"
 #define PATHCHAR '\\'
 #define LFN  /* Allow long filenames */
@@ -53,6 +68,8 @@
 #define _HAVE_GMTIME
 #define _HAVE_MKTIME
 //#define _HAVE_GETCH
+
+
 
 
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
@@ -215,3 +232,10 @@ struct text_info {
 	unsigned char curx;
 	unsigned char cury;
 };
+
+BOOL WINAPI setfiletime(
+	_In_      HANDLE hFile,
+	_In_opt_  const FILETIME *lpCreationTime,
+	_In_opt_  const FILETIME *lpLastAccessTime,
+	_In_opt_  const FILETIME *lpLastWriteTime
+	);
