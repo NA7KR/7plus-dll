@@ -1,6 +1,8 @@
 #include "7plus.h"
 #include "globals.h"
-#include <sys/utime.h>
+#include <io.h>
+#include <time.inl>
+#include <stack>
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
@@ -1169,17 +1171,7 @@ time_t mktime(register struct tm *tp)
  * and vice versa.
  * here comes the MS/DOS time structure
  */
-#ifdef _680X0_  /* use this struct on 680x0 systems */
-struct ftime
-{
-	unsigned int ft_year  : 7; /* Year minus 1980 */
-	unsigned int ft_month : 4;   /* 1..12 */
-	unsigned int ft_day   : 5;   /* 1..31 */
-	unsigned int ft_hour  : 5;   /* 0..23 */
-	unsigned int ft_min   : 6;   /* 0..59 */
-	unsigned int ft_tsec  : 5;   /* 0..59 /2 (!) */
-};
-#else  /* and this one on 80x86 systems */
+
 struct ftime
 {
 	unsigned  ft_tsec : 5;   /* 0..59 /2 (!) */
@@ -1189,7 +1181,7 @@ struct ftime
 	unsigned  ft_month : 4;   /* 1..12 */
 	unsigned  ft_year : 7; /* Year minus 1980 */
 };
-#endif
+
 #endif /* _FTIMEDEFINED */
 
 /*
@@ -1201,7 +1193,7 @@ ulong get_filetime(const char *filename)
 	struct ftime fti;
 	ulong *retval = (ulong *)&fti;
 	struct tm *utm;
-	struct stat fst;
+	struct _stat fst;
 
 	*retval = 0UL;
 

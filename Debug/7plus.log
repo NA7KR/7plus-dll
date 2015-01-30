@@ -1,40 +1,128 @@
-﻿Build started 1/30/2015 9:20:13 AM.
+﻿Build started 1/30/2015 12:07:42 PM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c dll\test.c encode.c extract.c join.c rebuild.c utils.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt utils.c
          utils.c
-     1>utils.c(229): warning C4013: '_chsize' undefined; assuming extern returning int
-     1>utils.c(536): warning C4013: '_access' undefined; assuming extern returning int
-     1>utils.c(537): warning C4013: '_chmod' undefined; assuming extern returning int
-     1>utils.c(537): error C2065: 'S_IREAD' : undeclared identifier
-     1>utils.c(537): error C2065: 'S_IWRITE' : undeclared identifier
-     1>utils.c(1204): error C2079: 'fst' uses undefined struct 'stat'
-     1>utils.c(1209): warning C4013: 'stat' undefined; assuming extern returning int
-     1>utils.c(1212): warning C4013: 'localtime' undefined; assuming extern returning int
-     1>utils.c(1212): error C2224: left of '.st_mtime' must have struct/union type
-     1>utils.c(1212): warning C4047: '=' : 'tm *' differs in levels of indirection from 'int'
-     1>utils.c(1217): error C2037: left of 'tm_sec' specifies undefined struct/union 'tm'
-     1>utils.c(1219): error C2037: left of 'tm_min' specifies undefined struct/union 'tm'
-     1>utils.c(1220): error C2037: left of 'tm_hour' specifies undefined struct/union 'tm'
-     1>utils.c(1221): error C2037: left of 'tm_mday' specifies undefined struct/union 'tm'
-     1>utils.c(1222): error C2037: left of 'tm_mon' specifies undefined struct/union 'tm'
-     1>utils.c(1223): error C2037: left of 'tm_year' specifies undefined struct/union 'tm'
-         rebuild.c
-         join.c
-         extract.c
-         encode.c
-     1>encode.c(165): warning C4013: 'get_filetime' undefined; assuming extern returning int
-         test.c
-         decode.c
-         correct.c
-     1>correct.c(406): warning C4013: '_chsize' undefined; assuming extern returning int
-         7plus.c
-     1>7plus.c(466): warning C4013: '_isatty' undefined; assuming extern returning int
-     1>7plus.c(545): warning C4013: 'findfirst' undefined; assuming extern returning int
-     1>7plus.c(652): warning C4013: 'gettextinfo' undefined; assuming extern returning int
-         Generating Code...
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(84): warning C4013: '_difftime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(90): warning C4013: '_ctime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(90): warning C4047: 'return' : 'char *' differs in levels of indirection from 'int'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(96): warning C4013: '_ctime64_s' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(103): warning C4013: '_gmtime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(103): warning C4047: 'return' : 'tm *' differs in levels of indirection from 'int'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(109): warning C4013: '_gmtime64_s' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(116): warning C4013: '_localtime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(116): warning C4047: 'return' : 'tm *' differs in levels of indirection from 'int'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(121): warning C4013: '_localtime64_s' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(125): warning C4013: '_mktime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(129): warning C4013: '_mkgmtime64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\time.inl(133): warning C4013: '_time64' undefined; assuming extern returning int
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(18): error C2054: expected '(' to follow 'using'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(18): error C2061: syntax error : identifier 'using'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(19): error C2061: syntax error : identifier 'using'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(19): error C2061: syntax error : identifier 'abs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(19): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(19): error C2061: syntax error : identifier 'atexit'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(20): error C2061: syntax error : identifier 'atof'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(20): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(20): error C2061: syntax error : identifier 'atoi'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(20): error C2061: syntax error : identifier 'atol'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(21): error C2061: syntax error : identifier 'bsearch'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(21): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(21): error C2061: syntax error : identifier 'calloc'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(21): error C2061: syntax error : identifier 'div'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(22): error C2061: syntax error : identifier 'exit'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(22): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(22): error C2061: syntax error : identifier 'free'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(23): error C2061: syntax error : identifier 'labs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(23): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(23): error C2061: syntax error : identifier 'ldiv'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(23): error C2061: syntax error : identifier 'malloc'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(24): error C2061: syntax error : identifier 'mblen'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(24): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(24): error C2061: syntax error : identifier 'mbstowcs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(24): error C2061: syntax error : identifier 'mbtowc'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(25): error C2061: syntax error : identifier 'qsort'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(25): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(25): error C2061: syntax error : identifier 'rand'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(25): error C2061: syntax error : identifier 'realloc'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(26): error C2061: syntax error : identifier 'srand'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(26): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(26): error C2061: syntax error : identifier 'strtod'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(26): error C2061: syntax error : identifier 'strtol'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(27): error C2061: syntax error : identifier 'strtoul'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(27): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(28): error C2061: syntax error : identifier 'wcstombs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(28): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(28): error C2061: syntax error : identifier 'wctomb'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(30): error C2054: expected '(' to follow 'using'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(33): error C2061: syntax error : identifier 'using'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(34): error C2061: syntax error : identifier 'system'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(34): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(37): error C2061: syntax error : identifier 'atoll'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(37): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(37): error C2061: syntax error : identifier 'llabs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(37): error C2061: syntax error : identifier 'lldiv'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(38): error C2061: syntax error : identifier 'strtof'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(38): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(38): error C2061: syntax error : identifier 'strtold'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(39): error C2061: syntax error : identifier 'strtoll'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(39): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cstdlib(39): error C2061: syntax error : identifier 'strtoull'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtgmath.h(214): warning C4602: #pragma pop_macro : 'new' no previous #pragma push_macro for this identifier
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtgmath.h(215): warning C4193: #pragma warning(pop) : no matching '#pragma warning(push)'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xtgmath.h(216): warning C4161: #pragma pack(pop...) : more pops than pushes
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(23): error C2061: syntax error : identifier 'abs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(23): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(23): error C2061: syntax error : identifier 'acos'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(23): error C2061: syntax error : identifier 'asin'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(24): error C2061: syntax error : identifier 'atan'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(24): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(24): error C2061: syntax error : identifier 'atan2'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(24): error C2061: syntax error : identifier 'ceil'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(25): error C2061: syntax error : identifier 'cos'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(25): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(25): error C2061: syntax error : identifier 'cosh'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(25): error C2061: syntax error : identifier 'exp'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(26): error C2061: syntax error : identifier 'fabs'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(26): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(26): error C2061: syntax error : identifier 'floor'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(26): error C2061: syntax error : identifier 'fmod'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(27): error C2061: syntax error : identifier 'frexp'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(27): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(27): error C2061: syntax error : identifier 'ldexp'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(27): error C2061: syntax error : identifier 'log'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(28): error C2061: syntax error : identifier 'log10'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(28): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(28): error C2061: syntax error : identifier 'modf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(28): error C2061: syntax error : identifier 'pow'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(29): error C2061: syntax error : identifier 'sin'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(29): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(29): error C2061: syntax error : identifier 'sinh'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(29): error C2061: syntax error : identifier 'sqrt'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(30): error C2061: syntax error : identifier 'tan'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(30): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(30): error C2061: syntax error : identifier 'tanh'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(32): error C2061: syntax error : identifier 'acosf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(32): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(32): error C2061: syntax error : identifier 'asinf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(33): error C2061: syntax error : identifier 'atanf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(33): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(33): error C2061: syntax error : identifier 'atan2f'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(33): error C2061: syntax error : identifier 'ceilf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(34): error C2061: syntax error : identifier 'cosf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(34): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(34): error C2061: syntax error : identifier 'coshf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(34): error C2061: syntax error : identifier 'expf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(35): error C2061: syntax error : identifier 'fabsf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(35): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(35): error C2061: syntax error : identifier 'floorf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(35): error C2061: syntax error : identifier 'fmodf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(36): error C2061: syntax error : identifier 'frexpf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(36): error C2059: syntax error : ';'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(36): error C2061: syntax error : identifier 'ldexpf'
+     1>C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\cmath(36): fatal error C1003: error count exceeds 100; stopping compilation
      1>Done Building Project "F:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:02.67
+Time Elapsed 00:00:00.47

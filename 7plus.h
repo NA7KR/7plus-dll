@@ -30,6 +30,8 @@
 #include <limits.h>
 #include <windows.h>
 
+#define	S_IREAD		0x0001	/* owner read */
+#define	S_IWRITE	0x0002	/* owner write */
 
 #define MAXDRIVE _MAX_DRIVE
 #define MAXDIR   _MAX_DIR
