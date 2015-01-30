@@ -7,3 +7,6 @@ Debug/7plus.log
 *.sdf
 *.dll
 Debug/*
+7plus.sdf
+7plus.vcxproj.user
+Debug/7plus.log
