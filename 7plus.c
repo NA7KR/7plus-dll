@@ -13,40 +13,37 @@
 #include <conio.h>
 
 
-FILE    *o;
-uint    crctab[256];
-byte    decode[256];
-byte    code[216];
-char    range[257];
+FILE* o;
+uint crctab[256];
+byte decode[256];
+byte code[216];
+char range[257];
 #ifdef LFN
-byte    _extended = '*';  /* Allow long filenames */
+byte _extended = '*'; /* Allow long filenames */
 #else
 byte    _extended = 0xdb; /* Stick to 8.3 */
 #endif
-size_t  buflen;
-char    _drive[MAXDRIVE], _dir[MAXDIR], _file[MAXFILE], _ext[MAXEXT];
-char    spaces[] = "                                                   ";
-char    *endstr;
-char    *sendstr;
-char    genpath[MAXPATH];
-char    altname[MAXPATH];
-char    delimit[] = "\n";
+size_t buflen;
+char _drive[MAXDRIVE ], _dir[MAXDIR ], _file[MAXFILE ], _ext[MAXEXT ];
+char spaces[] = "                                                   ";
+char* endstr;
+char* sendstr;
+char genpath[MAXPATH ];
+char altname[MAXPATH ];
+char delimit[] = "\n";
 char def_format[] = "format.def";
 const char cant[] = "\007\n'%s': Can't open. Break.\n";
 const char notsame[] = "\007Filesize in %s differs from the original file!\n" "Break.\n";
 const char nomem[] = "\007Argh error: Not enough memory present! " "Can't continue.....\n";
-int     noquery = 0;
-int     force = 0;
-int     fls = 0;
-int     autokill = 0;
-int     simulate = 0;
-int     sysop = 0;
-int     no_tty = 0;
-int     twolinesend = 0;
-struct  m_index *idxptr;
-
-
-
+int noquery = 0;
+int force = 0;
+int fls = 0;
+int autokill = 0;
+int simulate = 0;
+int sysop = 0;
+int no_tty = 0;
+int twolinesend = 0;
+struct m_index* idxptr;
 
 
 #ifdef LFN
@@ -55,13 +52,13 @@ struct  m_index *idxptr;
 #define _LFN "/8.3"
 #endif
 
-const char *logon[] = { "     7PLUS - file converter for store & forward     ",
-" * no commercial use * no sale * circulate freely * ",
-" version "VERSION""_LFN" ("PL7_DATE") (C) Axel Bauda, DG1BBQ " };
+const char* logon[] = {"     7PLUS - file converter for store & forward     ",
+	" * no commercial use * no sale * circulate freely * ",
+	" version "VERSION""_LFN" ("PL7_DATE") (C) Axel Bauda, DG1BBQ "};
 
 const char s_logon[] = "\n[7+ v"VERSION""_LFN" ("PL7_DATE"), (C) DG1BBQ]\n";
 
-const char *help[] = {
+const char* help[] = {
 	"\n",
 	"Commands (more exact descriptions, see manual): \n",
 	"\n",
@@ -169,7 +166,7 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 	int i, l;
 	int ret;
 
-	/*
+/*
 	* Count the args.
 	*
 	* Long Windows 9x file names may contain spaces,
@@ -189,7 +186,7 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 			while (cmd_line[i] != '"') i++;
 			i++;
 		}
-		/*
+/*
 		* Replace ' ' with '\0' unless surrounded with quotes
 		* to indicate the spaces are inside a long file name.
 		*/
@@ -200,17 +197,17 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 		}
 	}
 
-	/*
+/*
 	* The number of args should be one more than the spaces.
 	*/
 	argc++;
 
-	/*
+/*
 	* Allocate the pointers.
 	*/
 	argv = (char **) calloc (argc, sizeof (char *));
 
-	/*
+/*
 	* Process cmd_line again setting up argv.
 	*/
 	p1 = cmd_line;
@@ -222,7 +219,7 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 		if (p2) p1 = p2+1;
 	}
 
-	/*
+/*
 	* Remove any quotes
 	*/
 	for (i = 0; i < argc; i++)
@@ -234,7 +231,7 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 					argv[i] [l] = 0;
 			}
 
-	/*
+/*
 	* Call real program entry point
 	*/
 	ret = go_at_it(argc,argv);
@@ -246,28 +243,22 @@ int __export CALLBACK Do_7plus(char *cmd_line)
 #else /* #ifdef __DLL__ #else */
 
 
-
 /* Depending on the system, it may be nessesary to prompt the user for a
    keystroke, before terminating, because user wouldn't be able to read
    the outputs to the screen, when the window closes at termination.
    However, the '-n' option overrides this. */
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-
-
 	return (go_at_it(argc, argv));
-
-
 }
 #endif /* #ifdef __DLL__ #else */
 
 /* This is the real main() */
-int go_at_it(int argc, char **argv)
+int go_at_it(int argc, char** argv)
 {
-
 	char *p, *r, *s, *t;
-	char argname[MAXPATH];
-	int  ret, i, extract, genflag, join, cor;
+	char argname[MAXPATH ];
+	int ret, i, extract, genflag, join, cor;
 	long blocksize;
 
 
@@ -291,20 +282,19 @@ int go_at_it(int argc, char **argv)
 	blocksize = 138 * 62;
 
 
-
 	while (++i < argc)
 	{
 		if (*argv[i] != '-')
 		{
 			if (!p)
 			{
-				p = argv[i];  /* Name of file to de/encode/correct */
+				p = argv[i]; /* Name of file to de/encode/correct */
 				continue;
 			}
 			if (!r)
 			{
-				r = argv[i];  /* Searchpath for non-coded file. Needed for */
-				continue;     /* generating correction file */
+				r = argv[i]; /* Searchpath for non-coded file. Needed for */
+				continue; /* generating correction file */
 			}
 		}
 
@@ -313,15 +303,13 @@ int go_at_it(int argc, char **argv)
 			i++;
 			if (i == argc)
 			{
-				blocksize = 512 * 62;  /* No parameter, set max blocksize */
+				blocksize = 512 * 62; /* No parameter, set max blocksize */
 				i--;
 			}
+			else if (sscanf(argv[i], "%li", &blocksize) == 1 && *argv[i] != '-')
+				blocksize *= 62L; /* Set blocksize to parameter */
 			else
-				if (sscanf(argv[i], "%li", &blocksize) == 1 && *argv[i] != '-')
-					blocksize *= 62L; /* Set blocksize to parameter */
-				else
-					blocksize = 512 * 62; /* Next arg is not a parm. Set max blocksize */
-
+				blocksize = 512 * 62; /* Next arg is not a parm. Set max blocksize */
 		}
 
 		if (!_stricmp(argv[i], "-SP")) /* Split into equal parts */
@@ -332,9 +320,8 @@ int go_at_it(int argc, char **argv)
 				blocksize = 0; /* No parameter, no user defined split */
 				i--;
 			}
-			else
-				if (sscanf(argv[i], "%li", &blocksize) == 1)
-					blocksize += 50000L; /* Number of parts to encode (50000 used as
+			else if (sscanf(argv[i], "%li", &blocksize) == 1)
+				blocksize += 50000L; /* Number of parts to encode (50000 used as
 											 indicator) */
 		}
 
@@ -343,9 +330,8 @@ int go_at_it(int argc, char **argv)
 			i++;
 			if (i == argc)
 				i--;
-			else
-				if (sscanf(argv[i], "%li", &blocksize) == 1)
-					blocksize = (blocksize / 71 - 2) * 62;
+			else if (sscanf(argv[i], "%li", &blocksize) == 1)
+				blocksize = (blocksize / 71 - 2) * 62;
 		}
 
 		if (!_stricmp(argv[i], "-R")) /* Only re-encode specified part(s) */
@@ -365,15 +351,14 @@ int go_at_it(int argc, char **argv)
 				t = def_format;
 				i--;
 			}
+			else if (*argv[i] != '-')
+				t = argv[i];
 			else
-				if (*argv[i] != '-')
-					t = argv[i];
-				else
-					t = def_format;
+				t = def_format;
 		}
 
 		if (!_stricmp(argv[i], "-T")) /* Define BBS's termination string, */
-		{                             /* e.g. "/ex" */
+		{ /* e.g. "/ex" */
 			i++;
 			if (i == argc)
 				i--;
@@ -388,7 +373,7 @@ int go_at_it(int argc, char **argv)
 		}
 
 		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
-		{                                /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
+		{ /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
 			if (argv[i][5] == '2')
 				twolinesend = 1;
 			i++;
@@ -414,17 +399,17 @@ int go_at_it(int argc, char **argv)
 		}
 
 		if (!_stricmp(argv[i], "-#")) /* Create 7PLUS.FLS. Contents e.g.:     */
-			fls = 1;                    /* 10 TEST */
+			fls = 1; /* 10 TEST */
 		/* for TEST.EXE encoded into 10 parts   */
 
 		if (!_stricmp(argv[i], "-C")) /* Use 7PLUS-file as a correction file  */
 			cor = 1;
 
 		if (!_stricmp(argv[i], "-K")) /* Kill obsolete files, stop if gap */
-			autokill = 1;               /* greater than 10 files (faster)   */
+			autokill = 1; /* greater than 10 files (faster)   */
 
 		if (!_stricmp(argv[i], "-KA"))/* Kill all obsolete files        */
-			autokill = 2;               /* (slow, but better for servers) */
+			autokill = 2; /* (slow, but better for servers) */
 
 		if (!_stricmp(argv[i], "-F")) /* Force usage of correction file */
 			force = 1;
@@ -433,34 +418,31 @@ int go_at_it(int argc, char **argv)
 			genflag = 1;
 
 		if (!_stricmp(argv[i], "-J")) /* Join two error reports / Produce single */
-			join = 1;                   /* output file when encoding               */
-
+			join = 1; /* output file when encoding               */
 
 
 		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
-			sprintf_s(delimit, sizeof(delimit), "\r");    /* for direct binary upload. */
+			sprintf_s(delimit, sizeof(delimit), "\r"); /* for direct binary upload. */
 
 		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
-
 			o = fopen("7plus.out", OPEN_WRITE_TEXT);
 
 			noquery = 1;
 		}
 
 		if (!_stricmp(argv[i], "-SIM")) /* Simulate encoding and report */
-			simulate = 1;                 /* number of parts and parts */
+			simulate = 1; /* number of parts and parts */
 		/* filename in 7plus.fls */
 
 		if (!_stricmp(argv[i], "-SYSOP")) /* SYSOP mode. Decode, even if parts */
-			sysop = 1;                      /* are missing. */
+			sysop = 1; /* are missing. */
 
 		if (!_stricmp(argv[i], "-X")) /* Extract 7plus-files from log-file    */
 			extract = 1;
 
 		if (!_stricmp(argv[i], "-Y")) /* Always assume YES on queries.*/
 			noquery = 1;
-
 	}
 
 	if (!_isatty(_fileno(o)))
@@ -468,40 +450,36 @@ int go_at_it(int argc, char **argv)
 
 	if (no_tty)
 		fprintf(o, "%s", s_logon);
-	else
+	else if (!p) /* No File specified, show help */
+	{
+		int scrlines;
+		int n = 5;
 
+		i = 0;
 
+		/* How many lines fit on screen? */
+		scrlines = screenlength() - 1;
 
-		if (!p) /* No File specified, show help */
+		while (help[i])
 		{
-			int scrlines;
-			int n = 5;
-
-			i = 0;
-
-			/* How many lines fit on screen? */
-			scrlines = screenlength() - 1;
-
-			while (help[i])
+			if (++n == scrlines && !noquery)
 			{
-				if (++n == scrlines && !noquery)
-				{
-					set_autolf(0);
+				set_autolf(0);
 
-					fprintf(o, "Press RETURN to continue....\r");
+				fprintf(o, "Press RETURN to continue....\r");
 
-					fflush(stdout);
-					while (!_getch());
-					fflush(stdin);
-					n = 0;
+				fflush(stdout);
+				while (!_getch());
+				fflush(stdin);
+				n = 0;
 
-					set_autolf(1);
-				}
-				fprintf(o, help[i++]);
+				set_autolf(1);
 			}
-			ret = 0;
-			goto end;
+			fprintf(o, help[i++]);
 		}
+		ret = 0;
+		goto end;
+	}
 
 	if ((s = (char *)malloc((size_t)4000UL)) == NULLCP)
 	{
@@ -542,9 +520,9 @@ int go_at_it(int argc, char **argv)
 	  ** It's usefull for DOS also.
 	  */
 		struct ffblk ffblk; /* only needed locally */
-//KRR		if (findfirst (p, &ffblk, 0) == 0)
+		//KRR		if (findfirst (p, &ffblk, 0) == 0)
 		{
-			fnsplit (p, _drive, _dir, NULL, NULL);
+			fnsplit(p, _drive, _dir, NULL, NULL);
 			sprintf_s(argname, sizeof(argname), "%s%s%s", _drive, _dir, ffblk.ff_name);
 		}
 	}
@@ -578,8 +556,8 @@ int go_at_it(int argc, char **argv)
 		if (join)
 			if (!_strnicmp(".err", _ext, 4) ||
 				(toupper(*(_ext + 1)) == 'E' &&
-				isxdigit(*(_ext + 2)) &&
-				isxdigit(*(_ext + 3))))
+					isxdigit(*(_ext + 2)) &&
+					isxdigit(*(_ext + 3))))
 			{
 				ret = join_control(argname, r);
 				goto end;
@@ -587,8 +565,8 @@ int go_at_it(int argc, char **argv)
 
 		if (!_strnicmp(".cor", _ext, 4) ||
 			(toupper(*(_ext + 1)) == 'C' &&
-			isxdigit(*(_ext + 2)) &&
-			isxdigit(*(_ext + 3))))
+				isxdigit(*(_ext + 2)) &&
+				isxdigit(*(_ext + 3))))
 		{
 			ret = correct_meta(argname, 1, 0);
 			goto end;
@@ -607,7 +585,7 @@ int go_at_it(int argc, char **argv)
 			goto end;
 		}
 #ifdef _HAVE_CHSIZE
-		if (!_strnicmp (".7mf", _ext, 4))
+		if (!_strnicmp(".7mf", _ext, 4))
 #else
 		if (!_strnicmp(".7ix", _ext, 4))
 #endif
@@ -646,10 +624,10 @@ end:
 int screenlength(void)
 {
 	int scrlines;
-	
+
 	{
 		struct text_info t;
-//KRR		gettextinfo (&t);
+		//KRR		gettextinfo (&t);
 		scrlines = t.screenheight;
 	}
 
@@ -686,3 +664,4 @@ int screenlength(void)
  21 Not enough memory available
 
  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+

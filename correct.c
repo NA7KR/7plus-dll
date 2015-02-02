@@ -13,17 +13,17 @@ const char processing[] = "Processing '%s'. Missing lines left: %ld      \r";
 
 const char inv_idxfile[] = "\007Invalid index info.\n";
 
-int correct_meta(char *name, int itsacor, int quietmode)
+int correct_meta(char* name, int itsacor, int quietmode)
 {
-	FILE     *rfile, *meta;
-	char     inpath[MAXFPATH], indexfile[MAXPATH], metafile[MAXPATH];
-	char     newname[MAXPATH], orgname[13], filename[13], dum[20];
-	char     *p, line[81];
-	int      i, j, corrpart, corrline, corrline2, splitsize, length;
-	int      batchcor, num;
-	uint     crc, csequence;
-	long     binbytes, c_line, offset, oldoffset;
-	ulong    ftimestamp;
+	FILE *rfile, *meta;
+	char inpath[MAXFPATH], indexfile[MAXPATH ], metafile[MAXPATH ];
+	char newname[MAXPATH ], orgname[13], filename[13], dum[20];
+	char *p, line[81];
+	int i, j, corrpart, corrline, corrline2, splitsize, length;
+	int batchcor, num;
+	uint crc, csequence;
+	long binbytes, c_line, offset, oldoffset;
+	ulong ftimestamp;
 
 	*indexfile = EOS;
 	ftimestamp = 0UL;
@@ -75,13 +75,13 @@ int correct_meta(char *name, int itsacor, int quietmode)
 	}
 
 #ifdef _HAVE_CHSIZE
-	strcpy (indexfile, metafile);
+	strcpy(indexfile, metafile);
 
 	/* read index info into struct idxptr */
-	if (read_index (meta, idxptr))
+	if (read_index(meta, idxptr))
 	{
-		fprintf (o, inv_idxfile);
-		fclose (meta);
+		fprintf(o, inv_idxfile);
+		fclose(meta);
 		return (7);
 	}
 #endif
@@ -92,8 +92,8 @@ int correct_meta(char *name, int itsacor, int quietmode)
 
 	if (quietmode != 2)
 		fprintf(o, "\n-------------\n"
-		"Correcting...\n"
-		"-------------\n\n");
+		        "Correcting...\n"
+		        "-------------\n\n");
 
 	while (idxptr->lines_left)
 	{
@@ -130,10 +130,10 @@ int correct_meta(char *name, int itsacor, int quietmode)
 				if (!force)
 				{
 					fprintf(o,
-						"\n\007If you want to use this cor-file anyway, run 7PLUS "
-						"again\nwith the '-F' option (force usage). Bear in mind, "
-						"that this can\ncause irreparable damage to the metafile! "
-						"Use at own risk.\n");
+					        "\n\007If you want to use this cor-file anyway, run 7PLUS "
+					        "again\nwith the '-F' option (force usage). Bear in mind, "
+					        "that this can\ncause irreparable damage to the metafile! "
+					        "Use at own risk.\n");
 
 					fclose(meta);
 					return(7);
@@ -191,7 +191,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 		{
 			/* Get info from COR-file */
 			sscanf(line + 18, "%12s %ld %s [%lx]",
-				orgname, &binbytes, filename, &ftimestamp);
+			       orgname, &binbytes, filename, &ftimestamp);
 			splitsize = get_hex(filename);
 		}
 		else
@@ -201,8 +201,8 @@ int correct_meta(char *name, int itsacor, int quietmode)
 
 			/* Get info from 7PLUS header */
 			if (sscanf(line + 8, "%d %s %s %s %ld %s %s %s %s %s",
-				&corrpart, indexfile, indexfile, orgname, &binbytes,
-				indexfile, dum, indexfile, indexfile, indexfile) == 10)
+			           &corrpart, indexfile, indexfile, orgname, &binbytes,
+			           indexfile, dum, indexfile, indexfile, indexfile) == 10)
 			{
 				if (!mcrc(line, 0) || !corrpart || !dum)
 					*orgname = EOS;
@@ -248,7 +248,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 
 					if (mcrc(line, 0))
 						if (sscanf(line, " stop_7+. %s [%lx]",
-							indexfile, &ftimestamp) != 2)
+						           indexfile, &ftimestamp) != 2)
 							ftimestamp = 0UL;
 				}
 			}
@@ -260,7 +260,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 			(binbytes && (binbytes != idxptr->length)))
 		{
 			fprintf(o, "\007\nCorrection file '%s.%s' and metafile '%s' do not "
-				"refer\nto the same original file!\n", _file, _ext, metafile);
+			        "refer\nto the same original file!\n", _file, _ext, metafile);
 			fclose(rfile);
 			continue;
 		}
@@ -268,12 +268,12 @@ int correct_meta(char *name, int itsacor, int quietmode)
 			&& !force)
 		{
 			fprintf(o,
-				"\007WARNING! The timestamps in the metafile and the correction "
-				"file\n'%s.%s' differ!\nIf you still want to go ahead with the "
-				"correction, call 7PLUS again\nwith the addition of the '-f' "
-				"option (force usage).\nBear in mind, that this can cause "
-				"irreparable damage to the metafile!\nUse at own risk.\n",
-				_file, _ext);
+			        "\007WARNING! The timestamps in the metafile and the correction "
+			        "file\n'%s.%s' differ!\nIf you still want to go ahead with the "
+			        "correction, call 7PLUS again\nwith the addition of the '-f' "
+			        "option (force usage).\nBear in mind, that this can cause "
+			        "irreparable damage to the metafile!\nUse at own risk.\n",
+			        _file, _ext);
 			return (18);
 		}
 
@@ -313,14 +313,14 @@ int correct_meta(char *name, int itsacor, int quietmode)
 			/* Calculate CRC */
 			csequence = 0;
 			for (i = 0; i < 64; i++)
-				crc_calc(csequence, p[i]);
+			crc_calc(csequence, p[i]);
 			csequence &= 0x3fff; /* strip calculated CRC to 14 bits */
 
 			/* If line is corrupted, try repairing it */
 			if (csequence != crc)
 			{
 				if (!rebuild(p, 0))
-					/* Incorrect CRC. Ignore line. */
+				/* Incorrect CRC. Ignore line. */
 					continue;
 			}
 
@@ -402,8 +402,8 @@ int correct_meta(char *name, int itsacor, int quietmode)
 #ifdef _HAVE_CHSIZE
 	if (!idxptr->lines_left)
 	{
-		fseek (meta, 0L, SEEK_SET);
-		_chsize (_fileno(meta), idxptr->length);
+		fseek(meta, 0L, SEEK_SET);
+		_chsize(_fileno(meta), idxptr->length);
 	}
 #endif
 	fclose(meta);
@@ -427,7 +427,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 
 		if ((no_tty || batchcor == 1) && quietmode != 1)
 			fprintf(o, "\n%ld corrupted line%s left.\n", idxptr->lines_left,
-			(idxptr->lines_left == 1) ? "" : "s");
+			        (idxptr->lines_left == 1) ? "" : "s");
 		return (16);
 	}
 
@@ -449,8 +449,7 @@ int correct_meta(char *name, int itsacor, int quietmode)
 		kill_em(_file, inpath, "e", NULL, NULL, NULL, NULL, 0, 2);
 	}
 	fprintf(o, "\nCorrection successful! '%s', %ld bytes.\n",
-		newname, idxptr->length);
+	        newname, idxptr->length);
 
 	return (0);
 }
-

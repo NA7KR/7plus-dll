@@ -74,8 +74,6 @@
 //#define _HAVE_GETCH
 
 
-
-
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
 
 /* flags for fopen() */
@@ -98,22 +96,22 @@
 #endif
 
 /** shorthands for unsigned types **/
-typedef unsigned char byte;  /* 8bit unsigned char */
+typedef unsigned char byte; /* 8bit unsigned char */
 
-typedef unsigned int  uint;  /* 16 or 32bit unsigned int */
+typedef unsigned int uint; /* 16 or 32bit unsigned int */
 typedef unsigned long ulong; /* 32bit unsigned long      */
 
 
-struct  m_index
+struct m_index
 {
-	char  filename[14];  /*12  chars +2*/
-	char  full_name[258];/*256 chars +2*/
-	
+	char filename[14]; /*12  chars +2*/
+	char full_name[258];/*256 chars +2*/
+
 	long length;
 	ulong timestamp;
-	int  splitsize;
+	int splitsize;
 	ulong lines_ok[4090];
-	long  lines_left;
+	long lines_left;
 };
 
 /*********************** macros *************************/
@@ -123,56 +121,55 @@ struct  m_index
 /***************** function prototypes ******************/
 
 /** 7plus.c **/
-int   go_at_it(int argc, char **argv);
-int   screenlength(void);
+int go_at_it(int argc, char** argv);
+int screenlength(void);
 
 /** encode.c **/
-int   encode_file(char *name, long blocksize, char *searchbin, int join, char *head_foot);
-void  get_range(char *rangestring);
-int   read_tb(char *name, char *go_top, char *go_bottom);
-int   top_bottom(FILE *wfile, char *top_bot, char *orgname, char *type, int part, int parts);
+int encode_file(char* name, long blocksize, char* searchbin, int join, char* head_foot);
+void get_range(char* rangestring);
+int read_tb(char* name, char* go_top, char* go_bottom);
+int top_bottom(FILE* wfile, char* top_bot, char* orgname, char* type, int part, int parts);
 /** decode.c **/
-int   control_decode(char *name);
-int   decode_file(char *name, int flag);
-void  decode_n_write(FILE *raus, char *p, int length);
-void  w_index_err(struct m_index *idxptr, const char *localname, int flag);
-int   make_new_err(const char *name);
-void  progress(const char *filename, int part, int of_parts,
-	long errors, long rebuilt, const char *status);
+int control_decode(char* name);
+int decode_file(char* name, int flag);
+void decode_n_write(FILE* raus, char* p, int length);
+void w_index_err(struct m_index* idxptr, const char* localname, int flag);
+int make_new_err(const char* name);
+void progress(const char* filename, int part, int of_parts,
+              long errors, long rebuilt, const char* status);
 /* correct.c */
-int   correct_meta(char *name, int itsacor, int quietmode);
+int correct_meta(char* name, int itsacor, int quietmode);
 
 /** util.c **/
-char  *my_fgets(char *string, register int n, FILE *rein);
-int   my_putc(int  outchar, FILE *out);
-void  crc_n_lnum(uint *crc, int *linenumber, char *line);
-void  crc2(uint *crc, char *line);
-void  add_crc2(char *line);
-int   mcrc(char *line, int flag);
-int   read_index(FILE *ifile, struct m_index *idxptr);
-int   write_index(FILE *ifile, struct m_index *idxptr, int flag);
-ulong read_ulong(FILE *in);
-uint  read_uint(FILE *in);
-void  write_ulong(FILE *out, ulong val);
-void  write_uint(FILE *out, uint val);
-int   crc_file(const char *file, const char *s1, const char *s2,
-	int flag);
-int   copy_file(const char *to, const char *from, ulong timestamp);
-void  replace(const char *oldfil, const char *newfil, ulong timestamp);
+char* my_fgets(char* string, register int n, FILE* rein);
+int my_putc(int outchar, FILE* out);
+void crc_n_lnum(uint* crc, int* linenumber, char* line);
+void crc2(uint* crc, char* line);
+void add_crc2(char* line);
+int mcrc(char* line, int flag);
+int read_index(FILE* ifile, struct m_index* idxptr);
+int write_index(FILE* ifile, struct m_index* idxptr, int flag);
+ulong read_ulong(FILE* in);
+uint read_uint(FILE* in);
+void write_ulong(FILE* out, ulong val);
+void write_uint(FILE* out, uint val);
+int crc_file(const char* file, const char* s1, const char* s2,
+             int flag);
+int copy_file(const char* to, const char* from, ulong timestamp);
+void replace(const char* oldfil, const char* newfil, ulong timestamp);
 
 
-
-void  kill_em(const char *name, const char *inpath, const char *one,
-	const char *two, const char *three, const char *four,
-	const char *five, int _one, int no_lf);
-void  kill_dest(FILE *in, FILE *out, const char *name);
-int   test_exist(const char *filename);
-int   test_file(FILE *in, char *destnam, int flag, int namsize);
-void  init_decodetab(void);
-void  init_codetab(void);
-void  init_crctab(void);
-void  build_DOS_name(char *name, char *ext);
-void  strip(char *string);
+void kill_em(const char* name, const char* inpath, const char* one,
+             const char* two, const char* three, const char* four,
+             const char* five, int _one, int no_lf);
+void kill_dest(FILE* in, FILE* out, const char* name);
+int test_exist(const char* filename);
+int test_file(FILE* in, char* destnam, int flag, int namsize);
+void init_decodetab(void);
+void init_codetab(void);
+void init_crctab(void);
+void build_DOS_name(char* name, char* ext);
+void strip(char* string);
 
 #ifndef _HAVE_GMTIME
 struct tm *__offtime(const time_t *t, long int offset);
@@ -184,7 +181,7 @@ time_t    mktime(register struct tm *tp);
 ulong get_filetime(const char *filename);
 void  set_filetime(const char *filename, ulong ftimestamp);
 #endif
-uint  get_hex(char *hex);
+uint get_hex(char* hex);
 #ifndef _HAVE_FNSPLIT
 void  fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft);
 #endif
@@ -197,33 +194,36 @@ int   _strnicmp(const char *s1, const char *s2, size_t n);
 #endif
 
 /** rebuild.c **/
-int   rebuild(char *line, int flag);
+int rebuild(char* line, int flag);
 
 /** extract.c **/
-int   extract_files(char *name, char *search);
+int extract_files(char* name, char* search);
 
 /** join.c **/
-int   join_control(char *file1, char *file2);
-int   join_err(char *file1, char *file2);
+int join_control(char* file1, char* file2);
+int join_err(char* file1, char* file2);
 
 #define set_autolf(x)
 #define check_fn(x)
 
-struct ffblk {
-	char lfn_magic[6];	    /* LFN: the magic "LFN32" signature */
-	short lfn_handle;	    /* LFN: the handle used by findfirst/findnext */
+struct ffblk
+{
+	char lfn_magic[6]; /* LFN: the magic "LFN32" signature */
+	short lfn_handle; /* LFN: the handle used by findfirst/findnext */
 	unsigned short lfn_ctime; /* LFN: file creation time */
 	unsigned short lfn_cdate; /* LFN: file creation date */
 	unsigned short lfn_atime; /* LFN: file last _access time (usually 0) */
 	unsigned short lfn_adate; /* LFN: file last _access date */
-	char ff_reserved[5];      /* used to hold the state of the search */
-	unsigned char ff_attrib;  /* actual attributes of the file found */
-	unsigned short ff_ftime;  /* hours:5, minutes:6, (seconds/2):5 */
-	unsigned short ff_fdate;  /* (year-1980):7, month:4, day:5 */
-	unsigned long ff_fsize;   /* size of file */
-	char ff_name[260];        /* name of file as ASCIIZ string */
+	char ff_reserved[5]; /* used to hold the state of the search */
+	unsigned char ff_attrib; /* actual attributes of the file found */
+	unsigned short ff_ftime; /* hours:5, minutes:6, (seconds/2):5 */
+	unsigned short ff_fdate; /* (year-1980):7, month:4, day:5 */
+	unsigned long ff_fsize; /* size of file */
+	char ff_name[260]; /* name of file as ASCIIZ string */
 };
-struct text_info {
+
+struct text_info
+{
 	unsigned char winleft;
 	unsigned char wintop;
 	unsigned char winright;
@@ -236,5 +236,3 @@ struct text_info {
 	unsigned char curx;
 	unsigned char cury;
 };
-
-

@@ -10,7 +10,7 @@ const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 ***
 */
 
-char *my_fgets(char *string, register int n, FILE *rein)
+char* my_fgets(char* string, register int n, FILE* rein)
 {
 	register int in, i;
 
@@ -41,7 +41,7 @@ char *my_fgets(char *string, register int n, FILE *rein)
 ***
 */
 
-int my_putc(int outchar, FILE *out)
+int my_putc(int outchar, FILE* out)
 {
 	//register int x;
 	//return (x);
@@ -54,7 +54,7 @@ int my_putc(int outchar, FILE *out)
 ***
 */
 
-void crc_n_lnum(uint *crc, int *linenumber, char *line)
+void crc_n_lnum(uint* crc, int* linenumber, char* line)
 {
 	register ulong cs;
 
@@ -62,8 +62,8 @@ void crc_n_lnum(uint *crc, int *linenumber, char *line)
 		0xd8L * decode[(byte)line[65]] +
 		decode[(byte)line[64]];
 
-	*linenumber = (int)(cs >> 14);   /* upper 9 bits are the line number */
-	*crc = (uint)(cs & 0x3fffL);     /* lower 14 bits are the CRC */
+	*linenumber = (int)(cs >> 14); /* upper 9 bits are the line number */
+	*crc = (uint)(cs & 0x3fffL); /* lower 14 bits are the CRC */
 }
 
 /*
@@ -72,9 +72,8 @@ void crc_n_lnum(uint *crc, int *linenumber, char *line)
 ***
 */
 
-void crc2(uint *crc, char *line)
+void crc2(uint* crc, char* line)
 {
-
 	*crc = 0xd8 * decode[(byte)line[68]] +
 		decode[(byte)line[67]];
 }
@@ -85,7 +84,7 @@ void crc2(uint *crc, char *line)
 ***
 */
 
-void add_crc2(char *line)
+void add_crc2(char* line)
 {
 	register uint crc;
 	register int i;
@@ -93,7 +92,7 @@ void add_crc2(char *line)
 	/* Whip up 2nd CRC */
 	crc = 0;
 	for (i = 66; i > -1; i--)
-		crc_calc(crc, line[i]);
+	crc_calc(crc, line[i]);
 	crc &= 0x7fff;
 
 	i = 67;
@@ -108,7 +107,7 @@ void add_crc2(char *line)
 ***
 */
 
-int mcrc(char *line, int flag)
+int mcrc(char* line, int flag)
 {
 	register int i, j;
 	register uint crc;
@@ -122,7 +121,7 @@ int mcrc(char *line, int flag)
 	j = (int)(p - line) + 4;
 
 	for (i = crc = 0; i < j; i++)
-		crc_calc(crc, line[i]);
+	crc_calc(crc, line[i]);
 	crc %= 216;
 	if (!flag)
 	{
@@ -143,7 +142,7 @@ int mcrc(char *line, int flag)
 ***
 */
 
-int read_index(FILE *ifile, struct m_index *idxptr)
+int read_index(FILE* ifile, struct m_index* idxptr)
 {
 	int j;
 	ulong i, begin, end;
@@ -210,7 +209,7 @@ int read_index(FILE *ifile, struct m_index *idxptr)
 ***
 */
 
-int write_index(FILE *ifile, struct m_index *idxptr, int flag)
+int write_index(FILE* ifile, struct m_index* idxptr, int flag)
 {
 	int j, part, prevpart, lines;
 	ulong i, begin, end;
@@ -272,7 +271,8 @@ int write_index(FILE *ifile, struct m_index *idxptr, int flag)
 				i++;
 				j = (int)(i >> 5);
 			}
-		} while (j < 4080 && (idxptr->lines_ok[j] & (1UL << (i & 31UL))));
+		}
+		while (j < 4080 && (idxptr->lines_ok[j] & (1UL << (i & 31UL))));
 
 		end = i;
 
@@ -353,7 +353,7 @@ int write_index(FILE *ifile, struct m_index *idxptr, int flag)
 ***
 */
 
-ulong read_ulong(FILE *in)
+ulong read_ulong(FILE* in)
 {
 	ulong val;
 
@@ -365,7 +365,7 @@ ulong read_ulong(FILE *in)
 	return (val);
 }
 
-uint read_uint(FILE *in)
+uint read_uint(FILE* in)
 {
 	uint val;
 
@@ -375,7 +375,7 @@ uint read_uint(FILE *in)
 	return (val);
 }
 
-void write_ulong(FILE *out, ulong val)
+void write_ulong(FILE* out, ulong val)
 {
 	my_putc((int)(val & 0xffUL), out);
 	my_putc((int)((val >> 8) & 0xffUL), out);
@@ -383,7 +383,7 @@ void write_ulong(FILE *out, ulong val)
 	my_putc((int)((val >> 24) & 0xffUL), out);
 }
 
-void write_uint(FILE *out, uint val)
+void write_uint(FILE* out, uint val)
 {
 	my_putc((int)(val & 0xffU), out);
 	my_putc((int)((val >> 8) & 0xffU), out);
@@ -395,13 +395,13 @@ void write_uint(FILE *out, uint val)
 *** flag == 0: insert CRC into file.
 */
 
-int crc_file(const char *file, const char *s1, const char *s2, int flag)
+int crc_file(const char* file, const char* s1, const char* s2, int flag)
 {
 	char line[81];
-	const char *p;
+	const char* p;
 	uint crc, cs;
 	int i, j, k;
-	FILE *in;
+	FILE* in;
 
 	crc = cs = 0;
 
@@ -422,7 +422,8 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 			break;
 
 		j = strncmp(line, s1, i);
-	} while (j);
+	}
+	while (j);
 
 	if (j)
 		p = s1;
@@ -434,7 +435,7 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 			register int linelen = (int)strlen(line) - 1;
 
 			for (i = 0; i < linelen; i++)
-				crc_calc(crc, line[i]);
+			crc_calc(crc, line[i]);
 
 			/* unfortunately, OS9/68k uses CR as line seperator. Since the CRC
 			   is calculated over the entire file (including the line seps),
@@ -449,13 +450,14 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 
 			if (my_fgets(line, 80, in) == NULL)
 				break;
-		} while (j);
+		}
+		while (j);
 	}
 
 	if (j)
 	{
 		fprintf(o, "\n\007Can't calculate CRC\nString '%s' not found in '%s'.\n"
-			"Break.\n", p, file);
+		        "Break.\n", p, file);
 		return (7);
 	}
 
@@ -467,7 +469,7 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 		if (!line || strncmp("CRC ", line, 4))
 		{
 			fprintf(o, "\n'%s': no CRC found.\n(File may be corrupted or from version "
-				"earlier than 7PLUS v1.5)\n", file);
+			        "earlier than 7PLUS v1.5)\n", file);
 			return (17);
 		}
 		cs = get_hex(line + 4);
@@ -493,8 +495,7 @@ int crc_file(const char *file, const char *s1, const char *s2, int flag)
 */
 
 
-
-int copy_file(const char *to, const char *from, ulong timestamp)
+int copy_file(const char* to, const char* from, ulong timestamp)
 {
 	FILE *_from, *_to;
 	int _char, status;
@@ -510,13 +511,10 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 
 	if (status != EOF)
 	{
-
 		fclose(_to);
 
-		if (timestamp)
-			;
-//KRR			set_filetime(to, timestamp);
-
+		if (timestamp);
+		//KRR			set_filetime(to, timestamp);
 	}
 	else
 	{
@@ -532,9 +530,8 @@ int copy_file(const char *to, const char *from, ulong timestamp)
 ***
 */
 
-void replace(const char *old, const char *new, ulong timestamp)
+void replace(const char* old, const char*new, ulong timestamp)
 {
-
 	if (_access(old, 2))
 		_chmod(old, S_IREAD | S_IWRITE);
 	_unlink(old);
@@ -547,14 +544,10 @@ void replace(const char *old, const char *new, ulong timestamp)
 	{
 		if (timestamp)
 		{
-
-//KRR			set_filetime(old, timestamp);
-
+			//KRR			set_filetime(old, timestamp);
 		}
 	}
 }
-
-
 
 
 /*
@@ -563,12 +556,12 @@ void replace(const char *old, const char *new, ulong timestamp)
 *** are missing. This can be overridden by the -KA option)
 */
 
-void kill_em(const char *name, const char *inpath, const char *one,
-	const char *two, const char *three, const char *four,
-	const char *five, int _one, int no_lf)
+void kill_em(const char* name, const char* inpath, const char* one,
+             const char* two, const char* three, const char* four,
+             const char* five, int _one, int no_lf)
 {
-	const char *p;
-	char newname[MAXPATH];
+	const char* p;
+	char newname[MAXPATH ];
 	int i, j, k, l, len;
 
 	k = l = 0;
@@ -580,15 +573,15 @@ void kill_em(const char *name, const char *inpath, const char *one,
 
 		switch (i)
 		{
-		case 0:  p = one;
+		case 0: p = one;
 			break;
-		case 1:  p = two;
+		case 1: p = two;
 			break;
-		case 2:  p = three;
+		case 2: p = three;
 			break;
-		case 3:  p = four;
+		case 3: p = four;
 			break;
-		case 4:  p = five;
+		case 4: p = five;
 			break;
 		default: p = NULLCP;
 		}
@@ -647,7 +640,7 @@ void kill_em(const char *name, const char *inpath, const char *one,
 ***
 */
 
-void kill_dest(FILE *in, FILE *out, const char *name)
+void kill_dest(FILE* in, FILE* out, const char* name)
 {
 	if (out)
 		fclose(out);
@@ -663,9 +656,8 @@ void kill_dest(FILE *in, FILE *out, const char *name)
 ***
 */
 
-int test_exist(const char *filename)
+int test_exist(const char* filename)
 {
-
 	if (_access(filename, 0))
 		return (1);
 	return (0);
@@ -687,10 +679,10 @@ int test_exist(const char *filename)
 ***
 */
 
-int test_file(FILE *in, char *destnam, int flag, int namsize)
+int test_file(FILE* in, char* destnam, int flag, int namsize)
 {
 	/* FILE *out; */
-	int  i, ret;
+	int i, ret;
 	ret = 0;
 
 	/* Loop as long as file with same name exists. */
@@ -707,8 +699,8 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 
 		if (flag > 1) /* autogenerate new filename */
 		{
-			char __drive[MAXDRIVE], __dir[MAXDIR], __file[MAXFILE], __ext[MAXEXT];
-			char newnam[MAXPATH];
+			char __drive[MAXDRIVE ], __dir[MAXDIR ], __file[MAXFILE ], __ext[MAXEXT ];
+			char newnam[MAXPATH ];
 			int i = 1;
 			int j, k;
 			fnsplit(destnam, __drive, __dir, __file, __ext);
@@ -754,9 +746,12 @@ int test_file(FILE *in, char *destnam, int flag, int namsize)
 				}
 				return (ret);
 			}
-		} while (i != 'Y' && i != 'A' && i != 0xff);
+		}
+		while (i != 'Y' && i != 'A' && i != 0xff);
 	}
+	return(0);
 }
+
 /*
 	*** initialize decoding table
 	***
@@ -799,18 +794,18 @@ void init_codetab(void)
 
 	j = 0;
 
-	for (i = 0x21; i < 0x2a; i++, j++)
+	for (i = 0x21; i < 0x2a; i++ , j++)
 		code[j] = i;
 
-	for (i = 0x2b; i < 0x7f; i++, j++)
+	for (i = 0x2b; i < 0x7f; i++ , j++)
 		code[j] = i;
 
-	for (i = 0x80; i < 0x91; i++, j++)
+	for (i = 0x80; i < 0x91; i++ , j++)
 		code[j] = i;
 
 	code[j++] = 0x92;
 
-	for (i = 0x94; i < 0xfd; i++, j++)
+	for (i = 0x94; i < 0xfd; i++ , j++)
 		code[j] = i;
 }
 
@@ -825,12 +820,12 @@ void init_crctab(void)
 {
 	uint m, n, r, mask;
 
-	static uint bitrmdrs[] = { 0x9188, 0x48C4, 0x2462, 0x1231,
-		0x8108, 0x4084, 0x2042, 0x1021 };
+	static uint bitrmdrs[] = {0x9188, 0x48C4, 0x2462, 0x1231,
+		0x8108, 0x4084, 0x2042, 0x1021};
 
 	for (n = 0; n < 256; ++n)
 	{
-		for (mask = 0x0080, r = 0, m = 0; m < 8; ++m, mask >>= 1)
+		for (mask = 0x0080 , r = 0 , m = 0; m < 8; ++m , mask >>= 1)
 			if (n & mask)
 				r = bitrmdrs[m] ^ r;
 		crctab[n] = r;
@@ -843,9 +838,8 @@ void init_crctab(void)
 ***
 */
 
-void build_DOS_name(char *name, char *ext)
+void build_DOS_name(char* name, char* ext)
 {
-
 	strip(name);
 
 	if (*ext)
@@ -858,7 +852,7 @@ void build_DOS_name(char *name, char *ext)
 	ext[3] = EOS;
 }
 
-void strip(char *string)
+void strip(char* string)
 {
 	register int i;
 
@@ -875,12 +869,12 @@ void strip(char *string)
 
 			if (strchr(" <>=,';:*?&[]{}|^()/.\\\"~+@", string[i]) != NULL)
 				string[i] = '_';
-		} while (string[++i]);
+		}
+		while (string[++i]);
 
 		string[i] = EOS;
 	}
 }
-
 
 
 #define _SETFTIME_OK
@@ -908,9 +902,9 @@ fprintf(o, "\007\nCan't set file's timestamp!");
 
 const unsigned short int __mon_lengths[2][12] =
 {
-	/* Normal years.  */
+/* Normal years.  */
 	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
-	/* Leap years.  */
+/* Leap years.  */
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
@@ -953,7 +947,7 @@ struct tm *
 	rem %= SECS_PER_HOUR;
 	tbuf.tm_min = rem / 60;
 	tbuf.tm_sec = rem % 60;
-	/* January 1, 1970 was a Thursday.  */
+/* January 1, 1970 was a Thursday.  */
 	tbuf.tm_wday = (4 + days) % 7;
 	if (tbuf.tm_wday < 0)
 		tbuf.tm_wday += 7;
@@ -1033,7 +1027,7 @@ time_t mktime(register struct tm *tp)
 			max.tm_mday = max.tm_mon = max.tm_year = INT_MAX;
 	}
 
-	/* Make all the elements of TP that we pay attention to
+/* Make all the elements of TP that we pay attention to
 	   be within the ranges of reasonable values for those things.  */
 #define  normalize(elt, min, max, nextelt)\
 				while (tp->elt < min)                     \
@@ -1051,22 +1045,22 @@ time_t mktime(register struct tm *tp)
 	normalize(tm_min, 0, 59, tm_hour);
 	normalize(tm_hour, 0, 24, tm_mday);
 
-	/* Normalize the month first so we can use
+/* Normalize the month first so we can use
 	   it to figure the range for the day.  */
 	normalize(tm_mon, 0, 11, tm_year);
 	normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
 		tm_mon);
 
-	/* Normalize the month again, since normalizing
+/* Normalize the month again, since normalizing
 	   the day may have pushed it out of range.  */
 	normalize(tm_mon, 0, 11, tm_year);
 
-	/* Normalize the day again, because normalizing
+/* Normalize the day again, because normalizing
 	   the month may have changed the range.  */
 	normalize(tm_mday, 1, __mon_lengths[__isleap(tp->tm_year)][tp->tm_mon],
 		tm_mon);
 
-	/* Check for out-of-range values.  */
+/* Check for out-of-range values.  */
 #define  lowhigh(field, minmax, cmp)  (tp->field cmp minmax.field)
 #define  low(field)                   lowhigh(field, min, <)
 #define  high(field)                  lowhigh(field, max, >)
@@ -1171,7 +1165,7 @@ time_t mktime(register struct tm *tp)
  * and vice versa.
  * here comes the MS/DOS time structure
  */
-#ifdef _680X0_  /* use this struct on 680x0 systems */
+#ifdef _680X0_ /* use this struct on 680x0 systems */
 struct ftime
 {
 	unsigned int ft_year  : 7; /* Year minus 1980 */
@@ -1181,15 +1175,15 @@ struct ftime
 	unsigned int ft_min   : 6;   /* 0..59 */
 	unsigned int ft_tsec  : 5;   /* 0..59 /2 (!) */
 };
-#else  /* and this one on 80x86 systems */
+#else /* and this one on 80x86 systems */
 struct ftime
 {
-	unsigned  ft_tsec : 5;   /* 0..59 /2 (!) */
-	unsigned  ft_min : 6;   /* 0..59 */
-	unsigned  ft_hour : 5;   /* 0..23 */
-	unsigned  ft_day : 5;   /* 1..31 */
-	unsigned  ft_month : 4;   /* 1..12 */
-	unsigned  ft_year : 7; /* Year minus 1980 */
+	unsigned ft_tsec : 5; /* 0..59 /2 (!) */
+	unsigned ft_min : 6; /* 0..59 */
+	unsigned ft_hour : 5; /* 0..23 */
+	unsigned ft_day : 5; /* 1..31 */
+	unsigned ft_month : 4; /* 1..12 */
+	unsigned ft_year : 7; /* Year minus 1980 */
 };
 #endif
 #endif /* _FTIMEDEFINED */
@@ -1198,11 +1192,11 @@ struct ftime
  * Get file's timestamp and package it into a 32-bit word (MS_DOS-format).
  * This function should work on any system (even on AMIGAs) :-)
  */
-ulong get_filetime(const char *filename)
+ulong get_filetime(const char* filename)
 {
 	struct ftime fti;
-	ulong *retval = (ulong *)&fti;
-	struct tm *utm;
+	ulong* retval = (ulong *)&fti;
+	struct tm* utm;
 	struct stat fst;
 
 	*retval = 0UL;
@@ -1215,7 +1209,6 @@ ulong get_filetime(const char *filename)
 
 		if (utm)
 		{
-
 			fti.ft_tsec = utm->tm_sec / 2;
 
 			fti.ft_min = utm->tm_min;
@@ -1234,9 +1227,6 @@ ulong get_filetime(const char *filename)
 }
 
 
-
-
-
 #ifndef _SETFTIME_OK
 /*
  * Set file's timestamp
@@ -1244,14 +1234,13 @@ ulong get_filetime(const char *filename)
  */
 void set_filetime(const char *filename, ulong ftimestamp)
 {
-	/* error exit */
+/* error exit */
 	fprintf(o, "\007\nset_filetime not (yet) implemented on this system!\n"
 		"7PLUS should NOT be circulated until it is implemented!!\n"
 		"Axel, DG1BBQ.\n");
 	return;
 }
 #endif
-
 
 
 /*
@@ -1262,10 +1251,10 @@ void set_filetime(const char *filename, ulong ftimestamp)
 ***
 */
 
-uint get_hex(char *hex)
+uint get_hex(char* hex)
 {
 	register int i = 0;
-	uint   ret = 0;
+	uint ret = 0;
 
 	while (hex[i] == '0')
 		i++;
@@ -1421,4 +1410,3 @@ int _strnicmp(const char *s1, const char *s2, size_t n)
 	return (strncmp(_s1, _s2, n));
 }
 #endif /** ifndef _HAVE_ICMP **/
-
