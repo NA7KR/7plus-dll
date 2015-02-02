@@ -12,6 +12,7 @@
 #define LSEP 0x0a
 #define LSEPS "\x0a"
 #define _7PLUS_FLS "7plus.fls"
+#define __DLL__
 
 #include <conio.h>
 

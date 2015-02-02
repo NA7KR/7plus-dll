@@ -29,7 +29,7 @@ int join_control(char* file1, char* file2)
 	{
 		if ((q = strrchr(errnam, '.')) != NULL)
 			*q = EOS;
-		sprintf_s(dummi, sizeof(dummi), ".e%02x", errn++);
+		sprintf(dummi,  ".e%02x", errn++);
 		strcat(errnam, dummi);
 
 		if (n > 4)

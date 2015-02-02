@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	if (lpfnDo7plus == NULL)
 	{
 		MessageBox(0, "Cannot Link DLL", "Error", MB_ICONSTOP | MB_OK);
- , /.lpoil		goto end;
+	goto end;
 	}
 
 	/*

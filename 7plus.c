@@ -132,7 +132,7 @@ const char* help[] = {
 * DLL initialisation
 */
 
-#pragma warn -par
+
 
 /*
 * 32 bit DLL initialisation.
@@ -153,12 +153,13 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
 	return TRUE;
 }
 
-#pragma warn +par
+
 
 /*
 * The real DLL entry point
 */
-int __export CALLBACK Do_7plus(char *cmd_line)
+//int __export CALLBACK Do_7plus(char *cmd_line)
+__declspec(dllexport) int  Do_7plus(char *cmd_line)
 {
 	char *p1, *p2;
 	char **argv;
@@ -422,7 +423,7 @@ int go_at_it(int argc, char** argv)
 
 
 		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
-			sprintf_s(delimit, sizeof(delimit), "\r"); /* for direct binary upload. */
+			sprintf(delimit,  "\r"); /* for direct binary upload. */
 
 		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
@@ -520,10 +521,10 @@ int go_at_it(int argc, char** argv)
 	  ** It's usefull for DOS also.
 	  */
 		struct ffblk ffblk; /* only needed locally */
-		//KRR		if (findfirst (p, &ffblk, 0) == 0)
+		//if (findfirst (p, &ffblk, 0) == 0)
 		{
 			fnsplit(p, _drive, _dir, NULL, NULL);
-			sprintf_s(argname, sizeof(argname), "%s%s%s", _drive, _dir, ffblk.ff_name);
+			sprintf(argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
 		}
 	}
 
@@ -531,7 +532,7 @@ int go_at_it(int argc, char** argv)
 	fnsplit(argname, _drive, _dir, _file, _ext);
 
 	if (genflag)
-		sprintf_s(genpath, sizeof(genpath), "%s%s", _drive, _dir);
+		sprintf(genpath, "%s%s", _drive, _dir);
 
 	if (extract)
 	{

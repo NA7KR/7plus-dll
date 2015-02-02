@@ -113,7 +113,7 @@ int mcrc(char* line, int flag)
 	register uint crc;
 	char test[3], *p;
 
-	sprintf_s(test, sizeof(test), "\xb0\xb1");
+	sprintf(test,  "\xb0\xb1");
 
 	if ((p = strstr(line, test)) == NULL)
 		return (0);
@@ -594,9 +594,9 @@ void kill_em(const char* name, const char* inpath, const char* one,
 		for (j = 1; j < 256; j++)
 		{
 			if (len == 3)
-				sprintf_s(newname, sizeof(newname), "%s%s.%s", inpath, name, p);
+				sprintf(newname, "%s%s.%s", inpath, name, p);
 			else
-				sprintf_s(newname, sizeof(newname), "%s%s.%s%02x", inpath, name, p, j);
+				sprintf(newname,  "%s%s.%s%02x", inpath, name, p, j);
 
 			k++;
 
@@ -710,12 +710,12 @@ int test_file(FILE* in, char* destnam, int flag, int namsize)
 				k = MAXFILE - 2;
 			while (1 == 1)
 			{
-				sprintf_s(newnam, sizeof(newnam), "%d", i);
+				sprintf(newnam,  "%d", i);
 				j = strlen(newnam);
 				if (strlen(__file) > (size_t)(k - j))
-					sprintf_s(newnam, sizeof(newnam), "%s%s%*.*s$%d%s", __drive, __dir, k - j, k - j, __file, i, __ext);
+					sprintf(newnam,  "%s%s%*.*s$%d%s", __drive, __dir, k - j, k - j, __file, i, __ext);
 				else
-					sprintf_s(newnam, sizeof(newnam), "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
+					sprintf(newnam,  "%s%s%s$%d%s", __drive, __dir, __file, i, __ext);
 				if (!_access(newnam, 0))
 				{
 					/* File with new name already exists */

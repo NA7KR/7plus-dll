@@ -69,9 +69,9 @@ int extract_files(char* name, char* search)
 					*q = EOS;
 				destnam[8] = EOS;
 				if (strstr(p, "of 001"))
-					sprintf_s(dummi, sizeof(dummi), ".7PL");
+					sprintf(dummi, ".7PL");
 				else
-					sprintf_s(dummi, sizeof(dummi), ".P%02x", part);
+					sprintf(dummi,  ".P%02x", part);
 				strcat(destnam, dummi);
 			}
 			/* OK, then it could be an ERR or COR file.
@@ -89,7 +89,7 @@ int extract_files(char* name, char* search)
 			_strlwr(destnam);
 			fnsplit(destnam, _drive, _dir, _file, _ext);
 			build_DOS_name(_file, _ext);
-			sprintf_s(destnam, sizeof(destnam), "%s.%s", _file, _ext);
+			sprintf(destnam,  "%s.%s", _file, _ext);
 			check_fn(destnam);
 
 			err = cor = 0;
@@ -105,7 +105,7 @@ int extract_files(char* name, char* search)
 			}
 			if (*destnam) /* Open output file if 7PLUS file found. */
 			{
-				sprintf_s(writenam, sizeof(writenam), "%s%s", genpath, destnam);
+				sprintf(writenam,  "%s%s", genpath, destnam);
 
 				/* create filename for output file */
 				if (err && !test_exist(writenam))
@@ -115,9 +115,9 @@ int extract_files(char* name, char* search)
 					{
 						if ((q = strrchr(destnam, '.')) != NULL)
 							*q = EOS;
-						sprintf_s(dummi, sizeof(dummi), ".e%02x", errn++);
+						sprintf(dummi,  ".e%02x", errn++);
 						strcat(destnam, dummi);
-						sprintf_s(writenam, sizeof(writenam), "%s%s", genpath, destnam);
+						sprintf(writenam, "%s%s", genpath, destnam);
 					}
 					while (!test_exist(writenam));
 				}
@@ -129,9 +129,9 @@ int extract_files(char* name, char* search)
 					{
 						if ((q = strrchr(destnam, '.')) != NULL)
 							*q = EOS;
-						sprintf_s(dummi, sizeof(dummi), ".c%02x", corn++);
+						sprintf(dummi,  ".c%02x", corn++);
 						strcat(destnam, dummi);
-						sprintf_s(writenam, sizeof(writenam), "%s%s", genpath, destnam);
+						sprintf(writenam, "%s%s", genpath, destnam);
 					}
 					while (!test_exist(writenam));
 				}
@@ -141,7 +141,7 @@ int extract_files(char* name, char* search)
 						filen = 0;
 						do
 						{
-						sprintf_s (dummi, "%d", ++filen);
+						sprintf (dummi, "%d", ++filen);
 						if ((strlen (_file) + strlen (dummi)) > 8)
 						{
 						strcpy (destnam, _file);
@@ -150,8 +150,8 @@ int extract_files(char* name, char* search)
 						strcat (destnam, _ext);
 						}
 						else
-						sprintf_s (destnam, "%s%d.%s", _file, filen, _ext);
-						sprintf_s (writenam, "%s%s", genpath, destnam);
+						sprintf (destnam, "%s%d.%s", _file, filen, _ext);
+						sprintf (writenam, "%s%s", genpath, destnam);
 						}
 						while (!test_exist (writenam));
 						}
