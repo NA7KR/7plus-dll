@@ -1,4 +1,4 @@
-﻿Build started 2/2/2015 1:40:07 PM.
+﻿Build started 2/2/2015 2:45:56 PM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 3 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c rebuild.c utils.c
@@ -7,8 +7,6 @@
          join.c
          extract.c
          encode.c
-     1>encode.c(135): warning C4047: 'function' : 'const char *' differs in levels of indirection from 'unsigned int'
-     1>encode.c(135): warning C4024: 'sprintf' : different types for formal and actual parameter 2
          decode.c
          correct.c
          7plus.c
@@ -29,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.09
+Time Elapsed 00:00:04.03
