@@ -1,18 +1,6 @@
-﻿Build started 2/2/2015 2:45:56 PM.
+﻿Build started 2/4/2015 1:06:52 PM.
      1>Project "F:\Code\7plsrc.225\7plus.vcxproj" on node 3 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c rebuild.c utils.c
-         utils.c
-         rebuild.c
-         join.c
-         extract.c
-         encode.c
-         decode.c
-         correct.c
-         7plus.c
-         Generating Code...
-     1>f:\code\7plsrc.225\7plus.c(632): warning C4700: uninitialized local variable 't' used
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Code\7plsrc.225\7Plus Test\Debug\7plus.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\Code\7plsrc.225\7Plus Test\Debug\7plus.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Code\7plsrc.225\7Plus Test\Debug\7plus.lib" /MACHINE:X86 /DLL Debug\7plus.obj
          Debug\correct.obj
          Debug\decode.obj
@@ -27,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.03
+Time Elapsed 00:00:01.49

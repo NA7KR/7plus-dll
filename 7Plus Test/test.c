@@ -24,6 +24,16 @@ int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	HINSTANCE hinstDo7plus;
 	int (FAR *lpfnDo7plus) (char FAR*);
 
+	if (lpszArgs != NULL && lpszArgs[0] == '\0')
+	{
+		MessageBox(NULL, "Unable to parse command line", "Error", MB_OK);
+		return 10;
+	}
+	if (lpszArgs[0] == '?')
+	{
+		MessageBox(NULL, "?", "Error", MB_OK);
+		return 10;
+	}
 	/*
 	* The DLL in this example is called 7PLUSDLL.DLL
 	*/
