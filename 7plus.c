@@ -24,7 +24,7 @@ byte _extended = '*'; /* Allow long filenames */
 byte    _extended = 0xdb; /* Stick to 8.3 */
 #endif
 size_t buflen;
-char _drive[MAXDRIVE ], _dir[MAXDIR ], _file[MAXFILE ], _ext[MAXEXT ];
+char _drive[MAXDRIVE], _dir[MAXDIR], _file[MAXFILE], _ext[MAXEXT];
 char spaces[] = "                                                   ";
 char* endstr;
 char* sendstr;
