@@ -46,13 +46,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-//#include <iostream>
-//#include <conio.h>
-
-//#ifdef _MSC_VER
-//#define getch() _getch()
-//#endif
-
 
 #define MAXDRIVE _MAX_DRIVE
 #define MAXDIR   _MAX_DIR
@@ -73,7 +66,6 @@
 #define _HAVE_GMTIME
 #define _HAVE_MKTIME
 //#define _HAVE_GETCH
-
 
 #define MAXFPATH (MAXDRIVE+MAXDIR-1)
 

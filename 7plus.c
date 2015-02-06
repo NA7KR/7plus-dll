@@ -28,6 +28,7 @@ char _drive[MAXDRIVE], _dir[MAXDIR], _file[MAXFILE], _ext[MAXEXT];
 char spaces[] = "                                                   ";
 char* endstr;
 char* sendstr;
+char* pathstr;
 char genpath[MAXPATH ];
 char altname[MAXPATH ];
 char delimit[] = "\n";
@@ -372,7 +373,25 @@ int go_at_it(int argc, char** argv)
 				}
 			}
 		}
-
+// Save KRR
+		if (!_strnicmp(argv[i], "-SAVE", 5))
+		{
+			if (argv[i][5] == '2')
+				twolinesend = 1;
+			i++;
+			if (i == argc)
+				i--;
+			else
+			{
+				if (t != def_format)
+				{
+					pathstr = (char *)malloc((int)strlen(argv[i]) + 1);
+					strcpy(pathstr, argv[i]);
+				}
+			}
+			MessageBox(NULL, pathstr, "Error", MB_OK);
+		}
+//end save
 		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
 		{ /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
 			if (argv[i][5] == '2')
@@ -459,7 +478,7 @@ int go_at_it(int argc, char** argv)
 		i = 0;
 
 		/* How many lines fit on screen? */
-		scrlines = screenlength() - 1;
+		scrlines = 40;
 
 		while (help[i])
 		{
@@ -514,24 +533,6 @@ int go_at_it(int argc, char** argv)
 	init_codetab(); /* encoding-table */
 
 	strcpy(argname, p);
-
-
-	//{ /* Since Win32 does not distinguish the case in filenames, findfirst
-	//  ** is used to determine how the filename is really spelt casewise.
-	//  ** It's usefull for DOS also.
-	//  */
-	//	struct ffblk ffblk; /* only needed locally */
-		//if (findfirst (p, &ffblk, 0) == 0)
-	//	{
-			char buffer[MAX_PATH], drive;
-			GetCurrentDirectory(MAX_PATH, buffer);
-			drive = *buffer;
-
-	//		fnsplit(p, _drive, _dir, NULL, NULL);
-	//		sprintf(argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
-	//	}
-	//}
-
 
 	fnsplit(argname, _drive, _dir, _file, _ext);
 
@@ -621,24 +622,7 @@ end:
 	return (ret);
 }
 
-/*
-*** How many lines fit on screen?
-***
-***
-*/
-int screenlength(void)
-{
-	int scrlines;
 
-	{
-		struct text_info t;
-		//KRR		gettextinfo (&t);
-		scrlines = t.screenheight;
-	}
-
-
-	return (scrlines);
-}
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
