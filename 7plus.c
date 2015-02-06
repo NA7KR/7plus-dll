@@ -1,7 +1,7 @@
 /* Version */
 #define VERSION "2.25"
 #define PL7_DATE "20000320"
-#define AMIGADATE "20.03.00"
+
 
 /**********************************************************
 *** 7PLUS ASCII- Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
@@ -516,17 +516,21 @@ int go_at_it(int argc, char** argv)
 	strcpy(argname, p);
 
 
-	{ /* Since Win32 does not distinguish the case in filenames, findfirst
-	  ** is used to determine how the filename is really spelt casewise.
-	  ** It's usefull for DOS also.
-	  */
-		struct ffblk ffblk; /* only needed locally */
+	//{ /* Since Win32 does not distinguish the case in filenames, findfirst
+	//  ** is used to determine how the filename is really spelt casewise.
+	//  ** It's usefull for DOS also.
+	//  */
+	//	struct ffblk ffblk; /* only needed locally */
 		//if (findfirst (p, &ffblk, 0) == 0)
-		{
-			fnsplit(p, _drive, _dir, NULL, NULL);
-			sprintf(argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
-		}
-	}
+	//	{
+			char buffer[MAX_PATH], drive;
+			GetCurrentDirectory(MAX_PATH, buffer);
+			drive = *buffer;
+
+	//		fnsplit(p, _drive, _dir, NULL, NULL);
+	//		sprintf(argname, "%s%s%s", _drive, _dir, ffblk.ff_name);
+	//	}
+	//}
 
 
 	fnsplit(argname, _drive, _dir, _file, _ext);
