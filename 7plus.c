@@ -29,8 +29,8 @@ char spaces[] = "                                                   ";
 char* endstr;
 char* sendstr;
 char* pathstr;
-char genpath[MAXPATH ];
-char altname[MAXPATH ];
+char genpath[MAXPATH];
+char altname[MAXPATH];
 char delimit[] = "\n";
 char def_format[] = "format.def";
 const char cant[] = "\007\n'%s': Can't open. Break.\n";
@@ -53,13 +53,12 @@ struct m_index* idxptr;
 #define _LFN "/8.3"
 #endif
 
-const char* logon[] = {"     7PLUS - file converter for store & forward     ",
-	" * no commercial use * no sale * circulate freely * ",
-	" version "VERSION""_LFN" ("PL7_DATE") (C) Axel Bauda, DG1BBQ "};
+
 
 const char s_logon[] = "\n[7+ v"VERSION""_LFN" ("PL7_DATE"), (C) DG1BBQ]\n";
 
-const char* help[] = {
+const char* help[] =
+{
 	"\n",
 	"Commands (more exact descriptions, see manual): \n",
 	"\n",
@@ -129,15 +128,7 @@ const char* help[] = {
 
 #ifdef __DLL__
 
-/*
-* DLL initialisation
-*/
 
-
-
-/*
-* 32 bit DLL initialisation.
-*/
 HANDLE hDLLInst = 0;
 
 BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
@@ -168,15 +159,12 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 	int i, l;
 	int ret;
 
-/*
-	* Count the args.
-	*
-	* Long Windows 9x file names may contain spaces,
-	* a long file name could look like this...
-	*
-	* "This is a long win9x file called fumph.zip"
-	*
-	* Note the " " surrounding the file name.
+	/*
+		* Count the args.
+		* Long Windows 9x file names may contain spaces,
+		* a long file name could look like this...
+		* "This is a long win9x file called fumph.zip"
+		* Note the " " surrounding the file name.
 	*/
 	l = strlen(cmd_line);
 
@@ -188,10 +176,10 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 			while (cmd_line[i] != '"') i++;
 			i++;
 		}
-/*
-		* Replace ' ' with '\0' unless surrounded with quotes
-		* to indicate the spaces are inside a long file name.
-		*/
+		/*
+				* Replace ' ' with '\0' unless surrounded with quotes
+				* to indicate the spaces are inside a long file name.
+				*/
 		if (cmd_line[i] == ' ')
 		{
 			cmd_line[i] = 0;
@@ -199,44 +187,44 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 		}
 	}
 
-/*
-	* The number of args should be one more than the spaces.
-	*/
+	/*
+		* The number of args should be one more than the spaces.
+		*/
 	argc++;
 
-/*
-	* Allocate the pointers.
-	*/
-	argv = (char **) calloc (argc, sizeof (char *));
+	/*
+		* Allocate the pointers.
+		*/
+	argv = (char **)calloc(argc, sizeof(char *));
 
-/*
-	* Process cmd_line again setting up argv.
-	*/
+	/*
+		* Process cmd_line again setting up argv.
+		*/
 	p1 = cmd_line;
 
 	for (i = 0; i < argc; i++)
 	{
 		argv[i] = p1;
-		p2 = strchr(p1,0);
-		if (p2) p1 = p2+1;
+		p2 = strchr(p1, 0);
+		if (p2) p1 = p2 + 1;
 	}
 
-/*
-	* Remove any quotes
-	*/
+	/*
+		* Remove any quotes
+		*/
 	for (i = 0; i < argc; i++)
-		if (argv[i] [0] == '"')
-			for (l = 0; argv[i] [l]; l++)
+		if (argv[i][0] == '"')
+			for (l = 0; argv[i][l]; l++)
 			{
-				argv[i] [l] = argv[i] [l + 1];
-				if (argv[i] [l] == '"')
-					argv[i] [l] = 0;
+				argv[i][l] = argv[i][l + 1];
+				if (argv[i][l] == '"')
+					argv[i][l] = 0;
 			}
 
-/*
-	* Call real program entry point
-	*/
-	ret = go_at_it(argc,argv);
+	/*
+		* Call real program entry point
+		*/
+	ret = go_at_it(argc, argv);
 
 	fclose(o);
 	return ret;
@@ -259,7 +247,7 @@ int main(int argc, char** argv)
 int go_at_it(int argc, char** argv)
 {
 	char *p, *r, *s, *t;
-	char argname[MAXPATH ];
+	char argname[MAXPATH];
 	int ret, i, extract, genflag, join, cor;
 	long blocksize;
 
@@ -272,7 +260,7 @@ int go_at_it(int argc, char** argv)
 	i = 0;
 	o = stdout;
 #else
-	o = fopen("\\7plus.out","w");
+	o = fopen("\\7plus.out", "w");
 	noquery = 1;
 	i = -1; /* Args start at 0 with DLL */
 #endif
@@ -373,7 +361,7 @@ int go_at_it(int argc, char** argv)
 				}
 			}
 		}
-// Save KRR
+		// Save KRR
 		if (!_strnicmp(argv[i], "-SAVE", 5))
 		{
 			if (argv[i][5] == '2')
@@ -389,9 +377,9 @@ int go_at_it(int argc, char** argv)
 					strcpy(pathstr, argv[i]);
 				}
 			}
-			MessageBox(NULL, pathstr, "Error", MB_OK);
+			
 		}
-//end save
+		//end save
 		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
 		{ /* e.g. "sp dg1bbq @db0ver.#nds.deu.eu" */
 			if (argv[i][5] == '2')
@@ -442,7 +430,7 @@ int go_at_it(int argc, char** argv)
 
 
 		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
-			sprintf(delimit,  "\r"); /* for direct binary upload. */
+			sprintf(delimit, "\r"); /* for direct binary upload. */
 
 		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
@@ -533,9 +521,30 @@ int go_at_it(int argc, char** argv)
 	init_codetab(); /* encoding-table */
 
 	strcpy(argname, p);
-
-	fnsplit(argname, _drive, _dir, _file, _ext);
-
+	// KRR
+	if (pathstr == NULL)
+	{
+		fnsplit(argname, _drive, _dir, _file, _ext);
+	}
+	else
+	{
+		fnsplit(argname, _drive, _dir, _file, _ext);
+		{
+			char *c = malloc(strlen(pathstr) + strlen(_file) + strlen(_ext) + 1);
+			if (c != NULL)     
+			{ 
+				strcpy(c, pathstr);
+				strcat(c, _file);
+				strcat(c, _ext);
+				strcpy(argname, c);
+				strcpy(genpath, pathstr);
+				MessageBox(NULL, argname, "Error", MB_OK);
+				free(c);
+			}
+		}
+	}
+	//KRR 
+	// fnsplit(argname, _drive, _dir, _file, _ext);
 	if (genflag)
 		sprintf(genpath, "%s%s", _drive, _dir);
 
@@ -562,8 +571,8 @@ int go_at_it(int argc, char** argv)
 		if (join)
 			if (!_strnicmp(".err", _ext, 4) ||
 				(toupper(*(_ext + 1)) == 'E' &&
-					isxdigit(*(_ext + 2)) &&
-					isxdigit(*(_ext + 3))))
+				isxdigit(*(_ext + 2)) &&
+				isxdigit(*(_ext + 3))))
 			{
 				ret = join_control(argname, r);
 				goto end;
@@ -571,8 +580,8 @@ int go_at_it(int argc, char** argv)
 
 		if (!_strnicmp(".cor", _ext, 4) ||
 			(toupper(*(_ext + 1)) == 'C' &&
-				isxdigit(*(_ext + 2)) &&
-				isxdigit(*(_ext + 3))))
+			isxdigit(*(_ext + 2)) &&
+			isxdigit(*(_ext + 3))))
 		{
 			ret = correct_meta(argname, 1, 0);
 			goto end;

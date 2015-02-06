@@ -20,17 +20,11 @@
 #define NULLFP ((FILE *) 0)
 #define NULLCP ((char *) 0)
 
-/* Some compilers have difficulties using setvbuf().
-   Uncomment next line, if so (or add it to your definition block). */
-/* #define setvbuf(a,b,c,d) */
 
-/** these includes should work anywhere **/
 #include <stdio.h>
-
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
-
 #include <stdlib.h>
 
 #ifdef __DLL__
