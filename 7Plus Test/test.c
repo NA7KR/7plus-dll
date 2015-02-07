@@ -9,7 +9,8 @@
 /*                      it is only a demo, use with care                      */
 /*                                                                            */
 /*                Example ...   TEST -SB 5000 "Long Name.zip"                 */
-/*                                                                            */
+/*                    c:\temp\7plus.zip -SAVE "c:\temp\"                      */
+/*                   c:\temp\7plus.p01 - SAVE "c:\temp\"                      */
 /*       Long file names are supported in the 32 bit DLL, and should be       */
 /*         surrounded with quotes, short file names don't need quotes         */
 /*                                                                            */
