@@ -20,7 +20,7 @@ int encode_file(char* name, long blocksize, char* search,
 	char inpath[MAXFPATH], format_file[MAXPATH ];
 	char line[81], line2[81], dummi[20], dummi2[20], *q, *r;
 	char go_buf[257], stop_buf[257], cor_head[129], searchbin[MAXPATH ];
-
+	char c[256];
 	FILE *in, *out, *corr;
 	register int i, j, k;
 
@@ -352,12 +352,13 @@ int encode_file(char* name, long blocksize, char* search,
 			/* check, if output file already exists. */
 			if ((join < 2) && range[part])
 
-				char *c = malloc(strlen(filename) + 1);
+				
+				
 				strcpy(c , filename);
 				
 				strcpy(filename, genpath);
 				strcat(filename, c);
-			MessageBox(NULL, filename, "Error", MB_OK);
+			
 
 				if (test_file(out, filename, 0, 12) == 10)
 					return (10);
