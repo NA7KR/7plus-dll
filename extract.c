@@ -22,7 +22,7 @@ int extract_files(char* name, char* search)
 	file = /*filen =*/ err = errn = cor = corn = ret = lines = offset = 0;
 	info = 1;
 	bytes = sum = 0UL;
-
+	
 	if (search)
 		_strlwr(search);
 

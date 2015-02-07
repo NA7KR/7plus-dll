@@ -112,7 +112,7 @@ int go_at_it(int argc, char** argv);
 int screenlength(void);
 
 /** encode.c **/
-int encode_file(char* name, long blocksize, char* searchbin, int join, char* head_foot);
+int encode_file(char* name, long blocksize, char* searchbin, int join, char* head_foot,char* genpath);
 void get_range(char* rangestring);
 int read_tb(char* name, char* go_top, char* go_bottom);
 int top_bottom(FILE* wfile, char* top_bot, char* orgname, char* type, int part, int parts);

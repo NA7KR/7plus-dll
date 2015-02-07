@@ -364,8 +364,6 @@ int go_at_it(int argc, char** argv)
 		// Save KRR
 		if (!_strnicmp(argv[i], "-SAVE", 5))
 		{
-			if (argv[i][5] == '2')
-				twolinesend = 1;
 			i++;
 			if (i == argc)
 				i--;
@@ -529,19 +527,19 @@ int go_at_it(int argc, char** argv)
 	else
 	{
 		fnsplit(argname, _drive, _dir, _file, _ext);
-		{
-			char *c = malloc(strlen(pathstr) + strlen(_file) + strlen(_ext) + 1);
-			if (c != NULL)     
-			{ 
-				strcpy(c, pathstr);
-				strcat(c, _file);
-				strcat(c, _ext);
-				strcpy(argname, c);
-				strcpy(genpath, pathstr);
-				MessageBox(NULL, argname, "Error", MB_OK);
-				free(c);
-			}
+		
+		char *c = malloc(strlen(pathstr) + strlen(_file) + strlen(_ext) + 1);
+		if (c != NULL)     
+		{ 
+			strcpy(c, pathstr);
+			strcat(c, _file);
+			strcat(c, _ext);
+			strcpy(argname, c);
+			strcpy(genpath, pathstr);
+			
+			free(c);
 		}
+		
 	}
 	//KRR 
 	// fnsplit(argname, _drive, _dir, _file, _ext);
@@ -614,12 +612,12 @@ int go_at_it(int argc, char** argv)
 			ret = extract_files(argname, r);
 			goto end;
 		}
-		ret = encode_file(argname, blocksize, r, join, t);
+		ret = encode_file(argname, blocksize, r, join, t,genpath);
 	}
 	else
 	{
 		if (!test_exist(argname)) /* no EXT, but file exists on disk, then encode */
-			ret = encode_file(argname, blocksize, r, join, t);
+			ret = encode_file(argname, blocksize, r, join, t,genpath);
 		else
 			ret = control_decode(argname);
 	}

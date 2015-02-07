@@ -8,7 +8,7 @@
 */
 
 int encode_file(char* name, long blocksize, char* search,
-                int join, char* head_foot)
+                int join, char* head_foot, char* genpath)
 {
 	int part, parts, first_part, last_part, blocklines, curline;
 	int correct, corrlines, corrpart, corrline, tune;
@@ -30,7 +30,7 @@ int encode_file(char* name, long blocksize, char* search,
 	out = corr = NULLFP;
 	ftimestamp = ftstamp0 = 0UL;
 	corrsize = blocksize2 = 0L;
-
+	
 #ifdef TWO_CHAR_SEP
 	tune = 1;
 #else
@@ -271,6 +271,7 @@ int encode_file(char* name, long blocksize, char* search,
 		fprintf(out, "%d %s\n", parts, destname);
 		fprintf(o, "\nNumber of parts: %d, Filename of parts: \"%s\"\n", parts,
 		        destname);
+		
 		fclose(out);
 		fclose(in);
 		return (0);
@@ -350,6 +351,14 @@ int encode_file(char* name, long blocksize, char* search,
 			}
 			/* check, if output file already exists. */
 			if ((join < 2) && range[part])
+
+				char *c = malloc(strlen(filename) + 1);
+				strcpy(c , filename);
+				
+				strcpy(filename, genpath);
+				strcat(filename, c);
+			MessageBox(NULL, filename, "Error", MB_OK);
+
 				if (test_file(out, filename, 0, 12) == 10)
 					return (10);
 		}
