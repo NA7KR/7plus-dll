@@ -260,7 +260,17 @@ int go_at_it(int argc, char** argv)
 	i = 0;
 	o = stdout;
 #else
-	o = fopen("\\7plus.out", "w");
+	char cCurrentPath[FILENAME_MAX];
+
+	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+	{
+		return errno;
+	}
+
+	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+	
+	strcat(cCurrentPath, "\\7plus.out");
+	o = fopen(cCurrentPath, "w");
 	noquery = 1;
 	i = -1; /* Args start at 0 with DLL */
 #endif
@@ -432,7 +442,7 @@ int go_at_it(int argc, char** argv)
 
 		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
 		{
-			o = fopen("7plus.out", OPEN_WRITE_TEXT);
+			o = fopen(cCurrentPath, OPEN_WRITE_TEXT);
 
 			noquery = 1;
 		}
