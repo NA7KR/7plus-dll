@@ -18,7 +18,7 @@ int encode_file(char* name, long blocksize, char* search,
 	char destname[MAXPATH ], hdrname[MAXFNAME ], filename[MAXPATH ], corrname[13];
 	char orgcorrname[13], orgname[MAXFNAME ];
 	char inpath[MAXFPATH], format_file[MAXPATH ];
-	char line[81], line2[81], dummi[20], dummi2[20], *q, *r;
+	char line[81], line2[81], dummi[20], dummi2[20], *q, *r, *f;
 	char go_buf[257], stop_buf[257], cor_head[129], searchbin[MAXPATH ];
 	char c[256];
 	FILE *in, *out, *corr;
@@ -51,6 +51,7 @@ int encode_file(char* name, long blocksize, char* search,
 	}
 
 	q = name;
+	f = name;
 	/* create correction file, if ext of input file is .ERR */
 	if ((r = strrchr(q, '.')) != NULL)
 	{
@@ -80,8 +81,7 @@ int encode_file(char* name, long blocksize, char* search,
 			*orgname = EOS;
 			binb0 = 0L;
 			ftstamp0 = 0UL;
-			sscanf(line + 20, "%12s %s /%66[^/]/ %ld",
-			       corrname, dummi, orgname, &binb0);
+			sscanf(line + 20, "%12s %s /%66[^/]/ %ld", corrname, dummi, orgname, &binb0);
 			corrlines = get_hex(dummi);
 			if (!*orgname)
 			{
@@ -116,8 +116,9 @@ int encode_file(char* name, long blocksize, char* search,
 		if (searchbin[strlen(searchbin) - 1] != PATHCHAR)
 			strcat(searchbin, PATHSEP);
 	}
-
-	if ((in = fopen(q, OPEN_READ_BINARY)) == NULL)
+	strcpy(f, genpath);
+	strcat(f, q);
+	if ((in = fopen(f, OPEN_READ_BINARY)) == NULL)
 	{
 		fprintf(o, "\007'%s' not found. Break.\n", q);
 		return (2);
