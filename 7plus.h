@@ -89,7 +89,7 @@ typedef unsigned char byte; /* 8bit unsigned char */
 typedef unsigned int uint; /* 16 or 32bit unsigned int */
 typedef unsigned long ulong; /* 32bit unsigned long      */
 
-char *errorF;
+
 struct m_index
 {
 	char filename[14]; /*12  chars +2*/
