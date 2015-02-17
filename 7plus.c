@@ -494,7 +494,10 @@ int go_at_it(int argc, char** argv)
 			fprintf(o, help[i++]);
 		}
 		ret = 0;
-		goto end;
+			if (o != stdout)
+		fclose(o);
+		free(idxptr);
+		return (ret);
 	}
 
 	if ((s = (char *)malloc((size_t)4000UL)) == NULLCP)
@@ -565,7 +568,10 @@ int go_at_it(int argc, char** argv)
 			fprintf(o, "\007File to extract from not specified. Break.\n");
 			ret = 6;
 		}
-		goto end;
+			if (o != stdout)
+		fclose(o);
+		free(idxptr);
+		return (ret);
 	}
 	/* Does the filename contain an extension? */
 	if (*_ext)
@@ -573,7 +579,10 @@ int go_at_it(int argc, char** argv)
 		if (cor)
 		{
 			ret = correct_meta(argname, 0, 0);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 
 		if (join)
@@ -583,7 +592,10 @@ int go_at_it(int argc, char** argv)
 				isxdigit(*(_ext + 3))))
 			{
 				ret = join_control(argname, r);
-				goto end;
+				if (o != stdout)
+					fclose(o);
+				free(idxptr);
+				return (ret);
 			}
 
 		if (!_strnicmp(".cor", _ext, 4) ||
@@ -592,20 +604,29 @@ int go_at_it(int argc, char** argv)
 			isxdigit(*(_ext + 3))))
 		{
 			ret = correct_meta(argname, 1, 0);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 
 		if (sysop)
 		{
 			ret = control_decode(argname);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 
 		/* Call decode_file() if ext ist 7PL, P01, else encode_file() */
 		if (!_strnicmp(".7pl", _ext, 4) || !_strnicmp(".p01", _ext, 4))
 		{
 			ret = control_decode(argname);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 #ifdef _HAVE_CHSIZE
 		if (!_strnicmp(".7mf", _ext, 4))
@@ -614,13 +635,19 @@ int go_at_it(int argc, char** argv)
 #endif
 		{
 			ret = make_new_err(argname);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 
 		if (!_strnicmp(".x", _ext, 3))
 		{
 			ret = extract_files(argname, r);
-			goto end;
+			if (o != stdout)
+				fclose(o);
+			free(idxptr);
+			return (ret);
 		}
 		ret = encode_file(argname, blocksize, r, join, t,genpath);
 	}
@@ -632,7 +659,7 @@ int go_at_it(int argc, char** argv)
 			ret = control_decode(argname);
 	}
 
-end:
+
 	if (o != stdout)
 		fclose(o);
 	free(idxptr);

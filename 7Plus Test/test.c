@@ -66,7 +66,8 @@ int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	if (hinstDo7plus == NULL)
 	{
 		MessageBox(0, "Cannot load\n7PLUSDLL.DLL", "Error", MB_ICONSTOP | MB_OK);
-		goto end;
+		FreeLibrary(hinstDo7plus);
+		return 0;
 	}
 
 	/*
@@ -77,7 +78,8 @@ int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	if (lpfnDo7plus == NULL)
 	{
 		MessageBox(0, "Cannot Link DLL", "Error", MB_ICONSTOP | MB_OK);
-	goto end;
+		FreeLibrary(hinstDo7plus);
+		return 0;
 	}
 
 	/*
@@ -85,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hThisInst, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	*/
 	lpfnDo7plus((char FAR*) lpszArgs);
 
-end:
+
 	FreeLibrary(hinstDo7plus);
 	return 0;
 }
