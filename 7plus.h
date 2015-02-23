@@ -12,7 +12,7 @@
 #define LSEP 0x0a
 #define LSEPS "\x0a"
 #define _7PLUS_FLS "7plus.fls"
-#define __DLL__
+
 
 #include <conio.h>
 
@@ -27,10 +27,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#ifdef __DLL__
 #include <windows.h>
-#endif
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <io.h>
@@ -193,34 +190,3 @@ int join_err(char* file1, char* file2);
 
 #define set_autolf(x)
 #define check_fn(x)
-
-struct ffblk
-{
-	char lfn_magic[6]; /* LFN: the magic "LFN32" signature */
-	short lfn_handle; /* LFN: the handle used by findfirst/findnext */
-	unsigned short lfn_ctime; /* LFN: file creation time */
-	unsigned short lfn_cdate; /* LFN: file creation date */
-	unsigned short lfn_atime; /* LFN: file last _access time (usually 0) */
-	unsigned short lfn_adate; /* LFN: file last _access date */
-	char ff_reserved[5]; /* used to hold the state of the search */
-	unsigned char ff_attrib; /* actual attributes of the file found */
-	unsigned short ff_ftime; /* hours:5, minutes:6, (seconds/2):5 */
-	unsigned short ff_fdate; /* (year-1980):7, month:4, day:5 */
-	unsigned long ff_fsize; /* size of file */
-	char ff_name[260]; /* name of file as ASCIIZ string */
-};
-
-struct text_info
-{
-	unsigned char winleft;
-	unsigned char wintop;
-	unsigned char winright;
-	unsigned char winbottom;
-	unsigned char attribute;
-	unsigned char normattr;
-	unsigned char currmode;
-	unsigned char screenheight;
-	unsigned char screenwidth;
-	unsigned char curx;
-	unsigned char cury;
-};

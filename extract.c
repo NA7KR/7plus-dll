@@ -1,11 +1,8 @@
 #include "7plus.h"
 #include "globals.h"
 
-/*
-*** extract 7plus-files from log-file.
-***
-***
-*/
+
+// extract 7plus-files from log-file.
 
 const char list_top[] = "File         Length Lines\n"
 "------------ ------ -----\n";
@@ -43,13 +40,9 @@ int extract_files(char* name, char* search)
 	{
 		offset = 0;
 
-		/* This is necessary, because of some strange BBS in the UK that keeps
-		   stripping the space in the first line. */
+		// This is necessary, because of some strange BBS in the UK that keeps stripping the space in the first line. */
 		if (!strncmp(p, " go_", 4))
 			offset = 4;
-		/*    if (!strncmp (p, "go_", 3))
-			  offset = 3;
-			  */
 
 		if (offset)
 		{ /* Beginning of a 7PLUS file found. */
@@ -74,8 +67,7 @@ int extract_files(char* name, char* search)
 					sprintf(dummi,  ".P%02x", part);
 				strcat(destnam, dummi);
 			}
-			/* OK, then it could be an ERR or COR file.
-			   Careful! It could also be a marked textfile */
+			/* OK, then it could be an ERR or COR file. Careful! It could also be a marked textfile */
 			if (!strncmp(p + offset, "text.", 5) &&
 				(strstr(p, ".ERR") || strstr(p, ".COR")))
 				sscanf_s(p + offset + 6, "%12s", destnam);
@@ -136,26 +128,6 @@ int extract_files(char* name, char* search)
 					while (!test_exist(writenam));
 				}
 
-				/*        if (!err && !cor && !test_exist (writenam))
-						{
-						filen = 0;
-						do
-						{
-						sprintf (dummi, "%d", ++filen);
-						if ((strlen (_file) + strlen (dummi)) > 8)
-						{
-						strcpy (destnam, _file);
-						strcpy (destnam + 8 - strlen (dummi), dummi);
-						strcat (destnam, ".");
-						strcat (destnam, _ext);
-						}
-						else
-						sprintf (destnam, "%s%d.%s", _file, filen, _ext);
-						sprintf (writenam, "%s%s", genpath, destnam);
-						}
-						while (!test_exist (writenam));
-						}
-						*/
 				file++;
 
 				i = test_file(in, writenam, 3, 12);

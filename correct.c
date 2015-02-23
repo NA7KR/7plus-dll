@@ -1,15 +1,10 @@
 #include "7plus.h"
 #include "globals.h"
 
-/*
-*** Correct meta file using either a COR or a 7PL/P?? file
-***
-***
-*/
 
+// Correct meta file using either a COR or a 7PL/P?? file
 
 const char processing[] = "Processing '%s'. Missing lines left: %ld      \r";
-
 
 const char inv_idxfile[] = "\007Invalid index info.\n";
 

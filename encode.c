@@ -1,11 +1,7 @@
 #include "7plus.h"
 #include "globals.h"
 
-/*
-*** encode a file. split, if desired/needed. create correction file.
-***
-***
-*/
+// encode a file. split, if desired/needed. create correction file.
 
 int encode_file(char* name, long blocksize, char* search,
                 int join, char* head_foot, char* genpath)
@@ -76,8 +72,7 @@ int encode_file(char* name, long blocksize, char* search,
 				fclose(corr);
 				return (7);
 			}
-			/* Get name, lines per part, and length of original
-			   file from error file.*/
+			/* Get name, lines per part, and length of original  file from error file.*/
 			*orgname = EOS;
 			binb0 = 0L;
 			ftstamp0 = 0UL;
@@ -127,8 +122,7 @@ int encode_file(char* name, long blocksize, char* search,
 	/* read format information */
 	if (head_foot)
 	{
-		/* try to find name.def, e.g. when encoding 'test.dat',
-		   look for 'test.def' */
+		/* try to find name.def, e.g. when encoding 'test.dat', look for 'test.def' */
 
 		strcpy(format_file, head_foot);
 		fnsplit(format_file, _drive, _dir, _file, _ext);
@@ -140,8 +134,7 @@ int encode_file(char* name, long blocksize, char* search,
 			if ((r = strrchr(format_file, '.')) != NULL)
 				*r = EOS;
 			strcat(format_file, ".def");
-			/* if default format file 'format.def' does not exist, use previously
-				   constructed name */
+			/* if default format file 'format.def' does not exist, use previously constructed name */
 			if (!test_exist(format_file))
 			{
 				head_foot = format_file;
@@ -165,8 +158,7 @@ int encode_file(char* name, long blocksize, char* search,
 	//KRR ftimestamp = get_filetime(q);
 
 
-	/* determine size of original file. This could be done with filestat(),
-	   but it's not available on all compilers. */
+	/* determine size of original file. This could be done with filestat(), but it's not available on all compilers. */
 	fseek(in, 0L, SEEK_END); /* position read pointer to end of file. */
 	size = ftell(in); /* get size. */
 	fseek(in, 0L, SEEK_SET); /* reposition to beginning of file. */
@@ -197,14 +189,12 @@ int encode_file(char* name, long blocksize, char* search,
 		if (blocksize > 50000L)
 		{
 			blocksize -= 50000L;
-			/* calculate how many ascii-bytes per part are needed to get roughly
-			   equal filelengths. */
+			/* calculate how many ascii-bytes per part are needed to get roughly  equal filelengths. */
 			blocksize = (((size + 61) / 62) + (blocksize - 1)) / blocksize;
 			blocksize *= 62;
 		}
 
-		/* if blocksize is defined as zero or if it's bigger than the file,
-		   set it to filelength  */
+		/* if blocksize is defined as zero or if it's bigger than the file, set it to filelength  */
 		if (!blocksize || blocksize > size)
 			blocksize = size;
 
@@ -308,8 +298,7 @@ int encode_file(char* name, long blocksize, char* search,
 	{
 		if (!correct)
 		{
-			/* generate output filename. *.7PL, if unsplit. *.PXX if split.
-			   XX represents a two digit hex number. */
+			/* generate output filename. *.7PL, if unsplit. *.PXX if split. XX represents a two digit hex number. */
 			set_autolf(0);
 
 			if (parts == 1)
@@ -467,8 +456,7 @@ int encode_file(char* name, long blocksize, char* search,
 
 			if (correct)
 			{
-				/* get number of part and number of line to put into correction file
-				   from error file */
+				/* get number of part and number of line to put into correction file from error file */
 				fscanf(corr, "%s", dummi2);
 				corrline = get_hex(dummi2);
 				if (corrline == 0xfff || corrsize > blocksize)
@@ -589,8 +577,7 @@ int encode_file(char* name, long blocksize, char* search,
 
 			binbytes += 62;
 
-			/* write code line to output file. do radix216 conversion, crc
-			   calculation and ascii conversion as we go along. */
+			/* write code line to output file. do radix216 conversion, crc calculation and ascii conversion as we go along. */
 			for (i = j = 0; i < 16; i++)
 			{
 				line2[j++] = code[(int)(after[i] % 0xd8L)];
@@ -604,8 +591,7 @@ int encode_file(char* name, long blocksize, char* search,
 			for (i = 0; i < 64; i++)
 			crc_calc(csequence, line2[i]);
 
-			/* package line number and crc into three radix216 bytes and add
-			   to code line. */
+			/* package line number and crc into three radix216 bytes and add to code line. */
 			after[0] = (long)(curline & 0x1ff) << 14;
 			after[0] |= (csequence & 0x3fff);
 			line2[j++] = code[(int)(after[0] % 0xd8L)];
@@ -692,8 +678,7 @@ int encode_file(char* name, long blocksize, char* search,
 	if (join)
 		fclose(out);
 
-	/* all parts done.
-	   tell user about action. */
+	/* all parts done. tell user about action. */
 	if (!correct)
 	{
 		if (no_tty)
@@ -746,11 +731,9 @@ int encode_file(char* name, long blocksize, char* search,
 	return (0);
 }
 
-/*
-*** Get info from header file
-***
-***
-*/
+
+// Get info from header file
+
 
 int read_tb(char* name, char* go_top, char* go_bottom)
 {
@@ -821,11 +804,7 @@ int read_tb(char* name, char* go_top, char* go_bottom)
 	return (0);
 }
 
-/*
-*** output head or foot
-***
-***
-*/
+// output head or foot
 
 int top_bottom(FILE* wfile, char* top_bot, char* orgname,
                char* type, int part, int parts)

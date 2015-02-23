@@ -4,11 +4,7 @@
 
 const char no[] = NO, yes[] = YES, always[] = ALWAYS;
 
-/*
-*** get a line from file. don't care about type of line separator.
-***
-***
-*/
+// get a line from file. don't care about type of line separator.
 
 char* my_fgets(char* string, register int n, FILE* rein)
 {
@@ -35,11 +31,7 @@ char* my_fgets(char* string, register int n, FILE* rein)
 	return (string);
 }
 
-/*
-***
-*** Write a byte to file.
-***
-*/
+// Write a byte to file.
 
 int my_putc(int outchar, FILE* out)
 {
@@ -48,11 +40,9 @@ int my_putc(int outchar, FILE* out)
 	return putc(outchar, out);
 }
 
-/*
-*** Get crc and line number from code line.
-***
-***
-*/
+
+// Get crc and line number from code line.
+
 
 void crc_n_lnum(uint* crc, int* linenumber, char* line)
 {
@@ -66,11 +56,9 @@ void crc_n_lnum(uint* crc, int* linenumber, char* line)
 	*crc = (uint)(cs & 0x3fffL); /* lower 14 bits are the CRC */
 }
 
-/*
-*** Get crc2 from code line.
-***
-***
-*/
+
+// Get crc2 from code line.
+
 
 void crc2(uint* crc, char* line)
 {
@@ -78,11 +66,8 @@ void crc2(uint* crc, char* line)
 		decode[(byte)line[67]];
 }
 
-/*
-*** Whip up 2nd CRC
-***
-***
-*/
+
+//* Whip up 2nd CRC
 
 void add_crc2(char* line)
 {
@@ -101,11 +86,8 @@ void add_crc2(char* line)
 	line[i] = EOS;
 }
 
-/*
-*** mini-crc for header. safe enough...
-***
-***
-*/
+
+// mini-crc for header. safe enough...
 
 int mcrc(char* line, int flag)
 {
@@ -136,11 +118,8 @@ int mcrc(char* line, int flag)
 	return (crc);
 }
 
-/*
-*** read info from indexfile
-***
-***
-*/
+
+// read info from indexfile
 
 int read_index(FILE* ifile, struct m_index* idxptr)
 {
@@ -203,11 +182,9 @@ int read_index(FILE* ifile, struct m_index* idxptr)
 	return (0);
 }
 
-/*
-*** write info to indexfile
-***
-***
-*/
+
+// write info to indexfile
+
 
 int write_index(FILE* ifile, struct m_index* idxptr, int flag)
 {
@@ -220,10 +197,8 @@ int write_index(FILE* ifile, struct m_index* idxptr, int flag)
 	{
 		/* Update index at end of meta file */
 #ifdef _HAVE_CHSIZE
-		/* IBM C Set/2 fails, if fseeking to the end of a random file.
-		   Following output is not appended, but written to the beginning
-		   of the file, although the file length grows by the correct amount!
-		   After doing chzise first, it works. */
+		/* IBM C Set/2 fails, if fseeking to the end of a random file. Following output is not appended, but written to the beginning
+		   of the file, although the file length grows by the correct amount! After doing chzise first, it works. */
 		_chsize(_fileno(ifile), (long)idxptr->length);
 		fseek(ifile, (long)idxptr->length, SEEK_SET);
 #endif
@@ -347,11 +322,9 @@ int write_index(FILE* ifile, struct m_index* idxptr, int flag)
 	return (0);
 }
 
-/*
-*** Reading/writing unsigned long(32bit)/int(16)
-***
-***
-*/
+
+// Reading/writing unsigned long(32bit)/int(16)
+
 
 ulong read_ulong(FILE* in)
 {
@@ -488,11 +461,8 @@ int crc_file(const char* file, const char* s1, const char* s2, int flag)
 	return (0);
 }
 
-/*
-*** Copy a file.
-***
-***
-*/
+
+// Copy a file.
 
 
 int copy_file(const char* to, const char* from, ulong timestamp)
@@ -878,17 +848,7 @@ void strip(char* string)
 
 
 #define _SETFTIME_OK
-/*
-*** Set file's timestamp
-***
-***
-*/
-/*void set_filetime(FILE *_file, ulong ftimestamp)
-{
-if (setftime(fileno(_file), (struct ftime *)&ftimestamp) == EOF)
-fprintf(o, "\007\nCan't set file's timestamp!");
-}
-*/
+
 #ifndef _HAVE_GMTIME
 /*
 * mktime function from GNU C library V1.03; modified:
@@ -1264,13 +1224,10 @@ uint get_hex(char* hex)
 
 
 #ifndef _HAVE_FNSPLIT
-/*
-***       filenamesplit
-***       (by DL1MEN, taken from SP-ST, modified for portability)
-***
-***       split filename up into drive, path, name and extension.
-***
-*/
+
+//      (by DL1MEN, taken from SP-ST, modified for portability)
+//    split filename up into drive, path, name and extension.
+
 
 void fnsplit(char *pth, char *dr, char *pa, char *fn, char *ft)
 {
@@ -1381,11 +1338,9 @@ char *strcnvt(char *string, int flag)
 	return (string);
 }
 
-/*
-*** _stricmp - same as strcmp(), but ignores case.
-*** s1 and s2 are not modified.
-***
-*/
+
+// _stricmp - same as strcmp(), but ignores case. s1 and s2 are not modified.
+
 
 int _stricmp(const char *s1, const char *s2)
 {

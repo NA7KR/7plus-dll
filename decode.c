@@ -698,8 +698,7 @@ void w_index_err(struct m_index* idxp, const char* localname, int flag)
 }
 
 /*
-*** If an error report has been accidentally erased, it can be recreated
-*** using the information in the indexfile, respectively metafile.
+*** If an error report has been accidentally erased, it can be recreated using the information in the indexfile, respectively metafile.
 *** (depends on _CHSIZE_OK)
 */
 int make_new_err(const char* name)
@@ -733,11 +732,9 @@ int make_new_err(const char* name)
 	return (0);
 }
 
-/*
-*** Progress indication
-***
-***
-*/
+
+// Progress indication
+
 void progress(const char* filename, int part, int of_parts, long errors,
               long rebuilt, const char* status)
 {

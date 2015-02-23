@@ -2,13 +2,6 @@
 #define VERSION "2.25"
 #define PL7_DATE "20000320"
 
-
-/**********************************************************
-*** 7PLUS ASCII- Encoder/Decoder, (c) Axel Bauda, DG1BBQ ***
-***********************************************************
-
-*/
-
 #include "7plus.h"
 #include <conio.h>
 
@@ -18,11 +11,7 @@ uint crctab[256];
 byte decode[256];
 byte code[216];
 char range[257];
-#ifdef LFN
 byte _extended = '*'; /* Allow long filenames */
-#else
-byte    _extended = 0xdb; /* Stick to 8.3 */
-#endif
 size_t buflen;
 char _drive[MAXDRIVE], _dir[MAXDIR], _file[MAXFILE], _ext[MAXEXT];
 char spaces[] = "                                                   ";
@@ -45,89 +34,9 @@ int sysop = 0;
 int no_tty = 0;
 int twolinesend = 0;
 struct m_index* idxptr;
-
-
-#ifdef LFN
 #define _LFN "/LFN"
-#else
-#define _LFN "/8.3"
-#endif
-
-
 
 const char s_logon[] = "\n[7+ v"VERSION""_LFN" ("PL7_DATE"), (C) DG1BBQ]\n";
-
-const char* help[] =
-{
-	"\n",
-	"Commands (more exact descriptions, see manual): \n",
-	"\n",
-	"7plus file   <-- 'file' must not carry an extension (.7pl/.p01/.cor etc.)\n",
-	"  Automagic mode. 7PLUS will look for the right files and try to decode\n",
-	"  and correct, if possible. If a non-7PLUS file named 'file' exists, 7PLUS\n",
-	"  will encode it.\n",
-	"\n",
-	"7plus file.txt\n",
-	"  Encode 'file.txt' (automatically split into 10K chunks).\n",
-	"\n",
-	"  Valid options for encoding:\n",
-	"\n",
-	"  -s 30      30 lines/part (max 512 lines/part).\n",
-	"  -sp 3      3 parts of roughly equal size (max 255 parts).\n",
-	"  -sb 3000   Parts of roughly 3000 bytes (max 36000).\n",
-	"  -r 5-10,1  When encoding, only create part 5 through 10 and part 1.\n",
-	"             Be sure to split the same way as for the first upload!\n",
-	"  -t /ex     Append string '/ex' to encoded files (BBS file termination).\n",
-	"  -send \"sp dg1bbq @db0ver\" Add send command for BBS (-send2 = 2 line send).\n",
-	"  -tb file   Get head and footlines from format file 'file' when encoding.\n",
-	"             Produces ready-for-upload files. See manual.\n",
-	"  -j         Join all parts into a single output file 'file.upl'.\n",
-	"\n",
-
-#define EXMPL "c:\\pr\\"
-
-
-	"7plus file.err "EXMPL"\n",
-	"  Create correction file. Look for original unencoded file in '"EXMPL"'.\n",
-	"  Omit path of original unencoded file, if it's in the current directory.\n",
-	"\n",
-	"7plus file.err file2.err -j\n",
-	"  Add contents of error report 'file2.err' to error report 'file.err'.\n",
-	"  If second filename is omitted, 7PLUS will look for 'file.e01', 'file.e02'\n",
-	"  etc and add their contents to 'file.err' (automatic multiple join).\n"
-	"  Joining of err-files is necessary for producing collective cor-files.\n",
-	"\n",
-
-#ifdef _HAVE_CHSIZE
-#define MF "7mf"
-#define MG "meta"
-#else
-#define MF "7ix"
-#define MG "index"
-#endif
-
-	"7plus file."MF"\n",
-	"  Create new error report from "MG"file, if it's been accidentally erased.\n",
-	"\n",
-	"7plus logfile -x text\n",
-	"  Extract 7PLUS files from 'logfile'. Only extract a file, if its name\n",
-	"  contains 'text'. Omit 'text' to extract all files in 'logfile'.\n",
-	"\n",
-	"Other Options (not all options listed):\n",
-	"\n",
-	"-k    Automatically kill all obsolete files.\n",
-
-	"-p    Use Packet line separator CR for encoded files. Should be used,\n",
-	"      when uploading files to the BBS in binary mode! See manual.\n",
-	"-y    Assume YES on all queries.\n",
-	"\n",
-	"And do me a great favor: READ THE MANUAL, PLEASE! 73s, Axel.\n",
-	"\n",
-	NULLCP
-};
-
-#ifdef __DLL__
-
 
 HANDLE hDLLInst = 0;
 
@@ -145,11 +54,7 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
 	return TRUE;
 }
 
-
-
-/*
-* The real DLL entry point
-*/
+// The real DLL entry point
 //int __export CALLBACK Do_7plus(char *cmd_line)
 __declspec(dllexport) int  Do_7plus(char *cmd_line)
 {
@@ -160,11 +65,8 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 	int ret;
 
 	/*
-		* Count the args.
-		* Long Windows 9x file names may contain spaces,
-		* a long file name could look like this...
-		* "This is a long win9x file called fumph.zip"
-		* Note the " " surrounding the file name.
+		* Count the args. Long Windows 9x file names may contain spaces,
+		* a long file name could look like this... "This is a long win9x file called fumph.zip" Note the " " surrounding the file name.
 	*/
 	l = strlen(cmd_line);
 
@@ -176,10 +78,7 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 			while (cmd_line[i] != '"') i++;
 			i++;
 		}
-		/*
-				* Replace ' ' with '\0' unless surrounded with quotes
-				* to indicate the spaces are inside a long file name.
-				*/
+		//	* Replace ' ' with '\0' unless surrounded with quotes to indicate the spaces are inside a long file name.
 		if (cmd_line[i] == ' ')
 		{
 			cmd_line[i] = 0;
@@ -187,19 +86,15 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 		}
 	}
 
-	/*
-		* The number of args should be one more than the spaces.
-		*/
+	// The number of args should be one more than the spaces.
 	argc++;
 
-	/*
-		* Allocate the pointers.
-		*/
+	// Allocate the pointers.
+
 	argv = (char **)calloc(argc, sizeof(char *));
 
-	/*
-		* Process cmd_line again setting up argv.
-		*/
+	// Process cmd_line again setting up argv.
+
 	p1 = cmd_line;
 
 	for (i = 0; i < argc; i++)
@@ -209,9 +104,8 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 		if (p2) p1 = p2 + 1;
 	}
 
-	/*
-		* Remove any quotes
-		*/
+	// Remove any quotes
+
 	for (i = 0; i < argc; i++)
 		if (argv[i][0] == '"')
 			for (l = 0; argv[i][l]; l++)
@@ -221,27 +115,14 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 					argv[i][l] = 0;
 			}
 
-	/*
-		* Call real program entry point
-		*/
-	ret = go_at_it(argc, argv);
+	// Call real program entry point
 
+	ret = go_at_it(argc, argv);
 	fclose(o);
 	return ret;
 }
 
-#else /* #ifdef __DLL__ #else */
 
-
-/* Depending on the system, it may be nessesary to prompt the user for a
-   keystroke, before terminating, because user wouldn't be able to read
-   the outputs to the screen, when the window closes at termination.
-   However, the '-n' option overrides this. */
-int main(int argc, char** argv)
-{
-	return (go_at_it(argc, argv));
-}
-#endif /* #ifdef __DLL__ #else */
 
 /* This is the real main() */
 int go_at_it(int argc, char** argv)
@@ -251,36 +132,18 @@ int go_at_it(int argc, char** argv)
 	int ret, i, extract, genflag, join, cor;
 	long blocksize;
 
-
 	extract = genflag = join = cor = twolinesend = 0;
 	p = r = s = t = endstr = sendstr = NULLCP;
 	*genpath = *argname = *altname = EOS;
 
-#ifndef __DLL__
 	i = 0;
 	o = stdout;
-#else
-	char cCurrentPath[FILENAME_MAX];
-
-	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-	{
-		return errno;
-	}
-
-	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
-	
-	strcat(cCurrentPath, "\\7plus.out");
-	o = fopen(cCurrentPath, "w");
-	noquery = 1;
-	i = -1; /* Args start at 0 with DLL */
-#endif
 
 	/* initialize range array */
 	get_range("1-");
 
 	/* Default blocksize (abt 10000 bytes) */
 	blocksize = 138 * 62;
-
 
 	while (++i < argc)
 	{
@@ -440,12 +303,7 @@ int go_at_it(int argc, char** argv)
 		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
 			sprintf(delimit, "\r"); /* for direct binary upload. */
 
-		if (!_stricmp(argv[i], "-Q")) /* Quiet mode. Absolutely no screen output */
-		{
-			o = fopen(cCurrentPath, OPEN_WRITE_TEXT);
-
-			noquery = 1;
-		}
+		
 
 		if (!_stricmp(argv[i], "-SIM")) /* Simulate encoding and report */
 			simulate = 1; /* number of parts and parts */
@@ -476,23 +334,7 @@ int go_at_it(int argc, char** argv)
 		/* How many lines fit on screen? */
 		scrlines = 40;
 
-		while (help[i])
-		{
-			if (++n == scrlines && !noquery)
-			{
-				set_autolf(0);
-
-				fprintf(o, "Press RETURN to continue....\r");
-
-				fflush(stdout);
-				while (!_getch());
-				fflush(stdin);
-				n = 0;
-
-				set_autolf(1);
-			}
-			fprintf(o, help[i++]);
-		}
+		
 		ret = 0;
 			if (o != stdout)
 		fclose(o);
@@ -505,11 +347,9 @@ int go_at_it(int argc, char** argv)
 		fprintf(o, nomem);
 		if (o != stdout)
 			fclose(o);
-#ifndef __DLL__
+
 		exit(21);
-#else
-		return 21;
-#endif
+
 	}
 	free(s);
 
@@ -518,11 +358,9 @@ int go_at_it(int argc, char** argv)
 		fprintf(o, nomem);
 		if (o != stdout)
 			fclose(o);
-#ifndef __DLL__
+
 		exit(21);
-#else
-		return 21;
-#endif
+
 	}
 
 	buflen = 16384;
@@ -659,7 +497,6 @@ int go_at_it(int argc, char** argv)
 			ret = control_decode(argname);
 	}
 
-
 	if (o != stdout)
 		fclose(o);
 	free(idxptr);
@@ -697,4 +534,3 @@ int go_at_it(int argc, char** argv)
  21 Not enough memory available
 
  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
