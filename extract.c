@@ -10,7 +10,7 @@ const char list_top[] = "File         Length Lines\n"
 int extract_files(char* name, char* search)
 {
 	FILE *in, *out;
-	char string[81], destnam[13], writenam[MAXPATH ], dummi[20], *p, *q;
+	char string[81], destnam[13], writenam[MAXPATH], dummi[20], *p, *q;
 
 	int i, part, file, /*filen,*/ err, errn, cor, corn, ret, lines, info, offset;
 	ulong bytes, sum;
@@ -19,13 +19,13 @@ int extract_files(char* name, char* search)
 	file = /*filen =*/ err = errn = cor = corn = ret = lines = offset = 0;
 	info = 1;
 	bytes = sum = 0UL;
-	
+
 	if (search)
 		_strlwr(search);
 
 	fprintf(o, "\n--------------------\n"
-	        "7PLUS file extractor\n"
-	        "--------------------\n");
+		"7PLUS file extractor\n"
+		"--------------------\n");
 
 	if ((in = fopen(name, OPEN_READ_BINARY)) == NULLFP)
 	{
@@ -64,7 +64,7 @@ int extract_files(char* name, char* search)
 				if (strstr(p, "of 001"))
 					sprintf(dummi, ".7PL");
 				else
-					sprintf(dummi,  ".P%02x", part);
+					sprintf(dummi, ".P%02x", part);
 				strcat(destnam, dummi);
 			}
 			/* OK, then it could be an ERR or COR file. Careful! It could also be a marked textfile */
@@ -81,7 +81,7 @@ int extract_files(char* name, char* search)
 			_strlwr(destnam);
 			fnsplit(destnam, _drive, _dir, _file, _ext);
 			build_DOS_name(_file, _ext);
-			sprintf(destnam,  "%s.%s", _file, _ext);
+			sprintf(destnam, "%s.%s", _file, _ext);
 			check_fn(destnam);
 
 			err = cor = 0;
@@ -97,7 +97,7 @@ int extract_files(char* name, char* search)
 			}
 			if (*destnam) /* Open output file if 7PLUS file found. */
 			{
-				sprintf(writenam,  "%s%s", genpath, destnam);
+				sprintf(writenam, "%s%s", genpath, destnam);
 
 				/* create filename for output file */
 				if (err && !test_exist(writenam))
@@ -107,11 +107,10 @@ int extract_files(char* name, char* search)
 					{
 						if ((q = strrchr(destnam, '.')) != NULL)
 							*q = EOS;
-						sprintf(dummi,  ".e%02x", errn++);
+						sprintf(dummi, ".e%02x", errn++);
 						strcat(destnam, dummi);
 						sprintf(writenam, "%s%s", genpath, destnam);
-					}
-					while (!test_exist(writenam));
+					} while (!test_exist(writenam));
 				}
 
 				if (cor && !test_exist(writenam))
@@ -121,11 +120,10 @@ int extract_files(char* name, char* search)
 					{
 						if ((q = strrchr(destnam, '.')) != NULL)
 							*q = EOS;
-						sprintf(dummi,  ".c%02x", corn++);
+						sprintf(dummi, ".c%02x", corn++);
 						strcat(destnam, dummi);
 						sprintf(writenam, "%s%s", genpath, destnam);
-					}
-					while (!test_exist(writenam));
+					} while (!test_exist(writenam));
 				}
 
 				file++;
@@ -193,7 +191,7 @@ int extract_files(char* name, char* search)
 	if (file)
 	{
 		fprintf(o, "------------ ====== -----\n"
-		        "      Total: %6lu\n", sum);
+			"      Total: %6lu\n", sum);
 		fprintf(o, "\nAll done!\n");
 	}
 	else

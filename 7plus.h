@@ -110,7 +110,7 @@ int go_at_it(int argc, char** argv);
 int screenlength(void);
 
 /** encode.c **/
-int encode_file(char* name, long blocksize, char* searchbin, int join, char* head_foot,char* genpath);
+int encode_file(char* name, long blocksize, char* searchbin, int join, char* head_foot, char* genpath);
 void get_range(char* rangestring);
 int read_tb(char* name, char* go_top, char* go_bottom);
 int top_bottom(FILE* wfile, char* top_bot, char* orgname, char* type, int part, int parts);
@@ -121,7 +121,7 @@ void decode_n_write(FILE* raus, char* p, int length);
 void w_index_err(struct m_index* idxptr, const char* localname, int flag);
 int make_new_err(const char* name);
 void progress(const char* filename, int part, int of_parts,
-              long errors, long rebuilt, const char* status);
+	long errors, long rebuilt, const char* status);
 /* correct.c */
 int correct_meta(char* name, int itsacor, int quietmode);
 
@@ -139,14 +139,14 @@ uint read_uint(FILE* in);
 void write_ulong(FILE* out, ulong val);
 void write_uint(FILE* out, uint val);
 int crc_file(const char* file, const char* s1, const char* s2,
-             int flag);
+	int flag);
 int copy_file(const char* to, const char* from, ulong timestamp);
 void replace(const char* oldfil, const char* newfil, ulong timestamp);
 
 
 void kill_em(const char* name, const char* inpath, const char* one,
-             const char* two, const char* three, const char* four,
-             const char* five, int _one, int no_lf);
+	const char* two, const char* three, const char* four,
+	const char* five, int _one, int no_lf);
 void kill_dest(FILE* in, FILE* out, const char* name);
 int test_exist(const char* filename);
 int test_file(FILE* in, char* destnam, int flag, int namsize);

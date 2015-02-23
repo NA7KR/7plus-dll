@@ -67,7 +67,7 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 	/*
 		* Count the args. Long Windows 9x file names may contain spaces,
 		* a long file name could look like this... "This is a long win9x file called fumph.zip" Note the " " surrounding the file name.
-	*/
+		*/
 	l = strlen(cmd_line);
 
 	for (i = 0; i <= l; i++)
@@ -248,7 +248,7 @@ int go_at_it(int argc, char** argv)
 					strcpy(pathstr, argv[i]);
 				}
 			}
-			
+
 		}
 		//end save
 		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
@@ -303,7 +303,7 @@ int go_at_it(int argc, char** argv)
 		if (!_stricmp(argv[i], "-P")) /* Write encoded files in Packet format */
 			sprintf(delimit, "\r"); /* for direct binary upload. */
 
-		
+
 
 		if (!_stricmp(argv[i], "-SIM")) /* Simulate encoding and report */
 			simulate = 1; /* number of parts and parts */
@@ -334,10 +334,10 @@ int go_at_it(int argc, char** argv)
 		/* How many lines fit on screen? */
 		scrlines = 40;
 
-		
+
 		ret = 0;
-			if (o != stdout)
-		fclose(o);
+		if (o != stdout)
+			fclose(o);
 		free(idxptr);
 		return (ret);
 	}
@@ -378,19 +378,19 @@ int go_at_it(int argc, char** argv)
 	else
 	{
 		fnsplit(argname, _drive, _dir, _file, _ext);
-		
+
 		char *c = malloc(strlen(pathstr) + strlen(_file) + strlen(_ext) + 1);
-		if (c != NULL)     
-		{ 
+		if (c != NULL)
+		{
 			strcpy(c, pathstr);
 			strcat(c, _file);
 			strcat(c, _ext);
 			strcpy(argname, c);
 			strcpy(genpath, pathstr);
-			
+
 			free(c);
 		}
-		
+
 	}
 	//KRR 
 	// fnsplit(argname, _drive, _dir, _file, _ext);
@@ -406,8 +406,8 @@ int go_at_it(int argc, char** argv)
 			fprintf(o, "\007File to extract from not specified. Break.\n");
 			ret = 6;
 		}
-			if (o != stdout)
-		fclose(o);
+		if (o != stdout)
+			fclose(o);
 		free(idxptr);
 		return (ret);
 	}
@@ -487,12 +487,12 @@ int go_at_it(int argc, char** argv)
 			free(idxptr);
 			return (ret);
 		}
-		ret = encode_file(argname, blocksize, r, join, t,genpath);
+		ret = encode_file(argname, blocksize, r, join, t, genpath);
 	}
 	else
 	{
 		if (!test_exist(argname)) /* no EXT, but file exists on disk, then encode */
-			ret = encode_file(argname, blocksize, r, join, t,genpath);
+			ret = encode_file(argname, blocksize, r, join, t, genpath);
 		else
 			ret = control_decode(argname);
 	}

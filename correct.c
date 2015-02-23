@@ -11,8 +11,8 @@ const char inv_idxfile[] = "\007Invalid index info.\n";
 int correct_meta(char* name, int itsacor, int quietmode)
 {
 	FILE *rfile, *meta;
-	char inpath[MAXFPATH], indexfile[MAXPATH ], metafile[MAXPATH ];
-	char newname[MAXPATH ], orgname[13], filename[13], dum[20];
+	char inpath[MAXFPATH], indexfile[MAXPATH], metafile[MAXPATH];
+	char newname[MAXPATH], orgname[13], filename[13], dum[20];
 	char *p, line[81];
 	int i, j, corrpart, corrline, corrline2, splitsize, length;
 	int batchcor, num;
@@ -29,7 +29,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 	/* Isolate input-path and filename */
 	fnsplit(name, _drive, _dir, _file, _ext);
-	sprintf(inpath,  "%s%s", _drive, _dir);
+	sprintf(inpath, "%s%s", _drive, _dir);
 	if (*_ext)
 		memmove(_ext, _ext + 1, strlen(_ext));
 	/*build_DOS_name (_file, _ext);*/
@@ -41,7 +41,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 	check_fn(_file);
 	_strlwr(_file);
 
-	sprintf(metafile,  "%s%s.7mf", genpath, _file);
+	sprintf(metafile, "%s%s.7mf", genpath, _file);
 
 #ifndef _HAVE_CHSIZE
 	sprintf(indexfile, "%s%s.7ix", genpath, _file);
@@ -87,8 +87,8 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 	if (quietmode != 2)
 		fprintf(o, "\n-------------\n"
-		        "Correcting...\n"
-		        "-------------\n\n");
+		"Correcting...\n"
+		"-------------\n\n");
 
 	while (idxptr->lines_left)
 	{
@@ -102,7 +102,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 				if (num == 256 || (j > 9))
 					break;
 
-				sprintf(newname,  "%s%s%s.c%02x", _drive, _dir, _file, num);
+				sprintf(newname, "%s%s%s.c%02x", _drive, _dir, _file, num);
 				if (test_exist(newname))
 				{
 					j++;
@@ -125,10 +125,10 @@ int correct_meta(char* name, int itsacor, int quietmode)
 				if (!force)
 				{
 					fprintf(o,
-					        "\n\007If you want to use this cor-file anyway, run 7PLUS "
-					        "again\nwith the '-F' option (force usage). Bear in mind, "
-					        "that this can\ncause irreparable damage to the metafile! "
-					        "Use at own risk.\n");
+						"\n\007If you want to use this cor-file anyway, run 7PLUS "
+						"again\nwith the '-F' option (force usage). Bear in mind, "
+						"that this can\ncause irreparable damage to the metafile! "
+						"Use at own risk.\n");
 
 					fclose(meta);
 					return(7);
@@ -143,7 +143,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 			{
 				if (idxptr->lines_ok[4080 + (num >> 5)] & (1UL << (num & 31)))
 				{
-					sprintf(newname,  "%s%s%s.p%02x", _drive, _dir, _file, num);
+					sprintf(newname, "%s%s%s.p%02x", _drive, _dir, _file, num);
 					if (!test_exist(newname))
 					{
 						/* Use batchcor to indicate that at least one file was found */
@@ -186,7 +186,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		{
 			/* Get info from COR-file */
 			sscanf(line + 18, "%12s %ld %s [%lx]",
-			       orgname, &binbytes, filename, &ftimestamp);
+				orgname, &binbytes, filename, &ftimestamp);
 			splitsize = get_hex(filename);
 		}
 		else
@@ -196,8 +196,8 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 			/* Get info from 7PLUS header */
 			if (sscanf(line + 8, "%d %s %s %s %ld %s %s %s %s %s",
-			           &corrpart, indexfile, indexfile, orgname, &binbytes,
-			           indexfile, dum, indexfile, indexfile, indexfile) == 10)
+				&corrpart, indexfile, indexfile, orgname, &binbytes,
+				indexfile, dum, indexfile, indexfile, indexfile) == 10)
 			{
 				if (!mcrc(line, 0) || !corrpart || !dum)
 					*orgname = EOS;
@@ -243,7 +243,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 					if (mcrc(line, 0))
 						if (sscanf(line, " stop_7+. %s [%lx]",
-						           indexfile, &ftimestamp) != 2)
+							indexfile, &ftimestamp) != 2)
 							ftimestamp = 0UL;
 				}
 			}
@@ -255,7 +255,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 			(binbytes && (binbytes != idxptr->length)))
 		{
 			fprintf(o, "\007\nCorrection file '%s.%s' and metafile '%s' do not "
-			        "refer\nto the same original file!\n", _file, _ext, metafile);
+				"refer\nto the same original file!\n", _file, _ext, metafile);
 			fclose(rfile);
 			continue;
 		}
@@ -263,12 +263,12 @@ int correct_meta(char* name, int itsacor, int quietmode)
 			&& !force)
 		{
 			fprintf(o,
-			        "\007WARNING! The timestamps in the metafile and the correction "
-			        "file\n'%s.%s' differ!\nIf you still want to go ahead with the "
-			        "correction, call 7PLUS again\nwith the addition of the '-f' "
-			        "option (force usage).\nBear in mind, that this can cause "
-			        "irreparable damage to the metafile!\nUse at own risk.\n",
-			        _file, _ext);
+				"\007WARNING! The timestamps in the metafile and the correction "
+				"file\n'%s.%s' differ!\nIf you still want to go ahead with the "
+				"correction, call 7PLUS again\nwith the addition of the '-f' "
+				"option (force usage).\nBear in mind, that this can cause "
+				"irreparable damage to the metafile!\nUse at own risk.\n",
+				_file, _ext);
 			return (18);
 		}
 
@@ -308,14 +308,14 @@ int correct_meta(char* name, int itsacor, int quietmode)
 			/* Calculate CRC */
 			csequence = 0;
 			for (i = 0; i < 64; i++)
-			crc_calc(csequence, p[i]);
+				crc_calc(csequence, p[i]);
 			csequence &= 0x3fff; /* strip calculated CRC to 14 bits */
 
 			/* If line is corrupted, try repairing it */
 			if (csequence != crc)
 			{
 				if (!rebuild(p, 0))
-				/* Incorrect CRC. Ignore line. */
+					/* Incorrect CRC. Ignore line. */
 					continue;
 			}
 
@@ -422,11 +422,11 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 		if ((no_tty || batchcor == 1) && quietmode != 1)
 			fprintf(o, "\n%ld corrupted line%s left.\n", idxptr->lines_left,
-			        (idxptr->lines_left == 1) ? "" : "s");
+			(idxptr->lines_left == 1) ? "" : "s");
 		return (16);
 	}
 
-	sprintf(newname,  "%s%s", genpath, p);
+	sprintf(newname, "%s%s", genpath, p);
 
 	if (test_file(NULLFP, newname, 2, MAXFNAME - 1) == 10)
 		return (10);
@@ -444,7 +444,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		kill_em(_file, inpath, "e", NULL, NULL, NULL, NULL, 0, 2);
 	}
 	fprintf(o, "\nCorrection successful! '%s', %ld bytes.\n",
-	        newname, idxptr->length);
+		newname, idxptr->length);
 
 	return (0);
 }
