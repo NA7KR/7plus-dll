@@ -1,5 +1,5 @@
-﻿Build started 2/23/2015 12:53:02 PM.
-     1>Project "E:\Code\7plsrc.225\7plus.vcxproj" on node 3 (Build target(s)).
+﻿Build started 2/27/2015 4:40:28 PM.
+     1>Project "E:\Code\7plsrc.225\7plus.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt 7plus.c correct.c decode.c encode.c extract.c join.c rebuild.c utils.c
          utils.c
@@ -12,7 +12,7 @@
          7plus.c
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Code\7plsrc.225\7Plus Test\Debug\7plus.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Code\7plsrc.225\7Plus Test\Debug\7plus.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Code\7plsrc.225\7Plus Test\Debug\7plus.lib" /MACHINE:X86 /DLL Debug\7plus.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\Packet\Packet\bin\Debug\7plus.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\Packet\Packet\bin\Debug\7plus.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Packet\Packet\bin\Debug\7plus.lib" /MACHINE:X86 /DLL Debug\7plus.obj
          Debug\correct.obj
          Debug\decode.obj
          Debug\encode.obj
@@ -20,10 +20,10 @@
          Debug\join.obj
          Debug\rebuild.obj
          Debug\utils.obj
-            Creating library E:\Code\7plsrc.225\7Plus Test\Debug\7plus.lib and object E:\Code\7plsrc.225\7Plus Test\Debug\7plus.exp
-         7plus.vcxproj -> E:\Code\7plsrc.225\7Plus Test\Debug\7plus.dll
+            Creating library ..\Packet\Packet\bin\Debug\7plus.lib and object ..\Packet\Packet\bin\Debug\7plus.exp
+         7plus.vcxproj -> E:\Code\7plsrc.225\..\Packet\Packet\bin\Debug\7plus.dll
      1>Done Building Project "E:\Code\7plsrc.225\7plus.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.00
+Time Elapsed 00:00:02.85
