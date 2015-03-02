@@ -5,7 +5,6 @@
 #include "7plus.h"
 #include <conio.h>
 
-
 FILE* o;
 uint crctab[256];
 byte decode[256];
