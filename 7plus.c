@@ -56,7 +56,7 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
 
 // The real DLL entry point
 //int __export CALLBACK Do_7plus(char *cmd_line)
-__declspec(dllexport) int __cdecl Do_7plus(char *cmd_line)
+__declspec(dllexport) int  Do_7plus(char *cmd_line)
 {
 	char *p1, *p2;
 	char **argv;
