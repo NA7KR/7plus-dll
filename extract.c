@@ -23,18 +23,18 @@ int extract_files(char* name, char* search)
 	if (search)
 		_strlwr(search);
 
-	fprintf(o, "\n--------------------\n"
+	fprintf(ErrorFile, "\n--------------------\n"
 		"7PLUS file extractor\n"
 		"--------------------\n");
 
 	if ((in = fopen(name, OPEN_READ_BINARY)) == NULLFP)
 	{
-		fprintf(o, cant, name);
+		fprintf(ErrorFile, cant, name);
 		return (2);
 	}
 	setvbuf(in, NULL, _IOFBF, buflen);
 
-	fprintf(o, "\nScanning '%s' for 7PLUS-files.\n\n%s", name, list_top);
+	fprintf(ErrorFile, "\nScanning '%s' for 7PLUS-files.\n\n%s", name, list_top);
 
 	while ((p = my_fgets(string, 80, in)) != NULL)
 	{
@@ -48,7 +48,7 @@ int extract_files(char* name, char* search)
 		{ /* Beginning of a 7PLUS file found. */
 			if (out)
 			{
-				fprintf(o, "%6lu %5d -\n", bytes, lines);
+				fprintf(ErrorFile, "%6lu %5d -\n", bytes, lines);
 				sum += bytes;
 				fclose(out);
 				out = NULLFP;
@@ -92,7 +92,7 @@ int extract_files(char* name, char* search)
 
 			if (search && *destnam && !strstr(destnam, search))
 			{
-				fprintf(o, "%-12s ------ -----\n", destnam);
+				fprintf(ErrorFile, "%-12s ------ -----\n", destnam);
 				*destnam = EOS;
 			}
 			if (*destnam) /* Open output file if 7PLUS file found. */
@@ -132,9 +132,9 @@ int extract_files(char* name, char* search)
 				if (i == 10)
 					return (10);
 				else if (i)
-					fprintf(o, list_top);
+					fprintf(ErrorFile, list_top);
 
-				fprintf(o, "%-12s ", destnam);
+				fprintf(ErrorFile, "%-12s ", destnam);
 				out = fopen(writenam, OPEN_WRITE_TEXT);
 
 				bytes = 0UL;
@@ -166,7 +166,7 @@ int extract_files(char* name, char* search)
 
 				if (ret == EOF)
 				{
-					fprintf(o, "\007\nWrite error. Can't continue. Break.\n");
+					fprintf(ErrorFile, "\007\nWrite error. Can't continue. Break.\n");
 					exit(1);
 				}
 
@@ -178,7 +178,7 @@ int extract_files(char* name, char* search)
 
 				if (info == 2)
 				{
-					fprintf(o, "%6lu %5d\n", bytes, lines);
+					fprintf(ErrorFile, "%6lu %5d\n", bytes, lines);
 					sum += bytes;
 					fclose(out);
 					out = NULLFP;
@@ -190,12 +190,12 @@ int extract_files(char* name, char* search)
 
 	if (file)
 	{
-		fprintf(o, "------------ ====== -----\n"
+		fprintf(ErrorFile, "------------ ====== -----\n"
 			"      Total: %6lu\n", sum);
-		fprintf(o, "\nAll done!\n");
+		fprintf(ErrorFile, "\nAll done!\n");
 	}
 	else
-		fprintf(o, "No %sfiles found....\n", search ? "matching " : "");
+		fprintf(ErrorFile, "No %sfiles found....\n", search ? "matching " : "");
 
 	fclose(in);
 	if (out)

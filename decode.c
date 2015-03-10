@@ -119,7 +119,7 @@ int decode_file(char* name, int flag)
 				sprintf(srcname, "%s%s.%s", inpath, _file, _ext);
 				if (test_exist(srcname))
 				{
-					fprintf(o, cant, srcname);
+					fprintf(ErrorFile, cant, srcname);
 					return (2);
 				}
 			}
@@ -152,7 +152,7 @@ int decode_file(char* name, int flag)
 			sprintf(srcname, "%s%s.%s", inpath, _file, _ext);
 			if (test_exist(srcname))
 			{
-				fprintf(o, cant, srcname);
+				fprintf(ErrorFile, cant, srcname);
 				return (2);
 			}
 		}
@@ -168,7 +168,7 @@ int decode_file(char* name, int flag)
 				if (test_exist(srcname))
 				{
 					sprintf(srcname, "%s.7pl or %s.p01", _file, _file);
-					fprintf(o, cant, srcname);
+					fprintf(ErrorFile, cant, srcname);
 					return (2);
 				}
 			}
@@ -180,7 +180,7 @@ int decode_file(char* name, int flag)
 	/* Set I/O-buffering */
 	setvbuf(in, NULL, _IOFBF, buflen);
 
-	fprintf(o, "\n-----------\n"
+	fprintf(ErrorFile, "\n-----------\n"
 		"Decoding...\n"
 		"-----------\n\n");
 
@@ -192,7 +192,7 @@ int decode_file(char* name, int flag)
 	{
 		if (part == 256)
 		{
-			fprintf(o, "\007\nMore than 255 parts not allowed. Break.\n");
+			fprintf(ErrorFile, "\007\nMore than 255 parts not allowed. Break.\n");
 			kill_dest(in, out, metafile);
 			return (8);
 		}
@@ -211,7 +211,7 @@ int decode_file(char* name, int flag)
 			{
 				if (sysop != 2)
 				{
-					fprintf(o, "\007\n'%s': Not found. Break.\n"
+					fprintf(ErrorFile, "\007\n'%s': Not found. Break.\n"
 						"\nYou must have all parts to be able to decode!\n"
 						"              ===\n"
 						"Get the missing files and try again.\n", srcname);
@@ -260,8 +260,8 @@ int decode_file(char* name, int flag)
 		/* p == NULL? then no starting line found. File no good. */
 		if (!p)
 		{
-			fprintf(o, "\007'%s': 7PLUS-startline ", filename);
-			fprintf(o, "not found. Break.\n");
+			fprintf(ErrorFile, "\007'%s': 7PLUS-startline ", filename);
+			fprintf(ErrorFile, "not found. Break.\n");
 			kill_dest(in, out, metafile);
 			return (3);
 		}
@@ -272,7 +272,7 @@ int decode_file(char* name, int flag)
 		/* Check if file went trough 7bit channel */
 		if (!strstr(rline, "\xb0\xb1"))
 		{
-			fprintf(o, "\007\n'%s':\nBit 8 has been stripped! Can't decode.\nPlease "
+			fprintf(ErrorFile, "\007\n'%s':\nBit 8 has been stripped! Can't decode.\nPlease "
 				"check all settings of your terminal and tnc regarding 8 bit "
 				"transfer.\nYou will have to re-read '%s' from the mailbox\n"
 				"after having corrected the settings.\n", filename, filename);
@@ -289,7 +289,7 @@ int decode_file(char* name, int flag)
 
 		if (!blocklines || !_part || !_parts || !binbytes)
 		{
-			fprintf(o, "'%s': Header is corrupted. Can't continue.\n", filename);
+			fprintf(ErrorFile, "'%s': Header is corrupted. Can't continue.\n", filename);
 			kill_dest(in, out, metafile);
 			return (5);
 		}
@@ -327,7 +327,7 @@ int decode_file(char* name, int flag)
 		}
 		if (hcorrupted)
 		{
-			fprintf(o, "'%s': Header is corrupted. Can't continue.\n", filename);
+			fprintf(ErrorFile, "'%s': Header is corrupted. Can't continue.\n", filename);
 			kill_dest(in, out, metafile);
 			return(5);
 		}
@@ -342,7 +342,7 @@ int decode_file(char* name, int flag)
 				my_fgets(rline, 80, in);
 				if (!mcrc(rline, 0))
 				{
-					fprintf(o, "\nExtended Filename corrupted. "
+					fprintf(ErrorFile, "\nExtended Filename corrupted. "
 						"Using filename from header.\n");
 					strcpy(orgname2, idxptr->filename);
 					check_fn(orgname2);
@@ -369,7 +369,7 @@ int decode_file(char* name, int flag)
 		/* Current file does not contain expected part */
 		if (_part != part)
 		{
-			fprintf(o, "\007'%s': File does not contain part %03d. Break.\n",
+			fprintf(ErrorFile, "\007'%s': File does not contain part %03d. Break.\n",
 				filename, part);
 			kill_dest(in, out, metafile);
 			return (4);
@@ -384,7 +384,7 @@ int decode_file(char* name, int flag)
 			setvbuf(out, NULL, _IOFBF, buflen); /* As always, bufferize */
 
 			if (!no_tty)
-				fprintf(o, "File         Pt# of# Errors Rebuilt   Status\n");
+				fprintf(ErrorFile, "File         Pt# of# Errors Rebuilt   Status\n");
 
 			lines = 0;
 
@@ -546,7 +546,7 @@ int decode_file(char* name, int flag)
 				kill_em(_file, inpath, (parts == 1) ? "7pl" : "p",
 				"cor", "c", "err", "e", parts, 0);
 
-			fprintf(o, "\nDecoding successful! '%s', %ld bytes.\n", srcname, binbytes);
+			fprintf(ErrorFile, "\nDecoding successful! '%s', %ld bytes.\n", srcname, binbytes);
 
 			return (0);
 		}
@@ -555,14 +555,14 @@ int decode_file(char* name, int flag)
 
 	if (!flag || no_tty)
 	{
-		fprintf(o, "\nDecoding of '%s' not successful.\n", orgname);
+		fprintf(ErrorFile, "\nDecoding of '%s' not successful.\n", orgname);
 
 		if (no_tty)
-			fprintf(o, "\n%ld line%s corrupted, %ld line%s rebuilt.\n",
+			fprintf(ErrorFile, "\n%ld line%s corrupted, %ld line%s rebuilt.\n",
 			lines, (lines == 1) ? "" : "s", rebuilt, (rebuilt == 1) ? "" : "s");
 
 		if ((idxptr->lines_left > (idxptr->length / 620L)) && !sysop)
-			fprintf(o,
+			fprintf(ErrorFile,
 			"\nWARNING:\n"
 			"========\n"
 			"More than 10%% of all lines are corrupted! Are you sure, your "
@@ -573,7 +573,7 @@ int decode_file(char* name, int flag)
 	}
 	if (_binbytes != binbytes)
 	{
-		fprintf(o, "\nDecoded file has wrong length! Disk full?\n"
+		fprintf(ErrorFile, "\nDecoded file has wrong length! Disk full?\n"
 			"This error should never have occured.....I hoped...\n");
 		return (1);
 	}
@@ -704,21 +704,21 @@ int make_new_err(const char* name)
 {
 	FILE* rfile;
 
-	fprintf(o, "\n-----------------------\n"
+	fprintf(ErrorFile, "\n-----------------------\n"
 		"Recreating error report\n"
 		"-----------------------\n\n");
 
 	/* Open meta file */
 	if ((rfile = fopen(name, OPEN_READ_BINARY)) == NULLFP)
 	{
-		fprintf(o, cant, name);
+		fprintf(ErrorFile, cant, name);
 		return (2);
 	}
 
 	/* read index info into struct idxptr */
 	if (read_index(rfile, idxptr))
 	{
-		fprintf(o, "\007Invalid index info.\n");
+		fprintf(ErrorFile, "\007Invalid index info.\n");
 		return (7);
 	}
 
@@ -726,7 +726,7 @@ int make_new_err(const char* name)
 
 	w_index_err(idxptr, NULL, 1);
 
-	fprintf(o, "Error report has been recreated from '%s'.\n", name);
+	fprintf(ErrorFile, "Error report has been recreated from '%s'.\n", name);
 
 	return (0);
 }
@@ -743,10 +743,10 @@ void progress(const char* filename, int part, int of_parts, long errors,
 	set_autolf(0);
 
 
-	fprintf(o, "%-12s %3d %3d %6ld  %6ld   %-30s\r",
+	fprintf(ErrorFile, "%-12s %3d %3d %6ld  %6ld   %-30s\r",
 		filename, part, of_parts, errors, rebuilt, status);
 
 
-	fflush(o);
+	fflush(ErrorFile);
 	set_autolf(1);
 }

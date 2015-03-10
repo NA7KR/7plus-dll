@@ -138,7 +138,7 @@ int read_index(FILE* ifile, struct m_index* idxptr)
 	my_fgets(idxptr->full_name, 12, ifile);
 	if (strcmp(idxptr->full_name, "7PLUS-index"LSEPS))
 	{
-		fprintf(o, "\007No index info found.\n");
+		fprintf(ErrorFile, "\007No index info found.\n");
 		return (1);
 	}
 	my_fgets(idxptr->filename, 13, ifile);
@@ -379,7 +379,7 @@ int crc_file(const char* file, const char* s1, const char* s2, int flag)
 
 	if ((in = fopen(file, OPEN_RANDOM_BINARY)) == NULLFP)
 	{
-		fprintf(o, cant, file);
+		fprintf(ErrorFile, cant, file);
 		return (2);
 	}
 
@@ -426,7 +426,7 @@ int crc_file(const char* file, const char* s1, const char* s2, int flag)
 
 	if (j)
 	{
-		fprintf(o, "\n\007Can't calculate CRC\nString '%s' not found in '%s'.\n"
+		fprintf(ErrorFile, "\n\007Can't calculate CRC\nString '%s' not found in '%s'.\n"
 			"Break.\n", p, file);
 		return (7);
 	}
@@ -438,7 +438,7 @@ int crc_file(const char* file, const char* s1, const char* s2, int flag)
 		fclose(in);
 		if (!line || strncmp("CRC ", line, 4))
 		{
-			fprintf(o, "\n'%s': no CRC found.\n(File may be corrupted or from version "
+			fprintf(ErrorFile, "\n'%s': no CRC found.\n(File may be corrupted or from version "
 				"earlier than 7PLUS v1.5)\n", file);
 			return (17);
 		}
@@ -446,7 +446,7 @@ int crc_file(const char* file, const char* s1, const char* s2, int flag)
 		if (cs == crc)
 			return (0);
 
-		fprintf(o, "\007\n'%s' is corrupted.\n", file);
+		fprintf(ErrorFile, "\007\n'%s' is corrupted.\n", file);
 		return (7);
 	}
 
@@ -485,7 +485,7 @@ int copy_file(const char* to, const char* from, ulong timestamp)
 	}
 	else
 	{
-		fprintf(o, "\007\nFatal error. Can't write '%s'! Break.\n", to);
+		fprintf(ErrorFile, "\007\nFatal error. Can't write '%s'! Break.\n", to);
 		exit(1);
 	}
 	return (0);
@@ -536,7 +536,7 @@ void kill_em(const char* name, const char* inpath, const char* one,
 	for (i = 0; i < 5; i++)
 	{
 		if (!i && no_lf != 2)
-			fprintf(o, "\n");
+			fprintf(ErrorFile, "\n");
 
 		switch (i)
 		{
@@ -574,9 +574,9 @@ void kill_em(const char* name, const char* inpath, const char* one,
 				{
 					set_autolf(0);
 
-					fprintf(o, "Deleting: %s\r", newname);
+					fprintf(ErrorFile, "Deleting: %s\r", newname);
 
-					fflush(o);
+					fflush(ErrorFile);
 					set_autolf(1);
 				}
 			}
@@ -595,10 +595,10 @@ void kill_em(const char* name, const char* inpath, const char* one,
 	}
 
 	if (no_tty)
-		fprintf(o, "Obsolete files deleted!\n");
+		fprintf(ErrorFile, "Obsolete files deleted!\n");
 
 	if (k && no_lf != 1)
-		fprintf(o, "\n");
+		fprintf(ErrorFile, "\n");
 }
 
 /*
@@ -657,10 +657,10 @@ int test_file(FILE* in, char* destnam, int flag, int namsize)
 	{
 		if (noquery)
 		{
-			if (o == stdout)
-				fprintf(o, "\007\nExisting '%s' overwritten with new file.\n", destnam);
+			if (ErrorFile == stdout)
+				fprintf(ErrorFile, "\007\nExisting '%s' overwritten with new file.\n", destnam);
 			else
-				fprintf(o, "Existing '%s' overwritten with new file.\n", destnam);
+				fprintf(ErrorFile, "Existing '%s' overwritten with new file.\n", destnam);
 			return (ret);
 		}
 
@@ -695,8 +695,8 @@ int test_file(FILE* in, char* destnam, int flag, int namsize)
 		} /* if */
 
 		ret = 1;
-		fprintf(o, "\007\nOutputfile '%s' already exists, overwrite? [y/n/a] ", destnam);
-		fflush(o);
+		fprintf(ErrorFile, "\007\nOutputfile '%s' already exists, overwrite? [y/n/a] ", destnam);
+		fflush(ErrorFile);
 		do
 		{
 			i = _getch();
@@ -706,7 +706,7 @@ int test_file(FILE* in, char* destnam, int flag, int namsize)
 			{
 				if (flag)
 				{
-					fprintf(o, "\n");
+					fprintf(ErrorFile, "\n");
 					/*   fclose (out); */
 					if (i != 0xff)
 						break;
@@ -1177,7 +1177,7 @@ ulong get_filetime(const char* filename)
 	}
 
 	/* error exit */
-	fprintf(o, "\007\nCan't get file's timestamp!\n");
+	fprintf(ErrorFile, "\007\nCan't get file's timestamp!\n");
 	return (*retval);
 }
 
@@ -1190,7 +1190,7 @@ ulong get_filetime(const char* filename)
 void set_filetime(const char *filename, ulong ftimestamp)
 {
 	/* error exit */
-	fprintf(o, "\007\nset_filetime not (yet) implemented on this system!\n"
+	fprintf(ErrorFile, "\007\nset_filetime not (yet) implemented on this system!\n"
 		"7PLUS should NOT be circulated until it is implemented!!\n"
 		"Axel, DG1BBQ.\n");
 	return;

@@ -18,7 +18,7 @@ int join_control(char* file1, char* file2)
 
 	if (!file1)
 	{
-		fprintf(o, "\007No error report specified.\nBreak.\n");
+		fprintf(ErrorFile, "\007No error report specified.\nBreak.\n");
 		return (12);
 	}
 
@@ -96,7 +96,7 @@ int join_err(char* file1, char* file2)
 
 		if (!p[i])
 		{
-			fprintf(o, inv_err, file[i]);
+			fprintf(ErrorFile, inv_err, file[i]);
 			return(7);
 		}
 		sscanf(&line[i][20], scan, name[i], dummi, fullname[i], &fsize[i]);
@@ -110,7 +110,7 @@ int join_err(char* file1, char* file2)
 	if (strcmp(name[0], name[1]) || (blocksize[0] != blocksize[1]) ||
 		((fsize[0] && fsize[1]) && (fsize[0] != fsize[1])))
 	{
-		fprintf(o, "\007The two error reports do not refer "
+		fprintf(ErrorFile, "\007The two error reports do not refer "
 		        "to the same original file!\n"
 		        "Break.\n");
 		return (13);
@@ -130,7 +130,7 @@ int join_err(char* file1, char* file2)
 
 	if ((tmp = fopen("7plus.tmp", OPEN_WRITE_TEXT)) == NULLFP)
 	{
-		fprintf(o, "\007Can't write new error report.\nBreak.\n");
+		fprintf(ErrorFile, "\007Can't write new error report.\nBreak.\n");
 		return (1);
 	}
 
@@ -225,7 +225,7 @@ int join_err(char* file1, char* file2)
 	if (timestamp[0] && timestamp[1] && timestamp[0] != timestamp[1])
 	{
 		_unlink("7plus.tmp");
-		fprintf(o, "\007The two error reports do not refer to the same original "
+		fprintf(ErrorFile, "\007The two error reports do not refer to the same original "
 		        "file!\nThe timestamps contained are different!\nBreak.\n");
 		return (13);
 	}
@@ -234,7 +234,7 @@ int join_err(char* file1, char* file2)
 	rename("7plus.tmp", file[0]);
 	crc_file(file[0], "7P", "00\n", 0);
 
-	fprintf(o, "'%s' has been joined to '%s'.\n", file[1], file[0]);
+	fprintf(ErrorFile, "'%s' has been joined to '%s'.\n", file[1], file[0]);
 
 	return(0);
 }

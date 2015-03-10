@@ -49,13 +49,13 @@ int correct_meta(char* name, int itsacor, int quietmode)
 	/* Open index file */
 	if ((meta = fopen(indexfile, OPEN_READ_BINARY)) == NULLFP)
 	{
-		fprintf(o, cant, indexfile);
+		fprintf(ErrorFile, cant, indexfile);
 		return (2);
 	}
 	/* read index info into struct idxptr */
 	if (read_index(meta, idxptr))
 	{
-		fprintf(o, inv_idxfile);
+		fprintf(ErrorFile, inv_idxfile);
 		fclose(meta);
 		return (7);
 	}
@@ -65,7 +65,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 	/* Open meta file (*.7mf) */
 	if ((meta = fopen(metafile, OPEN_RANDOM_BINARY)) == NULLFP)
 	{
-		fprintf(o, cant, metafile);
+		fprintf(ErrorFile, cant, metafile);
 		return (2);
 	}
 
@@ -75,7 +75,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 	/* read index info into struct idxptr */
 	if (read_index(meta, idxptr))
 	{
-		fprintf(o, inv_idxfile);
+		fprintf(ErrorFile, inv_idxfile);
 		fclose(meta);
 		return (7);
 	}
@@ -86,7 +86,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		write_index(NULLFP, idxptr, 2);
 
 	if (quietmode != 2)
-		fprintf(o, "\n-------------\n"
+		fprintf(ErrorFile, "\n-------------\n"
 		"Correcting...\n"
 		"-------------\n\n");
 
@@ -124,7 +124,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 				}
 				if (!force)
 				{
-					fprintf(o,
+					fprintf(ErrorFile,
 						"\n\007If you want to use this cor-file anyway, run 7PLUS "
 						"again\nwith the '-F' option (force usage). Bear in mind, "
 						"that this can\ncause irreparable damage to the metafile! "
@@ -161,7 +161,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		/* Open COR-file */
 		if ((rfile = fopen(newname, OPEN_READ_BINARY)) == NULLFP)
 		{
-			fprintf(o, cant, newname);
+			fprintf(ErrorFile, cant, newname);
 			return (2);
 		}
 
@@ -177,7 +177,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		   the start of the COR info */
 		if (!p)
 		{
-			fprintf(o, "\007\n'%s': invalid correction file. Break.\n", newname);
+			fprintf(ErrorFile, "\007\n'%s': invalid correction file. Break.\n", newname);
 			fclose(rfile);
 			continue;
 		}
@@ -210,7 +210,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 
 			if (!*orgname)
 			{
-				fprintf(o, "\007\n'%s': Header is corrupted. Break.\n", newname);
+				fprintf(ErrorFile, "\007\n'%s': Header is corrupted. Break.\n", newname);
 				fclose(rfile);
 				break;
 			}
@@ -254,7 +254,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		if (_stricmp(orgname, idxptr->filename) ||
 			(binbytes && (binbytes != idxptr->length)))
 		{
-			fprintf(o, "\007\nCorrection file '%s.%s' and metafile '%s' do not "
+			fprintf(ErrorFile, "\007\nCorrection file '%s.%s' and metafile '%s' do not "
 				"refer\nto the same original file!\n", _file, _ext, metafile);
 			fclose(rfile);
 			continue;
@@ -262,7 +262,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		if ((ftimestamp && idxptr->timestamp && (ftimestamp != idxptr->timestamp))
 			&& !force)
 		{
-			fprintf(o,
+			fprintf(ErrorFile,
 				"\007WARNING! The timestamps in the metafile and the correction "
 				"file\n'%s.%s' differ!\nIf you still want to go ahead with the "
 				"correction, call 7PLUS again\nwith the addition of the '-f' "
@@ -275,8 +275,8 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		if (!no_tty)
 		{
 			set_autolf(0);
-			fprintf(o, processing, newname, idxptr->lines_left);
-			fflush(o);
+			fprintf(ErrorFile, processing, newname, idxptr->lines_left);
+			fflush(ErrorFile);
 			set_autolf(1);
 		}
 
@@ -367,15 +367,15 @@ int correct_meta(char* name, int itsacor, int quietmode)
 			{
 				set_autolf(0);
 				if (idxptr->lines_left % 10 == 0)
-					fprintf(o, processing, newname, idxptr->lines_left);
-				fflush(o);
+					fprintf(ErrorFile, processing, newname, idxptr->lines_left);
+				fflush(ErrorFile);
 				set_autolf(1);
 			}
 		}
 
 		set_autolf(0);
-		fprintf(o, processing, newname, idxptr->lines_left);
-		fflush(o);
+		fprintf(ErrorFile, processing, newname, idxptr->lines_left);
+		fflush(ErrorFile);
 		set_autolf(1);
 
 		if (rfile)
@@ -389,10 +389,10 @@ int correct_meta(char* name, int itsacor, int quietmode)
 	}
 
 	if (batchcor == 1 && quietmode != 1)
-		fprintf(o, "None of the required files have been found.\n");
+		fprintf(ErrorFile, "None of the required files have been found.\n");
 
 	if (quietmode != 1)
-		fprintf(o, "\n");
+		fprintf(ErrorFile, "\n");
 
 #ifdef _HAVE_CHSIZE
 	if (!idxptr->lines_left)
@@ -418,10 +418,10 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		}
 		w_index_err(idxptr, _file, 0);
 		if (quietmode != 1)
-			fprintf(o, "\nCorrection of '%s' not successful.\n", p);
+			fprintf(ErrorFile, "\nCorrection of '%s' not successful.\n", p);
 
 		if ((no_tty || batchcor == 1) && quietmode != 1)
-			fprintf(o, "\n%ld corrupted line%s left.\n", idxptr->lines_left,
+			fprintf(ErrorFile, "\n%ld corrupted line%s left.\n", idxptr->lines_left,
 			(idxptr->lines_left == 1) ? "" : "s");
 		return (16);
 	}
@@ -443,7 +443,7 @@ int correct_meta(char* name, int itsacor, int quietmode)
 		kill_em(_file, inpath, "7pl", "p", "cor", "c", "err", 0, 1);
 		kill_em(_file, inpath, "e", NULL, NULL, NULL, NULL, 0, 2);
 	}
-	fprintf(o, "\nCorrection successful! '%s', %ld bytes.\n",
+	fprintf(ErrorFile, "\nCorrection successful! '%s', %ld bytes.\n",
 		newname, idxptr->length);
 
 	return (0);

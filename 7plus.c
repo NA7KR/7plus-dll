@@ -400,7 +400,9 @@ int go_at_it(int argc, char** argv)
 		char *c = malloc(strlen(pathstr) + strlen(_file) + strlen(_ext) + 1);
 		if (c != NULL)
 		{
-			strcpy(c, pathstr);
+
+			strcpy(c, _drive);
+			strcat(c, _dir);
 			strcat(c, _file);
 			strcat(c, _ext);
 			strcpy(argname, c);

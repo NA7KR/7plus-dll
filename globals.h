@@ -1,5 +1,5 @@
 /** globals **/
-extern FILE* o;
+extern FILE* ErrorFile;
 extern uint crctab[];
 extern byte decode[];
 extern byte code[];
