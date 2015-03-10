@@ -6,7 +6,7 @@
 *** afterwards.
 ***
 */
-int control_decode(char* name)
+int control_decode(char* name, char* pathstr)
 {
 	int i, j, cor_exists;
 	char newname[MAXPATH];

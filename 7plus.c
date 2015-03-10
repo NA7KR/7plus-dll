@@ -408,7 +408,7 @@ int go_at_it(int argc, char** argv)
 			strcpy(argname, c);
 			strcpy(genpath, pathstr);
 
-			free(c);
+			//free(c);
 		}
 
 	}
@@ -470,7 +470,7 @@ int go_at_it(int argc, char** argv)
 
 		if (sysop)
 		{
-			ret = control_decode(argname);
+			ret = control_decode(argname, pathstr);
 			if (ErrorFile != stdout)
 				fclose(ErrorFile);
 			free(idxptr);
@@ -480,7 +480,7 @@ int go_at_it(int argc, char** argv)
 		/* Call decode_file() if ext ist 7PL, P01, else encode_file() */
 		if (!_strnicmp(".7pl", _ext, 4) || !_strnicmp(".p01", _ext, 4))
 		{
-			ret = control_decode(argname);
+			ret = control_decode(argname, pathstr);
 			if (ErrorFile != stdout)
 				fclose(ErrorFile);
 			free(idxptr);
@@ -515,7 +515,7 @@ int go_at_it(int argc, char** argv)
 		if (!test_exist(argname)) /* no EXT, but file exists on disk, then encode */
 			ret = encode_file(argname, blocksize, r12, join, t12, genpath);
 		else
-			ret = control_decode(argname);
+			ret = control_decode(argname, pathstr);
 	}
 
 	if (ErrorFile != stdout)

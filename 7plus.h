@@ -115,7 +115,7 @@ void get_range(char* rangestring);
 int read_tb(char* name, char* go_top, char* go_bottom);
 int top_bottom(FILE* wfile, char* top_bot, char* orgname, char* type, int part, int parts);
 /** decode.c **/
-int control_decode(char* name);
+int control_decode(char* name, char* pathstr);
 int decode_file(char* name, int flag);
 void decode_n_write(FILE* raus, char* p, int length);
 void w_index_err(struct m_index* idxptr, const char* localname, int flag);
