@@ -507,6 +507,7 @@ int go_at_it(int argc, char** argv)
 			free(idxptr);
 			return (ret);
 		}
+		strcat(genpath, "Out\\");
 		ret = encode_file(argname, blocksize, r12, join, t12, genpath);
 	}
 	else
