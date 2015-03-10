@@ -5,7 +5,7 @@
 #include "7plus.h"
 #include <conio.h>
 
-FILE* o;
+FILE* ErrorFile;
 uint crctab[256];
 byte decode[256];
 byte code[216];
@@ -18,6 +18,7 @@ char* endstr;
 char* sendstr;
 char* pathstr;
 char genpath[MAXPATH];
+char ErrorF[MAXPATH];
 char altname[MAXPATH];
 char delimit[] = "\n";
 char def_format[] = "format.def";
@@ -38,6 +39,15 @@ struct m_index* idxptr;
 const char s_logon[] = "\n[7+ v"VERSION""_LFN" ("PL7_DATE"), (C) DG1BBQ]\n";
 
 HANDLE hDLLInst = 0;
+
+
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
+
+char cCurrentPath[FILENAME_MAX];
+
+
 
 BOOL WINAPI DllMain(HANDLE hModule, DWORD dwFunction, LPVOID lpNot)
 {
@@ -118,11 +128,9 @@ __declspec(dllexport) int  Do_7plus(char *cmd_line)
 	// Call real program entry point
 
 	ret = go_at_it(argc, argv);
-	fclose(o);
+	fclose(ErrorFile);
 	return ret;
 }
-
-
 
 /* This is the real main() */
 int go_at_it(int argc, char** argv)
@@ -133,11 +141,20 @@ int go_at_it(int argc, char** argv)
 	long blocksize;
 
 	extract = genflag = join = cor = twolinesend = 0;
-	p12 = r12 = s12 = t12 = endstr = sendstr = NULLCP;
-	*genpath = *argname = *altname = EOS;
+	p12 = r12 = s12 = t12  = endstr = sendstr = NULLCP;
+	*genpath = *argname = *altname = *ErrorF = EOS;
 
-	i = 0;
-	o = stdout;
+	i = -1;
+	//ErrorFile = stdout;
+	
+
+	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+	{
+		return errno;
+	}
+	strcpy(ErrorF, cCurrentPath);
+	strcat(ErrorF, "\\7plus.out");
+	ErrorFile = fopen(ErrorF, "w");
 
 	/* initialize range array */
 	get_range("1-");
@@ -145,7 +162,7 @@ int go_at_it(int argc, char** argv)
 	/* Default blocksize (abt 10000 bytes) */
 	blocksize = 138 * 62;
 
-	while (i++ < argc)
+	while (i++ < argc -1)
 	{
 		if (*argv[i] != '-')
 		{
@@ -249,6 +266,7 @@ int go_at_it(int argc, char** argv)
 				}
 			}
 
+			
 		}
 		//end save
 		if (!_strnicmp(argv[i], "-SEND", 5)) /* Define send string, */
@@ -319,11 +337,11 @@ int go_at_it(int argc, char** argv)
 			noquery = 1;
 	}
 
-	if (!_isatty(_fileno(o)))
+	if (!_isatty(_fileno(ErrorFile)))
 		no_tty = noquery = 1;
 
 	if (no_tty)
-		fprintf(o, "%s", s_logon);
+		fprintf(ErrorFile, "%s", s_logon);
 	else if (!p12) /* No File specified, show help */
 	{
 		int scrlines;
@@ -336,17 +354,17 @@ int go_at_it(int argc, char** argv)
 
 
 		ret = 0;
-		if (o != stdout)
-			fclose(o);
+		if (ErrorFile != stdout)
+			fclose(ErrorFile);
 		free(idxptr);
 		return (ret);
 	}
 
 	if ((s12 = (char *)malloc((size_t)4000UL)) == NULLCP)
 	{
-		fprintf(o, nomem);
-		if (o != stdout)
-			fclose(o);
+		fprintf(ErrorFile, nomem);
+		if (ErrorFile != stdout)
+			fclose(ErrorFile);
 
 		exit(21);
 
@@ -355,9 +373,9 @@ int go_at_it(int argc, char** argv)
 
 	if ((idxptr = (struct m_index *)malloc(sizeof(struct m_index))) == NULL)
 	{
-		fprintf(o, nomem);
-		if (o != stdout)
-			fclose(o);
+		fprintf(ErrorFile, nomem);
+		if (ErrorFile != stdout)
+			fclose(ErrorFile);
 
 		exit(21);
 
@@ -403,11 +421,11 @@ int go_at_it(int argc, char** argv)
 			ret = extract_files(argname, r12);
 		else
 		{
-			fprintf(o, "\007File to extract from not specified. Break.\n");
+			fprintf(ErrorFile, "\007File to extract from not specified. Break.\n");
 			ret = 6;
 		}
-		if (o != stdout)
-			fclose(o);
+		if (ErrorFile != stdout)
+			fclose(ErrorFile);
 		free(idxptr);
 		return (ret);
 	}
@@ -417,8 +435,8 @@ int go_at_it(int argc, char** argv)
 		if (cor)
 		{
 			ret = correct_meta(argname, 0, 0);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -430,8 +448,8 @@ int go_at_it(int argc, char** argv)
 				isxdigit(*(_ext + 3))))
 			{
 				ret = join_control(argname, r12);
-				if (o != stdout)
-					fclose(o);
+				if (ErrorFile != stdout)
+					fclose(ErrorFile);
 				free(idxptr);
 				return (ret);
 			}
@@ -442,8 +460,8 @@ int go_at_it(int argc, char** argv)
 			isxdigit(*(_ext + 3))))
 		{
 			ret = correct_meta(argname, 1, 0);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -451,8 +469,8 @@ int go_at_it(int argc, char** argv)
 		if (sysop)
 		{
 			ret = control_decode(argname);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -461,8 +479,8 @@ int go_at_it(int argc, char** argv)
 		if (!_strnicmp(".7pl", _ext, 4) || !_strnicmp(".p01", _ext, 4))
 		{
 			ret = control_decode(argname);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -473,8 +491,8 @@ int go_at_it(int argc, char** argv)
 #endif
 		{
 			ret = make_new_err(argname);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -482,8 +500,8 @@ int go_at_it(int argc, char** argv)
 		if (!_strnicmp(".x", _ext, 3))
 		{
 			ret = extract_files(argname, r12);
-			if (o != stdout)
-				fclose(o);
+			if (ErrorFile != stdout)
+				fclose(ErrorFile);
 			free(idxptr);
 			return (ret);
 		}
@@ -497,8 +515,8 @@ int go_at_it(int argc, char** argv)
 			ret = control_decode(argname);
 	}
 
-	if (o != stdout)
-		fclose(o);
+	if (ErrorFile != stdout)
+		fclose(ErrorFile);
 	free(idxptr);
 	return (ret);
 }
